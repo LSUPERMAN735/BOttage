@@ -114,7 +114,7 @@ async def on_message(message):
                 delims=q.split('|')
                 quest=delims[0]
                 rep=delims[1]
-                if b<=2:
+                if b>1 and b<=2:
                     await message.channel.send(quest)  
             # await message.channel.send('Challenge 2 : Comment faire le reverse search ?')
             await message.channel.send('Réponse sous la forme : en MP')
