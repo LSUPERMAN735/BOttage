@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
-#4may and 5 may and 6 may commencé vers 18H20 and 7 may
+#4may and 5 may and 6 may commencé vers 18H20 and 7 may and 11 may
 import sys
 import discord
 from discord.ext import commands
