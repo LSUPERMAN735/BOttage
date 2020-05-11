@@ -146,12 +146,11 @@ async def on_message(message):
             print(len(top10NamesQY), top10NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
             print('message utilisateur=', message.content)
             print('réponse=', listchallengerx)
-            current_challengex=current_challenge-1
             if reptricheur(top10NamesQY, listchallengerx, message)!=True:
                 await message.channel.send(reptriche1) 
             
-            if repondre_quest(message, listchallengerx, top10NamesQY, ontBonMaisTropTardQY,'Q'+str(current_challengex)) == True :
-                await message.channel.send(msggagne+str(current_challengex))             
+            if repondre_quest(message, listchallengerx, top10NamesQY, ontBonMaisTropTardQY,'Q'+str(current_challenge)) == True :
+                await message.channel.send(msggagne+str(current_challenge))             
             
             if len(top10NamesQY) > 10:
                 await message.channel.send(repbotlate1)

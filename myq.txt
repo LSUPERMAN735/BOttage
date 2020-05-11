@@ -1,5 +1,5 @@
 coucou Challenge 1 : Savez-vous comment s appelle mon logo|1) Linux Mint
-Challenge 2 : Comment faire le reverse search ?|2) Google Images -> Insérer image -> Rechercher
+Challenge 2 : Comment faire le reverse search ?|2) Google Images -> Inserer image -> Rechercher
 Challenge 3 :  Acronyme de File Transfer Protocol ?|3) FTP
 Challenge 4 :  ?|4)
 Challenge 5 :  ?|5)
