@@ -6,11 +6,17 @@ import discord
 from discord.ext import commands
 import asyncio
 
+
+tok = open("token.txt", "r")
+token=tok.readlines()
+
 my_channel_id = 705073195077730344
 
 BOTman_id = 705418360216748062
 
 myAuthorId = 476338851871326219
+brice_Id=689134480291528710
+admin_Id=480045172630224916
 
 nbQ1gagnant = 0
 nbQ2gagnant = 0
@@ -148,4 +154,4 @@ async def on_message(message):
         print("Une erreur est survenue...Fermeture")
         sys.exit(1)        
 
-client.run('Tok')
+client.run(token[0])

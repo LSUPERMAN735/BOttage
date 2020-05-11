@@ -1,26 +1,31 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
-
+#4may and 5 may and 6 may
 import sys
 import discord
 from discord.ext import commands
 import asyncio
+
+tok = open("token.txt", "r")
+token=tok.readlines()
 
 my_channel_id = 705073195077730344
 
 BOTman_id = 705418360216748062
 
 myAuthorId = 476338851871326219
+brice_Id=689134480291528710
+admin_Id=480045172630224916
 
-nbQ1gagnant = 0
-nbQ2gagnant = 0
 top10IdsQ1 = []
 top10IdsQ2 = []
+# nbQ1Wins = len(top10IdsQ1)
+# nbQ2Wins = len(top10IdsQ2) #ne fonctionne pas
 ontBonMaisTropTardQ1 = []
 ontBonMaisTropTardQ2 = []
 perduAnImporteQuelQ = []
-nepasbloquerq1=True # pour ne pas bloquer q1
-nepasbloquerq2= True# pour ne pas bloquer q2
+# nepasbloquerq1=True # pour ne pas bloquer q1
+# nepasbloquerq2= True# pour ne pas bloquer q2
 ####
 # Events
 ####
@@ -29,41 +34,39 @@ client = commands.Bot(command_prefix='.')
 #challenge rép
 rep1='1) Linux Mint'
 rep2='2) Google Images -> Insérer image -> Rechercher'
-
 #reponse du bot
-gagnepremiereq='Vous avez gagné à la première question'
-gagnedeuxiemeq='Vous avez gagné à la deuxième question'
-
+msggagne='Vous avez gagné à la question'
+#réponse bot
+homer='Homer: Woohoo!! Vous êtes trop fort!!'
 # rep triche:
 reptriche1='Vous avez déjà participé ! Faîtes autre chose !!'
 reptriche2='tente de tricher!!'
+
 #reponse si trop tard du bot
 repbotlate1='Désolé mais 10 autres personnes ont déjà gagné'
 repbotlate1bis='Soyez plus rapide à la prochaine question '
 
 #définition des fonctions
-def reptricheur(top10IdsQx, repx, nepasbloquerqx, msg):
+def reptricheur(top10IdsQx, repx,  msg):
     if msg.author.id in top10IdsQx and msg.content.casefold()== repx.casefold() :
         msg.channel.send(reptriche1)
         print(msg.author.id, reptriche2)
-        nepasbloquerqx=False # valeur qui bloque la questionx si l'utilisateur tente de rerépondre bon
-        return False
+        return False# valeur qui bloque la questionx si l'utilisateur tente de rerépondre bon
     else: 
-        nepasbloquerqx=True
         return True
 
         #casefold pour ignorer la casse majuscule, minuscule ou mélangées
-def repondre_jusqua10(msg, repx, top10IdsQx, nepasbloquerqx,nbQxgagnant, ontBonMaisTropTardQx):
-    if msg.content.casefold() ==repx.casefold() and reptricheur(top10IdsQx, repx, nepasbloquerqx , msg)==True:
+def repondre_quest(msg, repx, top10IdsQx, ontBonMaisTropTardQx, Qx):
+    if msg.content.casefold() ==repx.casefold() and reptricheur(top10IdsQx, repx, msg)==True:
+    # if msg.content.casefold() ==repx.casefold() :
         # await msg.channel.send(gagnepremiereq)
+        print(msggagne,Qx)
         print(msg.author.id)
         top10IdsQx.append(msg.author.id)
-        nbQxgagnant += 1
+        print('gagné', Qx, '=', len(top10IdsQx))
+        print('gagné', Qx, 'mais late =', len(ontBonMaisTropTardQx))
         return True
-        if nbQ1gagnant == nbQxgagnant :
-            print('gagné q1=', nbQ1gagnant)
-        elif nbQ2gagnant == nbQxgagnant :
-            print('gagné q2=', nbQ2gagnant)
+
 
 @client.event
 async def on_ready():
@@ -73,16 +76,16 @@ async def on_ready():
 @client.event
 async def on_message(message):
     try:
-        global appel_membre, appel, absents, presents
+        # global appel_membre, appel, absents, presents
 
-        global nbQ1gagnant, nbQ2gagnant, top10IdsQ1, top10IdsQ2, ontBonMaisTropTardQ1, ontBonMaisTropTardQ2, perduAnImporteQuelQ, nepasbloquerq1, nepasbloquerq2
+        global nbQ1gagnant, nbQ2gagnant, top10IdsQ1, top10IdsQ2, ontBonMaisTropTardQ1, ontBonMaisTropTardQ2, perduAnImporteQuelQ
         if message.author.id != BOTman_id:
             print("Je suis", message.author.id)
             print("Actuellement les valeurs sont :")
             print("my_channel_id, BOTman_id, myAuthorId", \
                 my_channel_id, BOTman_id, myAuthorId)
             print("nbQ1gagnant, nbQ2gagnant, top10IdsQ1,top10IdsQ2, ontBonMaisTropTardQ1, ontBonMaisTropTardQ2, perduAnImporteQuelQ")
-            print(nbQ1gagnant, nbQ2gagnant, top10IdsQ1, top10IdsQ2, ontBonMaisTropTardQ1, ontBonMaisTropTardQ2, perduAnImporteQuelQ)
+            print(len(top10IdsQ1), len(top10IdsQ2), top10IdsQ1, top10IdsQ2, ontBonMaisTropTardQ1, ontBonMaisTropTardQ2, perduAnImporteQuelQ)
             print("Message initial", message)
 
         # Pour les personnes qui peuvent lancer le Challenge
@@ -106,32 +109,32 @@ async def on_message(message):
             # reptricheur(top10IdsQ2, rep2, nepasbloquerq2,message)         #si user tente de rerépondre Q2    
             # if message.content.casefold() == rep1.casefold() and nepasbloquerq1!=False: #casefold pour ignorer la casse majuscule, minuscule ou mélangées
             # if message.content.casefold() == rep1.casefold() and reptricheur(top10IdsQ1, rep1, nepasbloquerq1,message)==True: 
-
-
-            repondre_jusqua10(message, rep1, top10IdsQ1, nepasbloquerq1, nbQ1gagnant, ontBonMaisTropTardQ1)
-            # await message.channel.send(gagnepremiereq)
-            # if repondre_jusqua10 == True :
-            #     await message.channel.send(gagnepremiereq)
-                
-            repondre_jusqua10(message, rep2, top10IdsQ2, nepasbloquerq2, nbQ2gagnant, ontBonMaisTropTardQ2)
             
-            if nbQ1gagnant > 10:
+            if reptricheur(top10IdsQ1, rep1, message)!=True:
+                await message.channel.send(reptriche1) 
+            if repondre_quest(message, rep1, top10IdsQ1, ontBonMaisTropTardQ1,'Q1') == True :
+                await message.channel.send(msggagne+' 1')
+                
+            if len(top10IdsQ1) > 10:
                 await message.channel.send(repbotlate1)
                 await message.channel.send(repbotlate1bis)
-                ontBonMaisTropTardQ1.append(message.author.id)
+                ontBonMaisTropTardQ1.append(message.author.id)#sinon bug
 
-            # elif message.content.casefold() == rep2.casefold() and reptricheur(top10IdsQ2, rep2, nepasbloquerq2,message):
-            #     await message.channel.send(gagnedeuxiemeq)
-            #     print(message.author.id)
-            #     top10IdsQ2.append(message.author.id)
-            #     nbQ2gagnant += 1
-            #     print('gagné q2=', nbQ2gagnant)
+            if message.content.casefold()==rep1.casefold() and reptricheur(top10IdsQ1, rep1,  message)!=True :
+                await message.channel.send(homer) 
 
-                if nbQ2gagnant > 10:
+            elif reptricheur(top10IdsQ2, rep2, message)!=True:
+                await message.channel.send(reptriche1) 
+            elif repondre_quest(message, rep2, top10IdsQ2, ontBonMaisTropTardQ2,'Q2') == True :
+                await message.channel.send(msggagne+' 2')
+                
+                if len(top10IdsQ2) > 10:
                     await message.channel.send(repbotlate1)
                     await message.channel.send(repbotlate1bis)
-                    ontBonMaisTropTardQ2.append(message.author.id)
-
+                    ontBonMaisTropTardQ2.append(message.author.id) #sinon bug
+                
+                if message.content.casefold()==rep2.casefold() and reptricheur(top10IdsQ2, rep2, message)!=True :
+                    await message.channel.send(homer) 
             else:
                 await message.channel.send('Désolé vous avez perdu') 
                 perduAnImporteQuelQ.append(message.author.id)
@@ -165,4 +168,4 @@ async def on_message(message):
         print("Une erreur est survenue...Fermeture")
         sys.exit(1)        
 
-client.run('Tok')
+client.run(token[0])

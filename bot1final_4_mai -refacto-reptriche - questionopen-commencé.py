@@ -26,7 +26,7 @@ ontBonMaisTropTardQ2 = []
 perduAnImporteQuelQ = []
 # nepasbloquerq1=True # pour ne pas bloquer q1
 # nepasbloquerq2= True# pour ne pas bloquer q2
-####
+####c
 # Events
 ####
 client = commands.Bot(command_prefix='.')
