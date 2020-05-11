@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
-#4may and 5 may and 6 may commencé vers 18H20 and 7 may
+#4may and 5 may and 6 may commencé vers 18H20 and 7 may and 11 may
 import sys
 import discord
 from discord.ext import commands
@@ -47,6 +47,12 @@ repbotlate1='Désolé mais 10 autres personnes ont déjà gagné'
 repbotlate1bis='Soyez plus rapide à la prochaine question '
 
 #définition des fonctions
+def init_list():
+    global top10IdsQY, ontBonMaisTropTardQY, perduAnImporteQuelQY
+    top10IdsQY = []
+    ontBonMaisTropTardQY = []
+    perduAnImporteQuelQY = []
+
 def reptricheur(top10IdsQx, repx,  msg):
     if msg.author.id in top10IdsQx and msg.content.casefold()== repx.casefold() :
         msg.channel.send(reptriche1)
@@ -73,31 +79,22 @@ def fichreaderq1():
     listchallengeq=[]
     listchallenger=[]
     for q in lignes :
+        q= q.rstrip()
         delims=q.split('|') 
         quest=delims[0]
         listchallengeq.append(quest)
         rep=delims[1]
+        # rep=rep.rstrip()
         listchallenger.append(rep)
-        
+        # for q in lignes : 
+        #     print('q=',q)
+        #     print('quest=',quest)
+        #     print('rep=',rep)
+        # print('listchallengeq',listchallengeq)
+        print('listchallenger',listchallenger)
     fichdeqr.close()
     return quest,rep
 
-# def fichreaderq2plus():
-#     global questx, b, repx
-#     fichdeqr = open("myq.txt", "r")
-#     lignes = fichdeqr.readlines()
-#     b=0
-#     i=2
-#     for q in lignes :
-#         b+=1
-#         delims=q.split('|') 
-#         print('b=',b)
-#         if b>i-1 and b<=i :
-#             # i+=1
-#             questx=delims[0]
-#             repx=delims[1]
-#     fichdeqr.close()
-#     return questx,repx
                     
 @client.event
 async def on_ready():
@@ -119,75 +116,74 @@ async def on_message(message):
                 my_channel_id, BOTman_id, myAuthorId)
             print("nbQ1gagnant, nbQ2gagnant, top10IdsQ1,top10IdsQ2, ontBonMaisTropTardQ1, ontBonMaisTropTardQ2, perduAnImporteQuelQ")
             print(len(top10IdsQ1), len(top10IdsQ2), top10IdsQ1, top10IdsQ2, ontBonMaisTropTardQ1, ontBonMaisTropTardQ2, perduAnImporteQuelQ)
+
             print("Message initial", message)
         
         # Pour les personnes qui peuvent lancer le Challenge
         if message.content == 'Challenge!!' \
             and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :
-            # fichdeqr = open("myq.txt", "r")
-            # lignes = fichdeqr.readlines()
-            # a=0
-            # for q in lignes :
-            #     a+=1
-            #     delims=q.split('|')
-            #     quest=delims[0]
-            #     rep=delims[1]
-            #     if a<=1 :
             fichreaderq1()
             await message.channel.send(listchallengeq[current_challenge])
-            await message.channel.send('Si non faites un reverse search sur Google ou BING ')
             await message.channel.send('Réponse sous la forme : en MP')
-            await message.channel.send('1) Google Chrome //ne pas oublier le numéro la parenthèse et l espace et majuscule')
             current_challenge+=1
-            await message.channel.send('2) Google Chrome -> Téléchargement -> Cliquer sur le fichier téléchargé //ne pas oublier le numéro la parenthèse et l espace et majuscule')
-            # fichdeqr.close()
-        # elif message.content == '!!Challenge' \
-        #     and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :  
-            # fichdeqr = open("myq.txt", "r")
-            # lignes = fichdeqr.readlines()
-            # b=0
-            # for q in lignes :
-            #     b+=1  
-            #     delims=q.split('|')
-            #     if b>1 and b<=2 :
-            #         quest2=delims[0]
-            #         rep2=delims[1]
-            # fichreaderq2plus()
-            # await message.channel.send(questx)  
-            # await message.channel.send('Challenge 2 : Comment faire le reverse search ?')
-            # await message.channel.send('Réponse sous la forme : en MP')
-            # await message.channel.send('2) Google Chrome -> Téléchargement -> Cliquer sur le fichier téléchargé //ne pas oublier le numéro la parenthèse et l espace et majuscule')
-            # fichdeqr.close()
+            if current_challenge==1:
+                await message.channel.send('Si non faites un reverse search sur Google ou BING ')
+                await message.channel.send('1) Google Chrome //ne pas oublier le numéro la parenthèse et l espace ')
+            elif current_challenge==2:
+                await message.channel.send('2) Google Chrome -> Téléchargement -> Cliquer sur le fichier téléchargé //ne pas oublier le numéro la parenthèse et l espace')
+            else :
+                await message.channel.send('3) Google Chrome //ne pas oublier le numéro la parenthèse et l espace ')
+
 
         # Dans le channel privée et si ce n'est pas le bot
         if isinstance(message.channel, discord.DMChannel) and message.author.id != BOTman_id :
             print("Message privé : " + message.content)
             
-            if reptricheur(top10IdsQ1, rep1, message)!=True:
-                await message.channel.send(reptriche1) 
-            if repondre_quest(message, rep1, top10IdsQ1, ontBonMaisTropTardQ1,'Q1') == True :
-                await message.channel.send(msggagne+' 1')
+            # if reptricheur(top10IdsQ1, rep1, message)!=True:
+            #     await message.channel.send(reptriche1) 
+            # if repondre_quest(message, rep1, top10IdsQ1, ontBonMaisTropTardQ1,'Q1') == True :
+            #     await message.channel.send(msggagne+' 1')
                 
-            if len(top10IdsQ1) > 10:
-                await message.channel.send(repbotlate1)
-                await message.channel.send(repbotlate1bis)
-                ontBonMaisTropTardQ1.append(message.author.id)#sinon bug
+            # if len(top10IdsQ1) > 10:
+            #     await message.channel.send(repbotlate1)
+            #     await message.channel.send(repbotlate1bis)
+            #     ontBonMaisTropTardQ1.append(message.author.id)#sinon bug
 
-            if message.content.casefold()==rep1.casefold() and reptricheur(top10IdsQ1, rep1,  message)!=True :#casefold pour ignorer la casse majuscule, minuscule ou mélangées
-                await message.channel.send(homer) 
+            # if message.content.casefold()==rep1.casefold() and reptricheur(top10IdsQ1, rep1,  message)!=True :#casefold pour ignorer la casse majuscule, minuscule ou mélangées
+            #     await message.channel.send(homer) 
 
-            elif reptricheur(top10IdsQ2, rep2, message)!=True:
-                await message.channel.send(reptriche1) 
-            elif repondre_quest(message, rep2, top10IdsQ2, ontBonMaisTropTardQ2,'Q2') == True :
-                await message.channel.send(msggagne+' 2')
+            # elif reptricheur(top10IdsQ2, rep2, message)!=True:
+            #     await message.channel.send(reptriche1) 
+            # elif repondre_quest(message, rep2, top10IdsQ2, ontBonMaisTropTardQ2,'Q2') == True :
+            #     await message.channel.send(msggagne+' 2')
                 
-                if len(top10IdsQ2) > 10:
+            #     if len(top10IdsQ2) > 10:
+            #         await message.channel.send(repbotlate1)
+            #         await message.channel.send(repbotlate1bis)
+            #         ontBonMaisTropTardQ2.append(message.author.id) #sinon bug
+                
+            #     if message.content.casefold()==rep2.casefold() and reptricheur(top10IdsQ2, rep2, message)!=True :
+            #         await message.channel.send(homer) 
+            fichreaderq1()
+            listchallengerx=listchallenger[current_challenge]
+            init_list()
+            # init_list(top10IdsQ+[current_challenge],ontBonMaisTropTardQ, perduAnImporteQuelQY+[current_challenge])
+            # init_list(top10IdsQ3,ontBonMaisTropTardQ3, perduAnImporteQuelQ3)
+            print("nbQxgagnant, top10IdsQY, ontBonMaisTropTardQY,  perduAnImporteQuelQY")
+            print(len(top10IdsQY), top10IdsQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
+            if reptricheur(top10IdsQY, listchallengerx, message)!=True:
+                await message.channel.send(reptriche1) 
+            elif repondre_quest(message, listchallengerx, top10IdsQY, ontBonMaisTropTardQY,'Q'+str(current_challenge)) == True :
+                await message.channel.send(msggagne+str(current_challenge))
+                
+                if len(top10IdsQY) > 10:
                     await message.channel.send(repbotlate1)
                     await message.channel.send(repbotlate1bis)
-                    ontBonMaisTropTardQ2.append(message.author.id) #sinon bug
+                    ontBonMaisTropTardQY.append(message.author.id) #sinon bug
                 
-                if message.content.casefold()==rep2.casefold() and reptricheur(top10IdsQ2, rep2, message)!=True :
-                    await message.channel.send(homer) 
+                if message.content.casefold()==listchallengerx.casefold() and reptricheur(top10IdsQY, listchallengerx, message)!=True :
+                    await message.channel.send(homer)             
+            
             else:
                 await message.channel.send('Désolé vous avez perdu') 
                 perduAnImporteQuelQ.append(message.author.id)
