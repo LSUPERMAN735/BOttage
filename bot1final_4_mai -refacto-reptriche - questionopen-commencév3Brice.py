@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
-#4may and 5 may and 6 may commencé vers 18H20 and 7 may and 11 may
+#4may and 5 may and 6 may commencé vers 18H20 and 7 may and 11 may and 12 may
 import sys
 import discord
 from discord.ext import commands
@@ -53,6 +53,14 @@ def init_list():
     ontBonMaisTropTardQY = []
     perduAnImporteQuelQY = []
 
+def fini_challenge(top10NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY):
+    global top10NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall
+    top10NamesQall=[]
+    ontBonMaisTropTardQall=[]
+    perduAnImporteQuelQall=[]
+    top10NamesQall.append(top10NamesQY)
+    ontBonMaisTropTardQall.append(ontBonMaisTropTardQY)
+    perduAnImporteQuelQall.append(perduAnImporteQuelQY)
 def reptricheur(top10NamesQx, repx,  msg):
     if msg.author.name in top10NamesQx and msg.content.casefold()== repx.casefold() :
         msg.channel.send(reptriche1)
@@ -83,14 +91,7 @@ def fichreaderq1():
         quest=delims[0]
         listchallengeq.append(quest)
         rep=delims[1]
-        # rep=rep.rstrip()
         listchallenger.append(rep)
-        # for q in lignes : 
-        #     print('q=',q)
-        #     print('quest=',quest)
-        #     print('rep=',rep)
-        # print('listchallengeq',listchallengeq)
-        # print('listchallenger',listchallenger)
     fichdeqr.close()
     return quest,rep
 
@@ -113,15 +114,18 @@ async def on_message(message):
             print("Actuellement les valeurs sont :")
             print("my_channel_id, BOTman_id, myAuthorId", \
                 my_channel_id, BOTman_id, myAuthorId)
-            print("nbQ1gagnant, nbQ2gagnant, top10NamesQ1,top10NamesQ2, ontBonMaisTropTardQ1, ontBonMaisTropTardQ2, perduAnImporteQuelQ")
-            print(len(top10NamesQ1), len(top10NamesQ2), top10NamesQ1, top10NamesQ2, ontBonMaisTropTardQ1, ontBonMaisTropTardQ2, perduAnImporteQuelQ)
-
+            # print("nbQ1gagnant, nbQ2gagnant, top10NamesQ1,top10NamesQ2, ontBonMaisTropTardQ1, ontBonMaisTropTardQ2, perduAnImporteQuelQ")
+            # print(len(top10NamesQ1), len(top10NamesQ2), top10NamesQ1, top10NamesQ2, ontBonMaisTropTardQ1, ontBonMaisTropTardQ2, perduAnImporteQuelQ)
+            
             print("Message initial", message)
         
         # Pour les personnes qui peuvent lancer le Challenge
         if message.content == 'Challenge!!' \
             and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :
+            init_list()
+            fini_challenge(top10NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY)
             fichreaderq1()
+            
             await message.channel.send(listchallengeq[current_challenge])
             await message.channel.send('Réponse sous la forme : en MP')
             current_challenge+=1
@@ -139,11 +143,12 @@ async def on_message(message):
             print("Message privé : " + message.content)
             fichreaderq1()
             listchallengerx=listchallenger[current_challenge-1]
-            init_list()
             # init_list(top10IdsQ+[current_challenge],ontBonMaisTropTardQ, perduAnImporteQuelQY+[current_challenge])
             # init_list(top10IdsQ3,ontBonMaisTropTardQ3, perduAnImporteQuelQ3)
             print("nbQxgagnant, top10NamesQY, ontBonMaisTropTardQY,  perduAnImporteQuelQY")
             print(len(top10NamesQY), top10NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
+            print("nbQxallgagnant, top10NamesQall, ontBonMaisTropTardQall,  perduAnImporteQuelQall")
+            print(len(top10NamesQall), top10NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall)
             print('message utilisateur=', message.content)
             print('réponse=', listchallengerx)
             if reptricheur(top10NamesQY, listchallengerx, message)!=True:
@@ -164,7 +169,7 @@ async def on_message(message):
 
             else:
                 await message.channel.send('Désolé vous avez perdu') 
-                perduAnImporteQuelQ.append(message.author.name)
+                perduAnImporteQuelQY.append(message.author.name)
 
         # Dans le channel général et si c'est moi/Augustin bientôt        
         # elif message.author.name == myAuthorId:
