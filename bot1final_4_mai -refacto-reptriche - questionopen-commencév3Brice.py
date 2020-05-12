@@ -61,6 +61,23 @@ def fini_challenge(top10NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY):
     top10NamesQall.append(top10NamesQY)
     ontBonMaisTropTardQall.append(ontBonMaisTropTardQY)
     perduAnImporteQuelQall.append(perduAnImporteQuelQY)
+def score():
+    global j,x,i
+    j=1#cbeme
+    x=0#indice
+    i=10#score
+    try:
+        while i<=10 and j<=10 and x<10:
+            print('x=',x)
+            print('j=',j)
+            print('i=',i)
+            print('utilisateur', top10NamesQY[x], 'Top',j, 'a',i, 'points' )
+            i-=1
+            j+=1
+            x+=1
+    except (IndexError):
+        print("Impossible de trouver l'élément dans la liste")
+
 def reptricheur(top10NamesQx, repx,  msg):
     if msg.author.name in top10NamesQx and msg.content.casefold()== repx.casefold() :
         msg.channel.send(reptriche1)
@@ -107,6 +124,7 @@ async def on_message(message):
         # global appel_membre, appel, absents, presents
         # global quest2, rep2, b
         # global quest,a, rep, quest2, rep2, b
+        global j,x,i
         global current_challenge
         global nbQ1gagnant, nbQ2gagnant, top10NamesQ1, top10NamesQ2, ontBonMaisTropTardQ1, ontBonMaisTropTardQ2, perduAnImporteQuelQ
         if message.author.id != BOTman_id:
@@ -118,7 +136,26 @@ async def on_message(message):
             # print(len(top10NamesQ1), len(top10NamesQ2), top10NamesQ1, top10NamesQ2, ontBonMaisTropTardQ1, ontBonMaisTropTardQ2, perduAnImporteQuelQ)
             
             print("Message initial", message)
-        
+        if message.content == 'Podium!!' \
+            and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :
+            # score()
+            j=1#cbeme
+            x=0#indice
+            i=10#score
+            try:
+                while i<=10 and j<=10 and x<10:
+                    print('x=',x)
+                    print('j=',j)
+                    print('i=',i)
+                    await message.channel.send('utilisateur'+ str(top10NamesQY[x])+ 'Top'+str(j)+ 'a'+str(i)+ 'points' )
+                    i-=1
+                    j+=1
+                    x+=1
+            except (IndexError):
+                await message.channel.send("Impossible de trouver l'élément dans la liste")
+            # i-=1
+            # j+=1
+            # x+=1
         # Pour les personnes qui peuvent lancer le Challenge
         if message.content == 'Challenge!!' \
             and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :
@@ -154,7 +191,7 @@ async def on_message(message):
                 print("nbQxallgagnant, top10NamesQall, ontBonMaisTropTardQall,  perduAnImporteQuelQall")
                 print(len(top10NamesQall), top10NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall)
                 print("nbQxallgagnantx, top10NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
-                print(len(top10NamesQall), top10NamesQall[1], ontBonMaisTropTardQall[0], perduAnImporteQuelQall[1])
+                print(len(top10NamesQall), top10NamesQall[0], ontBonMaisTropTardQall[0], perduAnImporteQuelQall[0])
             print('message utilisateur=', message.content)
             # print('réponse=', listchallengerx)
             if reptricheur(top10NamesQY, listchallengerx, message)!=True:
