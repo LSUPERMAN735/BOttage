@@ -71,13 +71,29 @@ def score():
             print('x=',x)
             print('j=',j)
             print('i=',i)
-            print('utilisateur', top10NamesQY[x], 'Top',j, 'a',i, 'points' )
+            print('utilisateur '+ top10NamesQY[x]+ ' Top '+j+ ' a '+i+ ' points' )
             i-=1
             j+=1
             x+=1
     except (IndexError):
         print("Impossible de trouver l'élément dans la liste")
-
+def global_score():
+    global j,x,i
+    j=1#cbeme
+    x=0#indice
+    i=10#score
+    try:
+        while i<=10 and j<=10 and x<10:
+            print('x=',x)
+            print('j=',j)
+            print('i=',i)
+            print('utilisateur '+ top10NamesQY[x]+ ' Top '+j+ ' a '+i+ ' points' )
+            i-=1
+            j+=1
+            x+=1
+    except (IndexError):
+        print("Impossible de trouver l'élément dans la liste")
+        
 def reptricheur(top10NamesQx, repx,  msg):
     if msg.author.name in top10NamesQx and msg.content.casefold()== repx.casefold() :
         msg.channel.send(reptriche1)
@@ -147,7 +163,7 @@ async def on_message(message):
                     print('x=',x)
                     print('j=',j)
                     print('i=',i)
-                    await message.channel.send('utilisateur'+ str(top10NamesQY[x])+ 'Top'+str(j)+ 'a'+str(i)+ 'points' )
+                    await message.channel.send('utilisateur '+ str(top10NamesQY[x])+ ' Top '+str(j)+ ' a '+str(i)+ ' points' )
                     i-=1
                     j+=1
                     x+=1
