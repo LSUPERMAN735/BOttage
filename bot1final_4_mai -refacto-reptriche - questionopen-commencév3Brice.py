@@ -122,8 +122,11 @@ async def on_message(message):
         # Pour les personnes qui peuvent lancer le Challenge
         if message.content == 'Challenge!!' \
             and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :
+           
+            if (current_challenge>=1):
+                fini_challenge(top10NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY)
+           
             init_list()
-            fini_challenge(top10NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY)
             fichreaderq1()
             
             await message.channel.send(listchallengeq[current_challenge])
@@ -147,10 +150,13 @@ async def on_message(message):
             # init_list(top10IdsQ3,ontBonMaisTropTardQ3, perduAnImporteQuelQ3)
             print("nbQxgagnant, top10NamesQY, ontBonMaisTropTardQY,  perduAnImporteQuelQY")
             print(len(top10NamesQY), top10NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
-            print("nbQxallgagnant, top10NamesQall, ontBonMaisTropTardQall,  perduAnImporteQuelQall")
-            print(len(top10NamesQall), top10NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall)
+            if current_challenge>1:
+                print("nbQxallgagnant, top10NamesQall, ontBonMaisTropTardQall,  perduAnImporteQuelQall")
+                print(len(top10NamesQall), top10NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall)
+                print("nbQxallgagnantx, top10NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
+                print(len(top10NamesQall), top10NamesQall[0][0], ontBonMaisTropTardQall[0], perduAnImporteQuelQall[0][0])
             print('message utilisateur=', message.content)
-            print('réponse=', listchallengerx)
+            # print('réponse=', listchallengerx)
             if reptricheur(top10NamesQY, listchallengerx, message)!=True:
                 await message.channel.send(reptriche1) 
             
