@@ -154,7 +154,7 @@ async def on_message(message):
                 print("nbQxallgagnant, top10NamesQall, ontBonMaisTropTardQall,  perduAnImporteQuelQall")
                 print(len(top10NamesQall), top10NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall)
                 print("nbQxallgagnantx, top10NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
-                print(len(top10NamesQall), top10NamesQall[0][0], ontBonMaisTropTardQall[0], perduAnImporteQuelQall[0][0])
+                print(len(top10NamesQall), top10NamesQall[1], ontBonMaisTropTardQall[0], perduAnImporteQuelQall[1])
             print('message utilisateur=', message.content)
             # print('réponse=', listchallengerx)
             if reptricheur(top10NamesQY, listchallengerx, message)!=True:
