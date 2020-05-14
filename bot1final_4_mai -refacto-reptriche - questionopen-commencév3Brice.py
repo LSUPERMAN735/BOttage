@@ -50,6 +50,11 @@ reptriche2='tente de tricher!!'
 repbotlate1='Désolé mais 10 autres personnes ont déjà gagné'
 repbotlate1bis='Soyez plus rapide à la prochaine question '
 
+#init variable global podium
+o=1#cbeme
+q=10#score
+p=0#indice
+
 #définition des fonctions
 def init_list():
     global top10NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY
@@ -77,7 +82,8 @@ def score():
             print('x=',x)
             print('j=',j)
             print('i=',i)
-            top10NamesQY[x]=i
+            # top10NamesQY[x]=i
+            # top10NamesQY[x].append(i)
             print('utilisateur '+ top10NamesQY[x]+ ' Top '+j+ ' a '+i+ ' points' )
             i-=1
             j+=1
@@ -87,9 +93,6 @@ def score():
         
 def global_score():
     global o,q,p
-    o=1#cbeme
-    q=10#score
-    p=0#indice
     try:
         while q<=10 and o<=10 and p<10:
             print('p=',p)
@@ -120,7 +123,7 @@ def repondre_quest(msg, repx, top10NamesQx, ontBonMaisTropTardQx, Qx):
         print('gagné', Qx, 'mais late =', len(ontBonMaisTropTardQx))
         return True
 
-def fichreaderq1():        
+def fichreaderq1():
     global quest, a, rep, listchallengeq, listchallenger
     fichdeqr = open("myq.txt", "r")
     lignes = fichdeqr.readlines()
@@ -149,6 +152,7 @@ async def on_message(message):
         # global quest2, rep2, b
         # global quest,a, rep, quest2, rep2, b
         # global e
+        global o,q,p
         global top10NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall
         global j,x,i
         global current_challenge
@@ -171,17 +175,14 @@ async def on_message(message):
             try:
                 # for r in top10NamesQY: 
                 #     top10NamesQY[e]=[]
-                while i<=10 and j<=10 and x<10:
-                    print('x=',x)
-                    print('j=',j)
-                    print('i=',i)
-                    await message.channel.send('utilisateur '+ str(top10NamesQY[x])+ ' Top '+str(j)+ ' a '+str(i)+ ' points' )
-                    # top10NamesQY[x]=i
-                    # print(top10NamesQY[x])
-                    i-=1
-                    j+=1
-                    x+=1
-                    # e+=1
+                while q<=10 and o<=10 and p<10:
+                    print('p=',p)
+                    print('o=',o)
+                    print('q=',q)
+                    print('utilisateur '+ top10NamesQY[p]+ ' Top '+o+ ' a '+q+ ' points' )
+                    q-=1
+                    o+=1
+                    p+=1
             except (IndexError):
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
             # i-=1
@@ -189,10 +190,6 @@ async def on_message(message):
             # x+=1
             if message.content == 'PodiumGlobal!!' \
             and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :
-                # score()
-                j=1#cbeme
-                x=0#indice
-                i=10#score
                 # list_player_for_score()
                 try:
                     while i<=10 and j<=10 and x<10:
