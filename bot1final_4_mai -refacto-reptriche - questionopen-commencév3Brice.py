@@ -50,6 +50,7 @@ o=1#cbeme
 q=10#score
 p=0#indice
 
+mondico={}
 totdico={}
 #définition des fonctions
 def init_list():
@@ -79,6 +80,7 @@ def fini_challenge(top10NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY):
 #             print('x=',x)
 #             print('j=',j)
 #             print('i=',i)
+#             mondico[x]=i
 #             print('utilisateur '+ top10NamesQY[x]+ ' Top '+j+ ' a '+i+ ' points' )
 #             i-=1
 #             j+=1
