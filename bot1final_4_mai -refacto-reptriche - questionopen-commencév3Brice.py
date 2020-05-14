@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
-#4may and 5 may and 6 may commencé vers 18H20 and 7 may and 11 may and 12 may and 13 may
+#4may and 5 may and 6 may commencé vers 18H20 and 7 may and 11 may and 12 may and 13 may and 14 may
 import sys
 import discord
 from discord.ext import commands
@@ -21,12 +21,12 @@ e=0
 top10NamesQall=[]
 ontBonMaisTropTardQall=[]
 perduAnImporteQuelQall=[]
-top10NamesQ1 = []
-top10NamesQ2 = []
+# top10NamesQ1 = []
+# top10NamesQ2 = []
 # nbQ1Wins = len(top10NamesQ1)
 # nbQ2Wins = len(top10NamesQ2) #ne fonctionne pas
-ontBonMaisTropTardQ1 = []
-ontBonMaisTropTardQ2 = []
+# ontBonMaisTropTardQ1 = []
+# ontBonMaisTropTardQ2 = []
 perduAnImporteQuelQ = []
 #variable
 current_challenge=0
@@ -55,6 +55,8 @@ o=1#cbeme
 q=10#score
 p=0#indice
 
+mondico={}
+totdico={}
 #définition des fonctions
 def init_list():
     global top10NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY
@@ -84,6 +86,7 @@ def score():
             print('i=',i)
             # top10NamesQY[x]=i
             # top10NamesQY[x].append(i)
+            mondico[x]=i
             print('utilisateur '+ top10NamesQY[x]+ ' Top '+j+ ' a '+i+ ' points' )
             i-=1
             j+=1
@@ -167,7 +170,7 @@ async def on_message(message):
             
             print("Message initial", message)
         if message.content == 'Podium!!' \
-            and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :
+            and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916,BOTman_id) :
             # score()
             j=1#cbeme
             x=0#indice
@@ -175,35 +178,46 @@ async def on_message(message):
             try:
                 # for r in top10NamesQY: 
                 #     top10NamesQY[e]=[]
-                while q<=10 and o<=10 and p<10:
-                    print('p=',p)
-                    print('o=',o)
-                    print('q=',q)
-                    print('utilisateur '+ top10NamesQY[p]+ ' Top '+o+ ' a '+q+ ' points' )
-                    q-=1
-                    o+=1
-                    p+=1
+                while i<=10 and j<=10 and x<10:
+                    print('x=',x)
+                    print('j=',j)
+                    print('i=',i)
+                    mondico[top10NamesQY[p]]=i
+                    totdico[top10NamesY[p]]=i+i
+                    # mondico[str(top10NamesQY[p])]=i
+                    await message.channel.send('utilisateur '+ top10NamesQY[x]+ ' Top '+str(j)+ ' a '+str(i)+ ' points' )
+                    i-=1
+                    j+=1
+                    x+=1
+                    print('mondico', mondico)
+                if 10 in mondico.values():
+                    await message.channel.send('gagné')
             except (IndexError):
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
             # i-=1
             # j+=1
             # x+=1
-            if message.content == 'PodiumGlobal!!' \
+
+        if message.content == 'PodiumGlobal!!' \
             and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :
-                # list_player_for_score()
-                try:
-                    while i<=10 and j<=10 and x<10:
-                        print('x=',x)
-                        print('j=',j)
-                        print('i=',i)
-                        await message.channel.send('utilisateur '+ str(top10NamesQY[x])+ ' Top '+str(j)+ ' a '+str(i)+ ' points' )
-                        # top10NamesQY[x]=i
-                        # print(top10NamesQY[x])
-                        i-=1
-                        j+=1
-                        x+=1
-                except (IndexError):
-                    await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
+            # list_player_for_score()
+            print('im here')
+            try:
+                while q<=10 and o<=10 and p<10:
+                    print('p=',p)
+                    print('o=',o)
+                    print('q=',q)
+                    mondico[top10NamesQY[p]]=q+q
+                    print('zedico', mondico)
+                    # await message.channel.send('zedico', mondico)
+                    await message.channel.send('utilisateur '+ str(top10NamesQY[p])+ ' Top '+str(o)+ ' a '+str(q)+ ' points' )
+                    # top10NamesQY[x]=i
+                    # print(top10NamesQY[x])
+                    q-=1
+                    o+=1
+                    p+=1
+            except (IndexError):
+                await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
 
         if message.content.casefold() == '!!podium'.casefold() :
             # score()
@@ -229,7 +243,7 @@ async def on_message(message):
     # Pour les personnes qui peuvent lancer le Challenge
         if message.content == 'Challenge!!' \
             and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :
-           
+            await message.channel.send(Podium!!)
             if (current_challenge>=1):
                 fini_challenge(top10NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY)
            
