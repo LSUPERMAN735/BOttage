@@ -183,8 +183,12 @@ async def on_message(message):
                     print('j=',j)
                     print('i=',i)
                     mondico[top10NamesQY[p]]=i
-                    totdico[top10NamesY[p]]=i+i
+                    if current_challenge>1: 
+                        totdico[top10NamesQY[p]]+=i
+                    else:
+                        totdico[top10NamesQY[p]]=i
                     # mondico[str(top10NamesQY[p])]=i
+                    await message.channel.send('Gagnant tot= '+str(totdico))
                     await message.channel.send('utilisateur '+ top10NamesQY[x]+ ' Top '+str(j)+ ' a '+str(i)+ ' points' )
                     i-=1
                     j+=1
@@ -207,9 +211,7 @@ async def on_message(message):
                     print('p=',p)
                     print('o=',o)
                     print('q=',q)
-                    mondico[top10NamesQY[p]]=q+q
-                    print('zedico', mondico)
-                    # await message.channel.send('zedico', mondico)
+                    print('zedico', totdico)
                     await message.channel.send('utilisateur '+ str(top10NamesQY[p])+ ' Top '+str(o)+ ' a '+str(q)+ ' points' )
                     # top10NamesQY[x]=i
                     # print(top10NamesQY[x])
@@ -243,10 +245,10 @@ async def on_message(message):
     # Pour les personnes qui peuvent lancer le Challenge
         if message.content == 'Challenge!!' \
             and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :
-            await message.channel.send(Podium!!)
             if (current_challenge>=1):
+                await message.channel.send("Podium!!")
                 fini_challenge(top10NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY)
-           
+
             init_list()
             fichreaderq1()
             
