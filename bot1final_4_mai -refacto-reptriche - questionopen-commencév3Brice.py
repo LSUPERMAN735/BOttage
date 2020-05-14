@@ -187,7 +187,6 @@ async def on_message(message):
                         totdico[top10NamesQY[p]]+=i
                     else:
                         totdico[top10NamesQY[p]]=i
-                    # mondico[str(top10NamesQY[p])]=i
                     await message.channel.send('Gagnant tot= '+str(totdico))
                     await message.channel.send('utilisateur '+ top10NamesQY[x]+ ' Top '+str(j)+ ' a '+str(i)+ ' points' )
                     i-=1
@@ -205,19 +204,20 @@ async def on_message(message):
         if message.content == 'PodiumGlobal!!' \
             and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :
             # list_player_for_score()
-            print('im here')
             try:
-                while q<=10 and o<=10 and p<10:
-                    print('p=',p)
-                    print('o=',o)
-                    print('q=',q)
-                    print('zedico', totdico)
-                    await message.channel.send('utilisateur '+ str(top10NamesQY[p])+ ' Top '+str(o)+ ' a '+str(q)+ ' points' )
+                # while q<=10 and o<=10 and p<10:
+                #     print('p=',p)
+                #     print('o=',o)
+                #     print('zedico', totdico)
+             #  print('zedico', totdico)
+                for cle, valeur in totdico.items():
+                    print('utilisateur {}'.format(cle)+ ' Top '+str(o)+ ' a '+ '{} points'.format(valeur) )
+                    await message.channel.send('utilisateur {}'.format(cle)+ ' Top '+str(o)+ ' a '+ '{} points'.format(valeur) )
                     # top10NamesQY[x]=i
                     # print(top10NamesQY[x])
-                    q-=1
                     o+=1
-                    p+=1
+                        # p+=1
+                        # q-=1
             except (IndexError):
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
 
