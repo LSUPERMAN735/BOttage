@@ -64,6 +64,12 @@ def fini_challenge(top10NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY):
     ontBonMaisTropTardQall.append(ontBonMaisTropTardQY)
     perduAnImporteQuelQall.append(perduAnImporteQuelQY)
 
+def podium_user_mini():
+    if current_challenge>1:
+        challengeprec=current_challenge-2
+        print('chall',challengeprec)
+        print("nbQxallgagnantx, top10NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
+        print(len(top10NamesQall), top10NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
 # def list_player_for_score():
 #     global e
 #     e=0
@@ -217,11 +223,7 @@ async def on_message(message):
             x=0#indice
             i=10#score
             try:
-                if current_challenge>1:
-                    challengeprec=current_challenge-2
-                    print('chall',challengeprec)
-                    print("nbQxallgagnantx, top10NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
-                    print(len(top10NamesQall), top10NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
+                podium_user_mini()
                 while i<=10 and j<=10 and x<10:
                     print('x=',x)
                     print('j=',j)
