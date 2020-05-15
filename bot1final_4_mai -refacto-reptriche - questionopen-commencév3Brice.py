@@ -265,7 +265,7 @@ async def on_message(message):
             await message.channel.send("```PodiumGlobal!! affiche le podium Global des challenges terminés destinés aux profs```")
             await message.channel.send('```Challenge!! lancer le challenge ou passer le challenge admin/prof```')
             await message.channel.send('```Podium!!! voir le podium du challenge pour les admin/prof```')
-            await message.channel.send("Podium!! destiné à forcer l'actualisation du bot destiné aux bots```")
+            await message.channel.send("```Podium!! destiné à forcer l'actualisation du bot destiné aux bots```")
         # Dans le channel privée et si ce n'est pas le bot
         if isinstance(message.channel, discord.DMChannel) and message.author.id != BOTman_id :
             print("Message privé : " + message.content)
