@@ -17,16 +17,24 @@ myAuthorId = 476338851871326219
 brice_Id=689134480291528710
 admin_Id=480045172630224916
 
+<<<<<<< HEAD
 poder=0 #pour empêcher que si on tape Podium!! cela modifie le score
 # e=0# 
 
+=======
+# e=0
+>>>>>>> 47849f5c8ea4e5dc9a2c8564dd86b9951e3e7745
 top10NamesQall=[]
 ontBonMaisTropTardQall=[]
 perduAnImporteQuelQall=[]
 perduAnImporteQuelQ = []
 #variable
 current_challenge=0
+<<<<<<< HEAD
 
+=======
+poder=0
+>>>>>>> 47849f5c8ea4e5dc9a2c8564dd86b9951e3e7745
 ####
 # Events
 ####
@@ -49,6 +57,13 @@ repbotlate1bis='Soyez plus rapide à la prochaine question '
 
 #init variable global podium
 o=1#cbeme
+<<<<<<< HEAD
+=======
+q=10#score
+p=0#indice
+
+# mondico={}
+>>>>>>> 47849f5c8ea4e5dc9a2c8564dd86b9951e3e7745
 totdico={}
 # mondico={}
 # q=10#score
@@ -99,8 +114,13 @@ def fini_challenge(top10NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY):
 
 def reptricheur(top10NamesQx, repx,  msg):
     if msg.author.name in top10NamesQx and msg.content.casefold()== repx.casefold() :
+<<<<<<< HEAD
         print(reptriche1)
         print(msg.author.name, reptriche2)
+=======
+        # print(reptriche1)
+        # print(msg.author.name, reptriche2)
+>>>>>>> 47849f5c8ea4e5dc9a2c8564dd86b9951e3e7745
         return False# valeur qui bloque la questionx si l'utilisateur tente de rerépondre bon
     else: 
         return True
