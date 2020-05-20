@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
-#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may
+#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may
+#sort adding
 import sys
 import discord
 from discord.ext import commands
+from operator import itemgetter
 import asyncio
 
 tok = open("token.txt", "r")
@@ -213,7 +215,7 @@ async def on_message(message):
             #   print('zedico', totdico)
              o=1
              while o<=len(totdico):
-                for cle, valeur in totdico.items():
+                for cle, valeur in sorted(totdico.items(), key=itemgetter(1), reverse=True):
                         print('utilisateur {}'.format(cle)+ ' Top '+str(o)+ ' a '+ '{} points'.format(valeur) )
                         await message.channel.send('utilisateur {}'.format(cle)+ ' Top '+str(o)+ ' a '+ '{} points'.format(valeur) )
                         o+=1
@@ -263,7 +265,7 @@ async def on_message(message):
                 await message.channel.send('3) Google Chrome //ne pas oublier le numéro la parenthèse et l espace ')
 
         if message.content == 'help!!':
-            await message.channel.send('```!!podium affiche pour tous les utilisateurs```')
+            await message.channel.send('```!!podium affiche le podium précédent pour tous les utilisateurs```')
             await message.channel.send("```PodiumGlobal!! affiche le podium Global des challenges terminés destinés aux profs```")
             await message.channel.send('```Challenge!! lancer le challenge ou passer le challenge admin/prof```')
             await message.channel.send('```Podium!!! voir le podium du challenge pour les admin/prof```')
