@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
-#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may, 25 may
-#sort adding
+#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may,21may,  25 may
+#sort added for podiumglobal and added !podium x
 import sys
 import discord
 from discord.ext import commands
@@ -215,7 +215,7 @@ async def on_message(message):
             #   print('zedico', totdico)
              o=1
              while o<=len(totdico):
-                for cle, valeur in sorted(totdico.items(), key=itemgetter(1), reverse=True):
+                for cle, valeur in sorted(totdico.items(), key=itemgetter(1), reverse=True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
                         print('utilisateur {}'.format(cle)+ ' Top '+str(o)+ ' a '+ '{} points'.format(valeur) )
                         await message.channel.send('utilisateur {}'.format(cle)+ ' Top '+str(o)+ ' a '+ '{} points'.format(valeur) )
                         o+=1
@@ -266,10 +266,50 @@ async def on_message(message):
 
         if message.content == 'help!!':
             await message.channel.send('```!!podium affiche le podium précédent pour tous les utilisateurs```')
+            await message.channel.send('```!podium x affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```')
             await message.channel.send("```PodiumGlobal!! affiche le podium Global des challenges terminés destinés aux profs```")
             await message.channel.send('```Challenge!! lancer le challenge ou passer le challenge admin/prof```')
             await message.channel.send('```Podium!!! voir le podium du challenge pour les admin/prof```')
             await message.channel.send("```Podium!! destiné à forcer l'actualisation du bot destiné aux bots```")
+
+        
+        if message.content.startswith('!podium'):
+            typed=message.content
+            delimited=typed.split(' ') 
+            podiuming=delimited[0]
+            numberpodiuming=delimited[1]
+            numberpodium= int(numberpodiuming)
+            # print("message= "+ message.content)
+            # print("podiuming= "+ podiuming)
+            # print("numberpodium= "+numberpodiuming)
+            # await message.channel.send('Say hello!')
+            f=1#cbeme
+            g=0#indice
+            h=10#score
+            try:
+                if current_challenge>numberpodium:
+                    # print("current_challenge=",current_challenge)
+                    # challengeprec=current_challenge-2
+                    # challengeprec=int(numberpodium)+1
+                    challengeprec=numberpodium-1
+                    print('chall',challengeprec)
+                    print("nbQxallgagnantx, top10NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
+                    print(len(top10NamesQall), top10NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
+                elif current_challenge==numberpodium:
+                    await message.channel.send("Ce challenge est en cours !! Veuillez attendre qu'il soit terminé !")
+                else: 
+                   await message.channel.send("Ce challenge n'a pas démarré!!")
+                while h<=10 and f<=10 and g<10:
+                    print('g=',g)
+                    print('f=',f)
+                    print('h=',h)
+                    await message.channel.send('utilisateur '+ str(top10NamesQall[challengeprec][g])+ ' Top '+str(f)+ ' a '+str(h)+ ' points' )
+                    h-=1
+                    f+=1
+                    g+=1
+            except (IndexError):
+                await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
+        
         # Dans le channel privée et si ce n'est pas le bot
         if isinstance(message.channel, discord.DMChannel) and message.author.id != BOTman_id :
             print("Message privé : " + message.content)
