@@ -2,7 +2,7 @@ coucou Challenge 1 : Savez-vous comment s appelle mon logo|1) Linux Mint
 Challenge 2 : Comment faire le reverse search ?|2) Google Images -> Inserer image -> Rechercher
 Challenge 3 :  Acronyme de File Transfer Protocol ?|3) FTP
 Challenge 4 :  ?|4)
-Challenge 5 :  ?|5)
+Challenge 5 :  ?|5) Connecter vous en RDP vers le serveur , puis dans C:\\ vous trouverez un dossier à renommer puis à épingler et dans code vous trouverez un code à envoyer en mp au bot voilà|154246
 Challenge 6 :  ?|6)
 Challenge 7 :  ?|7)
 Challenge 8 :  ?|8)
