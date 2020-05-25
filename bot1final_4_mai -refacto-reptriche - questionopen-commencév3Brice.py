@@ -272,7 +272,7 @@ async def on_message(message):
             await message.channel.send('```Podium!!! voir le podium du challenge pour les admin/prof```')
             await message.channel.send("```Podium!! destiné à forcer l'actualisation du bot destiné aux bots```")
 
-        
+        #afficher le podium du challenge terminé que l'on souhaite voir
         if message.content.startswith('!podium'):
             typed=message.content
             delimited=typed.split(' ') 
