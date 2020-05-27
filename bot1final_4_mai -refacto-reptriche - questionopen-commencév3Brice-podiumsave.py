@@ -129,9 +129,11 @@ def fichreaderq1():
     return quest,rep
 
 def podiumsave():
-    global totdico
+    global totdico, top10NamesQY
     i=10
     x=0
+    print('i am here at least')
+    print('top10NameQY=', top10NamesQY)
     for s in top10NamesQY:
         print ('current_challenge!', current_challenge)
         if current_challenge > 1: 
@@ -146,7 +148,7 @@ def podiumsave():
             i-=1
         else:
             print('fini')
-
+    return totdico
                     
 @client.event
 async def on_ready():
@@ -162,6 +164,7 @@ async def on_message(message):
         global top10NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall, poder
         global j,x,i
         global current_challenge, totdico
+        global top10NamesQY
 
         if message.author.id != BOTman_id:
             print("Je suis", message.author.name)
@@ -239,9 +242,8 @@ async def on_message(message):
         if message.content == 'Challenge!!' \
             and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :
             if (current_challenge>=1):
-                await message.channel.send("Podium!!")
+                # await message.channel.send("Podium!!")
                 fini_challenge(top10NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY)
-
             init_list()
             fichreaderq1()
 
