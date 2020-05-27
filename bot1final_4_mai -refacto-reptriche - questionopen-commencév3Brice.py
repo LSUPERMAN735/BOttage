@@ -356,7 +356,7 @@ async def on_message(message):
         elif not isinstance(message.channel, discord.DMChannel) and message.author.id == BOTman_id:
             print("Message du BOT dans le channel général :", message.content)
             await message.add_reaction(emoji = '\N{THUMBS UP SIGN}')
-        
+        # s
         # Dans le channel et si c'est n'importe qui autre que moi
         elif not isinstance(message.channel, discord.DMChannel):
             print("Message par qq d'autres du channel :", message.content)
