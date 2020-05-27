@@ -129,15 +129,19 @@ def fichreaderq1():
     return quest,rep
 
 def podiumsave():
+    global totdico
     i=10
     x=0
     for s in top10NamesQY:
+        print ('current_challenge!', current_challenge)
         if current_challenge > 1: 
             totdico[top10NamesQY[x]]+=i
+            print ('totdico!', totdico)
             x+=1
             i-=1
         elif current_challenge == 1:
             totdico[top10NamesQY[x]]=i
+            print ('totdico!', totdico)
             x+=1
             i-=1
         else:
@@ -154,10 +158,10 @@ async def on_message(message):
     try:
         # global appel_membre, appel, absents, presents
         # global e
-        global o,q,p
+        global o
         global top10NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall, poder
         global j,x,i
-        global current_challenge
+        global current_challenge, totdico
 
         if message.author.id != BOTman_id:
             print("Je suis", message.author.name)
