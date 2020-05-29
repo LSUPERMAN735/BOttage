@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
-#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may, 18 may, 19may
+#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may, 18 may, 19may,27may 29 may
 import sys
 import discord
 from discord.ext import commands
@@ -132,18 +132,21 @@ def podiumsave():
     global totdico, top10NamesQY
     i=10
     x=0
-    print('i am here at least')
     print('top10NameQY=', top10NamesQY)
     for s in top10NamesQY:
         print ('current_challenge!', current_challenge)
         if current_challenge > 1: 
-            totdico[top10NamesQY[x]]+=i
-            print ('totdico!', totdico)
-            x+=1
-            i-=1
+            try: 
+                totdico[top10NamesQY[x]]+=i
+                x+=1
+                i-=1
+            except KeyError:
+                totdico[top10NamesQY[x]]=i
+                x+=1
+                i-=1
+
         elif current_challenge == 1:
             totdico[top10NamesQY[x]]=i
-            print ('totdico!', totdico)
             x+=1
             i-=1
         else:
@@ -244,30 +247,36 @@ async def on_message(message):
             if (current_challenge>=1):
                 # await message.channel.send("Podium!!")
                 fini_challenge(top10NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY)
-            init_list()
+            if current_challenge== 0:
+                init_list()
             fichreaderq1()
 
             await message.channel.send(listchallengeq[current_challenge])
             await message.channel.send('Réponse sous la forme : en MP')
+            if current_challenge>0:
+                try:
+                    podiumsave()
+                    # while poder>0:
+                    #     totdico[top10NamesQY[p]]-=i
+                    #     x+=1
+                    #     poder-=1
+                    await message.channel.send('Gagnant tot= '+str(totdico))
+                    print('totdico', totdico)
+                    print("top10NamesQY!!",top10NamesQY)
+                except (IndexError):
+                    print (" fini")#Impossible de trouver l'élément dans la liste
             current_challenge+=1
-            try:
-                podiumsave()
-                # while poder>0:
-                #     totdico[top10NamesQY[p]]-=i
-                #     x+=1
-                #     poder-=1
-                await message.channel.send('Gagnant tot= '+str(totdico))
-                print('totdico', totdico)
-            except (IndexError):
-                print (" fini")#Impossible de trouver l'élément dans la liste
+            init_list()
             if current_challenge==1:
                 await message.channel.send('Si non faites un reverse search sur Google ou BING ')
                 await message.channel.send('1) Google Chrome //ne pas oublier le numéro la parenthèse et l espace ')
+                # current_challenge+=1
             elif current_challenge==2:
                 await message.channel.send('2) Google Chrome -> Téléchargement -> Cliquer sur le fichier téléchargé //ne pas oublier le numéro la parenthèse et l espace')
+                # current_challenge+=1
             else :
                 await message.channel.send('3) Google Chrome //ne pas oublier le numéro la parenthèse et l espace ')
-
+                # current_challenge+=1
         if message.content == 'help!!':
             await message.channel.send('```!!podium affiche le podium précédent pour tous les utilisateurs```')
             await message.channel.send("```PodiumGlobal!! affiche le podium Global des challenges terminés destinés aux profs```")
