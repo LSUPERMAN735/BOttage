@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
-#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may,21may,  25 may,27
-#sort added for podiumglobal and added !podium x
+#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may,21may,  25 may,27, 29 may
+#sort added for podiumglobal and added !podium x, podiumsave dans challenge!!
 import sys
 import discord
 from discord.ext import commands
@@ -134,20 +134,29 @@ def fichreaderq1():
     return quest,rep
 
 def podiumsave():
+    global totdico, top10NamesQY
     i=10
     x=0
+    print('top10NameQY=', top10NamesQY)
     for s in top10NamesQY:
+        print ('current_challenge!', current_challenge)
         if current_challenge > 1: 
-            totdico[top10NamesQY[x]]+=i
-            x+=1
-            i-=1
+            try: 
+                totdico[top10NamesQY[x]]+=i
+                x+=1
+                i-=1
+            except KeyError:
+                totdico[top10NamesQY[x]]=i
+                x+=1
+                i-=1
+
         elif current_challenge == 1:
             totdico[top10NamesQY[x]]=i
             x+=1
             i-=1
         else:
             print('fini')
-
+    return totdico
                     
 @client.event
 async def on_ready():
@@ -159,10 +168,11 @@ async def on_message(message):
     try:
         # global appel_membre, appel, absents, presents
         # global e
-        global o,q,p
+        # global o,q,p
+        global o
         global top10NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall, poder
         global j,x,i
-        global current_challenge
+        global current_challenge, totdico, top10NamesQY
 
         if message.author.id != BOTman_id:
             print("Je suis", message.author.name)
@@ -171,28 +181,28 @@ async def on_message(message):
                 my_channel_id, BOTman_id, myAuthorId)
             
             print("Message initial", message)
-        if message.content == 'Podium!!' \
-            and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :
-            poder+=1
-        if message.content == 'Podium!!' \
-            and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916,BOTman_id) :
-            # score()
-            # j=1#cbeme
-            # x=0#indice
-            # i=10#score
-            try:
-                    podiumsave()
-                    while poder>0:
-                        totdico[top10NamesQY[p]]-=i
-                        x+=1
-                        # i-=1
-                        poder-=1
-                    await message.channel.send('Gagnant tot= '+str(totdico))
-                    # await message.channel.send('utilisateur '+ top10NamesQY[x]+ ' Top '+str(j)+ ' a '+str(i)+ ' points' )
-                    # i-=1
-                    print('totdico', totdico)
-            except (IndexError):
-                print (" fini")#Impossible de trouver l'élément dans la liste
+        # if message.content == 'Podium!!' \
+        #     and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :
+        #     poder+=1
+        # if message.content == 'Podium!!' \
+        #     and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916,BOTman_id) :
+        #     # score()
+        #     # j=1#cbeme
+        #     # x=0#indice
+        #     # i=10#score
+        #     try:
+        #             podiumsave()
+        #             while poder>0:
+        #                 totdico[top10NamesQY[p]]-=i
+        #                 x+=1
+        #                 # i-=1
+        #                 poder-=1
+        #             await message.channel.send('Gagnant tot= '+str(totdico))
+        #             # await message.channel.send('utilisateur '+ top10NamesQY[x]+ ' Top '+str(j)+ ' a '+str(i)+ ' points' )
+        #             # i-=1
+        #             print('totdico', totdico)
+        #     except (IndexError):
+        #         print (" fini")#Impossible de trouver l'élément dans la liste
 
         if message.content == 'Podium!!!' \
             and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916,BOTman_id) : #current_podiums
@@ -247,15 +257,28 @@ async def on_message(message):
         if message.content == 'Challenge!!' \
             and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) :
             if (current_challenge>=1):
-                await message.channel.send("Podium!!")
                 fini_challenge(top10NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY)
 
-            init_list()
+            if current_challenge== 0:
+                init_list()
             fichreaderq1()
             
             await message.channel.send(listchallengeq[current_challenge])
             await message.channel.send('Réponse sous la forme : en MP')
+            if current_challenge>0:
+                try:
+                    podiumsave()
+                    # while poder>0:
+                    #     totdico[top10NamesQY[p]]-=i
+                    #     x+=1
+                    #     poder-=1
+                    await message.channel.send('Gagnant tot= '+str(totdico))
+                    print('totdico', totdico)
+                    print("top10NamesQY!!",top10NamesQY)
+                except (IndexError):
+                    print (" fini")#Impossible de trouver l'élément dans la liste
             current_challenge+=1
+            init_list()
             if current_challenge==1:
                 await message.channel.send('Si non faites un reverse search sur Google ou BING ')
                 await message.channel.send('1) Google Chrome //ne pas oublier le numéro la parenthèse et l espace ')
@@ -269,8 +292,8 @@ async def on_message(message):
             await message.channel.send('```!podium x affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```')
             await message.channel.send("```PodiumGlobal!! affiche le podium Global des challenges terminés destinés aux profs```")
             await message.channel.send('```Challenge!! lancer le challenge ou passer le challenge admin/prof```')
-            await message.channel.send('```Podium!!! voir le podium du challenge pour les admin/prof```')
-            await message.channel.send("```Podium!! destiné à forcer l'actualisation du bot destiné aux bots```")
+            await message.channel.send('```Podium!!! voir le podium du challenge actuel pour les admin/prof```')
+            # await message.channel.send("```Podium!! destiné à forcer l'actualisation du bot destiné aux bots```")
 
         #afficher le podium du challenge terminé que l'on souhaite voir
         if message.content.startswith('!podium'):

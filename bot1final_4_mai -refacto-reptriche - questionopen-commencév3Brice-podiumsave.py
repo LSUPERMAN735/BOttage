@@ -270,13 +270,11 @@ async def on_message(message):
             if current_challenge==1:
                 await message.channel.send('Si non faites un reverse search sur Google ou BING ')
                 await message.channel.send('1) Google Chrome //ne pas oublier le numéro la parenthèse et l espace ')
-                # current_challenge+=1
             elif current_challenge==2:
                 await message.channel.send('2) Google Chrome -> Téléchargement -> Cliquer sur le fichier téléchargé //ne pas oublier le numéro la parenthèse et l espace')
-                # current_challenge+=1
             else :
                 await message.channel.send('3) Google Chrome //ne pas oublier le numéro la parenthèse et l espace ')
-                # current_challenge+=1
+
         if message.content == 'help!!':
             await message.channel.send('```!!podium affiche le podium précédent pour tous les utilisateurs```')
             await message.channel.send("```PodiumGlobal!! affiche le podium Global des challenges terminés destinés aux profs```")
