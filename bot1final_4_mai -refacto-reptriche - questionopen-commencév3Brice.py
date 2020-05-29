@@ -19,7 +19,7 @@ myAuthorId = 476338851871326219
 brice_Id=689134480291528710
 admin_Id=480045172630224916
 
-poder=0 #pour empêcher que si on tape Podium!! cela modifie le score
+# poder=0 #pour empêcher que si on tape Podium!! cela modifie le score
 # e=0# 
 
 top10NamesQall=[]
@@ -222,13 +222,12 @@ async def on_message(message):
             and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916) : #podium global par les admins
             # list_player_for_score()
             try:
-            #   print('zedico', totdico)
-             o=1
-             while o<=len(totdico):
-                for cle, valeur in sorted(totdico.items(), key=itemgetter(1), reverse=True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
-                        print('utilisateur {}'.format(cle)+ ' Top '+str(o)+ ' a '+ '{} points'.format(valeur) )
-                        await message.channel.send('utilisateur {}'.format(cle)+ ' Top '+str(o)+ ' a '+ '{} points'.format(valeur) )
-                        o+=1
+                o=1
+                while o<=len(totdico):
+                    for cle, valeur in sorted(totdico.items(), key=itemgetter(1), reverse=True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
+                            print('utilisateur {}'.format(cle)+ ' Top '+str(o)+ ' a '+ '{} points'.format(valeur) )
+                            await message.channel.send('utilisateur {}'.format(cle)+ ' Top '+str(o)+ ' a '+ '{} points'.format(valeur) )
+                            o+=1
             except (IndexError):
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
 
@@ -268,10 +267,6 @@ async def on_message(message):
             if current_challenge>0:
                 try:
                     podiumsave()
-                    # while poder>0:
-                    #     totdico[top10NamesQY[p]]-=i
-                    #     x+=1
-                    #     poder-=1
                     await message.channel.send('Gagnant tot= '+str(totdico))
                     print('totdico', totdico)
                     print("top10NamesQY!!",top10NamesQY)
