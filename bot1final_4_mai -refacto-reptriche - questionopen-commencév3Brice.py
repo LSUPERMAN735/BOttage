@@ -157,7 +157,19 @@ def podiumsave():
         else:
             print('fini')
     return totdico
-                    
+    
+def podiumnum(message):
+    global typed, delimited, podiuming, numberpodiuming, numberpodium
+    typed=message.content
+    delimited=typed.split(' ') 
+    podiuming=delimited[0]
+    numberpodiuming=delimited[1]
+    numberpodium= int(numberpodiuming)
+    print("message= "+ message.content)
+    print("podiuming= "+ podiuming)
+    print("numberpodium= "+numberpodiuming)
+    return typed, delimited, podiuming, numberpodiuming, numberpodium
+            
 @client.event
 async def on_ready():
     print ('Challenge Bot est prêt.')
@@ -282,7 +294,7 @@ async def on_message(message):
             else :
                 await message.channel.send('3) Google Chrome //ne pas oublier le numéro la parenthèse et l espace ')
 
-        if message.content == 'help!!':
+        if message.content.casefold() == 'help!!'.casefold():
             await message.channel.send('```!!podium affiche le podium précédent pour tous les utilisateurs```')
             await message.channel.send('```!podium x affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```')
             await message.channel.send("```PodiumGlobal!! affiche le podium Global des challenges terminés destinés aux profs```")
@@ -292,42 +304,34 @@ async def on_message(message):
 
         #afficher le podium du challenge terminé que l'on souhaite voir
         if message.content.startswith('!podium'):
-            typed=message.content
-            delimited=typed.split(' ') 
-            podiuming=delimited[0]
-            numberpodiuming=delimited[1]
-            numberpodium= int(numberpodiuming)
-            # print("message= "+ message.content)
-            # print("podiuming= "+ podiuming)
-            # print("numberpodium= "+numberpodiuming)
-            # await message.channel.send('Say hello!')
+            podiumnum(message)
             f=1#cbeme
             g=0#indice
             h=10#score
             try:
-                if current_challenge>numberpodium:
-                    # print("current_challenge=",current_challenge)
-                    # challengeprec=current_challenge-2
-                    # challengeprec=int(numberpodium)+1
-                    challengeprec=numberpodium-1
-                    print('chall',challengeprec)
-                    print("nbQxallgagnantx, top10NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
-                    print(len(top10NamesQall), top10NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
-                elif current_challenge==numberpodium:
-                    await message.channel.send("Ce challenge est en cours !! Veuillez attendre qu'il soit terminé !")
-                else: 
-                   await message.channel.send("Ce challenge n'a pas démarré!!")
-                while h<=10 and f<=10 and g<10:
-                    print('g=',g)
-                    print('f=',f)
-                    print('h=',h)
-                    await message.channel.send('utilisateur '+ str(top10NamesQall[challengeprec][g])+ ' Top '+str(f)+ ' a '+str(h)+ ' points' )
-                    h-=1
-                    f+=1
-                    g+=1
+                    if current_challenge>numberpodium:
+                        # print("current_challenge=",current_challenge)
+                        # challengeprec=current_challenge-2
+                        # challengeprec=int(numberpodium)+1
+                        challengeprec=numberpodium-1
+                        print('chall',challengeprec)
+                        print("nbQxallgagnantx, top10NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
+                        print(len(top10NamesQall), top10NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
+                    elif current_challenge==numberpodium:
+                        await message.channel.send("Ce challenge est en cours !! Veuillez attendre qu'il soit terminé !")
+                    else: 
+                        await message.channel.send("Ce challenge n'a pas démarré!!")
+                    while h<=10 and f<=10 and g<10:
+                        print('g=',g)
+                        print('f=',f)
+                        print('h=',h)
+                        await message.channel.send('utilisateur '+ str(top10NamesQall[challengeprec][g])+ ' Top '+str(f)+ ' a '+str(h)+ ' points' )
+                        h-=1
+                        f+=1
+                        g+=1
             except (IndexError):
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
-        
+
         # Dans le channel privée et si ce n'est pas le bot
         if isinstance(message.channel, discord.DMChannel) and message.author.id != BOTman_id :
             print("Message privé : " + message.content)
