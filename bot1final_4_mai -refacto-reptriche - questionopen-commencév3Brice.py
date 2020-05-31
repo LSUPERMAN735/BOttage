@@ -149,7 +149,6 @@ def podiumsave():
                 totdico[top10NamesQY[x]]=i
                 x+=1
                 i-=1
-
         elif current_challenge == 1:
             totdico[top10NamesQY[x]]=i
             x+=1
@@ -157,7 +156,7 @@ def podiumsave():
         else:
             print('fini')
     return totdico
-    
+
 def podiumnum(message):
     global typed, delimited, podiuming, numberpodiuming, numberpodium
     typed=message.content
