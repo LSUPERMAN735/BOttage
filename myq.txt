@@ -1,40 +1,5 @@
-coucou Challenge 1 : Savez-vous comment s appelle mon logo|1) Linux Mint
-Challenge 2 : Comment faire le reverse search ?|2) Google Images -> Inserer image -> Rechercher
-Challenge 3 :  Acronyme de File Transfer Protocol ?|3) FTP
-Challenge 4 :  ?|4)
-Challenge 5 :  ?|5) Connecter vous en RDP vers le serveur , puis dans C:\\ vous trouverez un dossier à renommer puis à épingler et dans code vous trouverez un code à envoyer en mp au bot voilà|154246
-Challenge 6 :  ?|6)
-Challenge 7 :  ?|7)
-Challenge 8 :  ?|8)
-Challenge 9 :  ?|9)
-Challenge 10 :  ?|10)
-Challenge 11 :  ?|11)
-Challenge 12 :  ?|12)
-Challenge 13 :  ?|13)
-Challenge 14 :  ?|14)
-Challenge 15 :  ?|15)
-Challenge 16 :  ?|16)
-Challenge 17 :  ?|17)
-Challenge 18 :  ?|18)
-Challenge 19 :  ?|19)
-Challenge 20 :  ?|20)
-Challenge 21 :  ?|21)
-Challenge 22 :  ?|22)
-Challenge 23 :  ?|23)
-Challenge 24 :  ?|24)
-Challenge 25 :  ?|25)
-Challenge 26 :  ?|26)
-Challenge 27 :  ?|27)
-Challenge 28 :  ?|28)
-Challenge 29 :  ?|29)
-Challenge 30 :  ?|30)
-Challenge 31 :  ?|31)
-Challenge 32 :  ?|32)
-Challenge 33 :  ?|33)
-Challenge 34 :  ?|34)
-Challenge 35 :  ?|35)
-Challenge 36 :  ?|36)
-Challenge 37 :  ?|37)
-Challenge 38 :  ?|38)
-Challenge 39 :  ?|39)
-Challenge 40 :  ?|40)
+1) Combien font 1 + 1 ?|2
+2) Combien font 2 + 2 ?|4
+3) Combien font 3 + 3 ?|6
+4) Combien font 4 + 4 ?|8
+5) Combien font 5 + 5 ?|10
