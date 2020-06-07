@@ -274,7 +274,7 @@ async def on_message(message) :
         #         print (" fini")#Impossible de trouver l'élément dans la liste
 
         if message.content == 'Podium!!!' \
-            and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916,BOTman_id) : #current_podiums
+            and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) : #current_podiums
             # score()
             init_var_score()   #j=cbeme, x=indice, i=score
             try:
@@ -285,8 +285,9 @@ async def on_message(message) :
                     x += 1
             except (IndexError) :
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
+        
         if message.content == 'PodiumGlobal!!' \
-            and message.author.id in (myAuthorId, 68913448029152873, 480045172630224916) : #podium global par les admins
+            and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) : #podium global par les admins
             # list_player_for_score()
             if current_challenge == 1 :
                 await message.channel.send("Veuillez attendre que le challenge soit terminé ou faites Podium!!!")
@@ -321,6 +322,7 @@ async def on_message(message) :
             except (IndexError) :
                 await message.channel.send("Personne d'autres a gagné") #Impossible de trouver l'élément dans la liste
                  #afficher le podium du challenge terminé que l'on souhaite voir
+       
         if message.content.startswith('!podium') :
             podiumnum(message)
             init_f_g_h() # f=cbeme, g=indice, h=score
@@ -337,7 +339,7 @@ async def on_message(message) :
                         await message.channel.send("Ce challenge est en cours !! Veuillez attendre qu'il soit terminé !")
                     else: 
                         await message.channel.send("Ce challenge n'a pas démarré!!")
-                    while h<=3 and f<=3 and g<3 :
+                    while h <= 3 and f <= 3 and g < 3 :
                         print ('g=', g)
                         print ('f=', f)
                         print ('h=', h)
@@ -350,7 +352,7 @@ async def on_message(message) :
 
     # Pour les personnes qui peuvent lancer le Challenge
         if message.content == 'Challenge!!' \
-            and message.author.id in (myAuthorId, 68913448029152873, 480045172630224916) :
+            and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) :
             
             if (current_challenge >= 1) :
                 fini_challenge(top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
@@ -476,8 +478,8 @@ async def on_message(message) :
         if message.content.casefold() == 'help!!'.casefold() :
             await message.channel.send('```!!podium affiche le podium précédent pour tous les utilisateurs```'+\
                 '```!podium x affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```'\
-                +"```PodiumGlobal!! affiche le podium Global des challenges terminés destinés aux profs```"+\
-                '```Challenge!! lancer le challenge ou passer le challenge admin/prof```'+'```Podium!!! voir le podium du challenge actuel pour les admin/prof```')
+                + "```PodiumGlobal!! affiche le podium Global des challenges terminés destinés aux profs```" +\
+                '```Challenge!! lancer le challenge ou passer le challenge admin/prof```' + '```Podium!!! voir le podium du challenge actuel pour les admin/prof```')
             # await message.channel.send('```!podium x affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```')
             # await message.channel.send("```PodiumGlobal!! affiche le podium Global des challenges terminés destinés aux profs```")
             # await message.channel.send('```Challenge!! lancer le challenge ou passer le challenge admin/prof```')
@@ -501,15 +503,16 @@ async def on_message(message) :
                 print (len(top3NamesQall), top3NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
             # print ('message utilisateur=', message.content)
             # print ('réponse=', listchallengerx)
+
             if reptricheur(top3NamesQY, listchallengerx, message) != True :
                 await message.channel.send(reptriche1) 
             
             if repondre_quest(message, listchallengerx, top3NamesQY, ontBonMaisTropTardQY,'Q' + str(current_challenge)) == True :
                 # await message.channel.send(msggagne+str(current_challenge))             
-                await message.channel.send(msggagne + str(current_challenge) + "\n"+homer)             
+                await message.channel.send(msggagne + str(current_challenge) + "\n" + homer)             
                 # await message.channel.send(homer)      
-           
                 perduAnImporteQuelQY.append(message.author.name)
+
             if len(top3NamesQY) > 3 :
                 await message.channel.send(repbotlate1)
                 await message.channel.send(repbotlate1bis)
@@ -529,7 +532,7 @@ async def on_message(message) :
 
         # Dans le channel général et si c'est moi/Augustin bientôt        
         # elif message.author.name == myAuthorId:
-        elif message.author.name == 'AMINE AA':
+        elif message.author.name == 'AMINE AA' :
             print ("Mon message dans le channel général :", message.content)
             # await message.add_reaction(emoji = '\N{THUMBS UP SIGN}') 
         #Si ce n'est pas le bot
