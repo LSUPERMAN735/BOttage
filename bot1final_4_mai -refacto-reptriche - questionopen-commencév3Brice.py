@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
-#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may,21may,  25 may,27, 29 may
+#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may,21may,  25 may,27, 29 may,5juin,6juin,7juin
 #sort added for podiumglobal and added !podium x, podiumsave dans challenge!!
 import sys
 import discord
@@ -61,6 +61,22 @@ totdico={}
 # p=0#indice
 
 #définition des fonctions
+def init_od_totidcoinc_totdicoincrease():
+    global bomdiggybombom, od, totdicoinc, totdicoincrease
+    bomdiggybombom=0#empeche une réexucution de la boucle bug bizarre
+    od=0
+    totdicoinc=0 
+    totdicoincrease=0
+def init_var_score():
+    global j, x, i 
+    j=1#cbeme
+    x=0#indice
+    i=3#score
+def init_f_g_h():
+    global f, g, h
+    f=1#cbeme
+    g=0#indice
+    h=3#score
 def init_list():
     global top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY
     top3NamesQY = []
@@ -144,9 +160,9 @@ def podiumsave():
     print('top3NameQY=', top3NamesQY)
     for s in top3NamesQY:
         print ('current_challenge!', current_challenge)
-        if i<=0:#permet d'éviter un score négatif
-            i=0#0 pour tous les gens en retard ou perdant
-        if i >0:
+        # if i<=0:#permet d'éviter un score négatif
+        #     i=0#0 pour tous les gens en retard ou perdant
+        if i > 0:
             if current_challenge > 1: 
                 try: 
                     totdico[s]+=i
@@ -176,7 +192,36 @@ def podiumnum(message):
     print("podiuming= "+ podiuming)
     print("numberpodium= "+numberpodiuming)
     return typed, delimited, podiuming, numberpodiuming, numberpodium
-            
+# def fact_malus(bomdiggybombom, od, totdicoinc, totdicoincrease, message_author_name, totdico):#bug refcato
+    #  while od<=len(totdico) :
+    #             # for cle, valeur in sorted(totdico.items(), key=itemgetter(1), reverse=True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
+    #             for cle, valeur in totdico.items() : #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
+    #                 # print('im here')
+    #                 # print ('cle', cle)
+    #                 # print ('valeur', valeur)
+    #                 # print ('msg.author.name', message_author_name)
+    #                 if cle == message_author_name and bomdiggybombom == 0 and totdicoincrease==0 :
+    #                     # print("we are here")
+    #                     # print(totdico[0])
+    #                     # print(totdico[1])
+    #                     # print(totdico[cle])
+    #                     # print(totdico[2])#br
+    #                     # print(totdico[3])#à tester
+    #                     totdico[cle]-=2# 2 points de malus pour non respect des consignes ou totdico[cle]=valeur-2
+    #                     # totdico[cle]-=-2# 2 points de malus pour non respect des consignes#-1 pour 3 fait indice-2
+    #                     bomdiggybombom+=1
+    #                     print('bomdiggybombom')
+    #                 else :
+    #                     # totdico[message.author.name]=0#RuntimeError: dictionary changed size during iteration
+    #                     totdicoinc+=1#RuntimeError: dictionary changed size during iteration
+    #                     # totdico[message.author.name]-=2
+    #             od+=1
+                #cette partie bug en refacto ci-dessous
+    #             if totdicoinc == 1 and bomdiggybombom == 0 :# si l'utilisateur n'est pas dans totdico la boucle s'exécute parfois même si l'user y est d'où le bomdiggy
+    #                 print("im 367")
+    #                 totdico[message.author.name]=0#RuntimeError: dictionary changed size during iteration
+    #                 totdico[message.author.name]-=2
+    #                 totdicoincrease+=1          
 @client.event
 async def on_ready():
     print ('Challenge Bot est prêt.')
@@ -193,6 +238,8 @@ async def on_message(message):
         global top3NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall, poder
         global j,x,i
         global current_challenge, totdico, top3NamesQY
+        global bomdiggybombom, od, totdicoinc, totdicoincrease
+        global f, g, h
 
         if message.author.id != BOTman_id:
             print("Je suis", message.author.name)
@@ -229,9 +276,7 @@ async def on_message(message):
         if message.content == 'Podium!!!' \
             and message.author.id in (myAuthorId, 689134480291528710, 480045172630224916,BOTman_id) : #current_podiums
             # score()
-            j=1#cbeme
-            x=0#indice
-            i=3#score
+            init_var_score()   #j=cbeme, x=indice, i=score
             try:
                 while i<=3 and j<=3 and x<3:
                     await message.channel.send(top3NamesQY[x]+ ' Top '+str(j)+ ' a '+str(i)+ ' points' )
@@ -258,9 +303,7 @@ async def on_message(message):
 
         if message.content.casefold() == '!!podium'.casefold() :
             # score()
-            j=1#cbeme
-            x=0#indice
-            i=3#score
+            init_var_score() #j=cbeme, x=indice, i=score
             try:
                 if current_challenge>1:
                     challengeprec=current_challenge-2
@@ -320,18 +363,64 @@ async def on_message(message):
         #     await bot.delete_message(message)
        
         # print('cr',current_challenge)
-        # print('listcr',listchallenger[current_challenge-1])
+        print('listcr',listchallenger[current_challenge-1])
         if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 :
         # if message.content.casefold() == listchallenger[current_challenge].casefold() :
+            
             print(message.content)
             await message.delete()#discord.errors.Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
             await message.channel.send(message.author.name+" Vous devez saisir la réponse en message privée!!! \n -2Points ROHH!! ```Bart: Wohooh t'es trop ...```")
+            print('i am here')
+            init_od_totidcoinc_totdicoincrease()      
+            #od pour parcourir le totdico #totdicoinc pour les gens qui n'existe pas dans totdico #totdicoincrease pour ne pas rentrer dans la boucle Clodomir
+          
+            print('bomdiggybombom', bomdiggybombom)
+            # if current_challenge == 1 :
+            #     # fini_challenge(top3NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY)
+            #     podiumsave()
+            print('od', od)
+            print('lentotdico', len(totdico))
+            # print('current_challenge', current_challenge)
+            # while od<=len(totdico) or current_challenge == 1:
+            # while od<=len(totdico) or message.content == listchallenger[current_challenge-1] :#boucle infinie
+            # while message.content == listchallenger[current_challenge-1] and current_challenge == 1 : #boucle infinie empeche de passer au challenge 2
+            #boucle while Clodomir permet de retirer aux utilisateurs dans totdico les malus des gens qui répondent dans le channel
+            # fact_malus(bomdiggybombom, od, totdicoinc, totdicoincrease, message.author.name, totdico)# bug avec refacto
+            while od<=len(totdico) :
+                # for cle, valeur in sorted(totdico.items(), key=itemgetter(1), reverse=True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
+                for cle, valeur in totdico.items() : #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
+                    # print('im here')
+                    # print ('cle', cle)
+                    # print ('valeur', valeur)
+                    # print ('msg.author.name', message.author.name)
+                    if cle == message.author.name and bomdiggybombom == 0 and totdicoincrease==0 :
+                        # print("we are here")
+                        # print(totdico[0])
+                        # print(totdico[1])
+                        # print(totdico[cle])
+                        # print(totdico[2])#br
+                        # print(totdico[3])#à tester
+                        totdico[cle]-=2# 2 points de malus pour non respect des consignes ou totdico[cle]=valeur-2
+                        # totdico[cle]-=-2# 2 points de malus pour non respect des consignes#-1 pour 3 fait indice-2
+                        bomdiggybombom+=1
+                        print('bomdiggybombom')
+                    else :
+                        # totdico[message.author.name]=0#RuntimeError: dictionary changed size during iteration
+                        totdicoinc+=1#RuntimeError: dictionary changed size during iteration
+                        # totdico[message.author.name]-=2
+                od+=1
+                if totdicoinc == 1 and bomdiggybombom == 0 :# si l'utilisateur n'est pas dans totdico la boucle s'exécute parfois même si l'user y est d'où le bomdiggy
+                    print("im 367")
+                    totdico[message.author.name]=0#RuntimeError: dictionary changed size during iteration
+                    totdico[message.author.name]-=2
+                    totdicoincrease+=1          
+                    # totdicoinc=0
             # for elem in totdico: 
             #     print('s',elem)
             #     print('ttdico',totdico[elem])
             #     if totdico[elem] == message.author.name:
             #        print('doing')
-            #        totdico[elem]-=2# 2 points de malus pour non respect des consignes
+                #    totdico[elem]-=2# 2 points de malus pour non respect des consignes
             # for s in top3NamesQY : 
                 # print(s)
                 # print(top3NamesQY[s])
@@ -352,9 +441,7 @@ async def on_message(message):
         #afficher le podium du challenge terminé que l'on souhaite voir
         if message.content.startswith('!podium'):
             podiumnum(message)
-            f=1#cbeme
-            g=0#indice
-            h=3#score
+            init_f_g_h() # f=cbeme, g=indice, h=score
             try:
                     if current_challenge>numberpodium:
                         # print("current_challenge=",current_challenge)
