@@ -31,17 +31,16 @@ ontBonMaisTropTardQall = []
 perduAnImporteQuelQall = []
 perduAnImporteQuelQ = []
 #variable
-current_challenge=0
+current_challenge = 0
 
 ####
 # Events
 ####
 client = commands.Bot(command_prefix='.')
 
-# #challenge rép
-# rep1='1) Linux Mint'
-# rep2='2) Google Images -> Insérer image -> Rechercher'
-#reponse du bot
+# #challenge rép -> fichier fichreaderq1() fini les brut
+
+#réponse du bot
 msggagne = 'Vous avez bon à la question'
 #réponse bot
 homer = 'Homer: Woohoo!! Vous êtes trop fort!!'
@@ -153,7 +152,7 @@ def fichreaderq1() :
         rep = delims[1]
         listchallenger.append(rep)
     fichdeqr.close()
-    return quest,rep
+    return quest, rep
 
 def podiumsave() :
     global totdico, top3NamesQY
@@ -238,7 +237,7 @@ async def on_message(message) :
         # global o,q,p
         global o
         global top3NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall, poder
-        global j,x,i
+        global j, x, i
         global current_challenge, totdico, top3NamesQY
         global bomdiggybombom, od, totdicoinc, totdicoincrease
         global f, g, h
@@ -348,7 +347,7 @@ async def on_message(message) :
                     await message.channel.send('Gagnant tot= ' + str(totdico))
                     print ('totdico', totdico)
                     print ("top3NamesQY!!", top3NamesQY)
-                except (IndexError):
+                except (IndexError) :
                     print (" fini")#Impossible de trouver l'élément dans la liste
             current_challenge += 1
             init_list()
