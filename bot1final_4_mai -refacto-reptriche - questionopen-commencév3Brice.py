@@ -295,7 +295,7 @@ async def on_message(message) :
                 while o <= len(totdico) :
                     for cle, valeur in sorted(totdico.items(), key = itemgetter(1), reverse = True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
                             # if valeur>0 : 
-                        print ('utilisateur {}'.format(cle) +  ' Top ' + str(o)+ ' a ' + '{} points'.format(valeur) )
+                        print ('utilisateur {}'.format(cle) +  ' Top ' + str(o) + ' a ' + '{} points'.format(valeur) )
                         await message.channel.send('utilisateur {}'.format(cle) + ' Top '+str(o) + ' a ' + '{} points'.format(valeur) )
                         o += 1
             except (IndexError) :
