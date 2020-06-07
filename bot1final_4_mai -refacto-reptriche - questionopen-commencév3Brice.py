@@ -85,7 +85,7 @@ def init_list() :
     ontBonMaisTropTardQY = []
     perduAnImporteQuelQY = []
 
-def fini_challenge(top3NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY) :
+def fini_challenge(top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY) :
     top3NamesQall.append(top3NamesQY)
     ontBonMaisTropTardQall.append(ontBonMaisTropTardQY)
     perduAnImporteQuelQall.append(perduAnImporteQuelQY)
@@ -94,9 +94,9 @@ def fini_challenge(top3NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY) :
 #     global challengeprec
 #     if current_challenge>1:
 #         challengeprec=current_challenge-2
-#         print('chall',challengeprec)
-#         print("nbQxallgagnantx, top3NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
-#         print(len(top3NamesQall), top3NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
+#         print ('chall',challengeprec)
+#         print ("nbQxallgagnantx, top3NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
+#         print (len(top3NamesQall), top3NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
 # def list_player_for_score():
 #     global e
 #     e=0
@@ -110,21 +110,21 @@ def fini_challenge(top3NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY) :
 #     i=3#score
 #     try:
 #         while i<=3 and j<=3 and x<3:
-#             print('x=',x)
-#             print('j=',j)
-#             print('i=',i)
+#             print ('x=',x)
+#             print ('j=',j)
+#             print ('i=',i)
 #             mondico[x]=i
-#             print('utilisateur '+ top3NamesQY[x]+ ' Top '+j+ ' a '+i+ ' points' )
+#             print ('utilisateur '+ top3NamesQY[x]+ ' Top '+j+ ' a '+i+ ' points' )
 #             i-=1
 #             j+=1
 #             x+=1
 #     except (IndexError):
-#         print("Impossible de trouver l'élément dans la liste")
+#         print ("Impossible de trouver l'élément dans la liste")
 
 def reptricheur(top3NamesQx, repx,  msg) :
     if msg.author.name in top3NamesQx and msg.content.casefold() == repx.casefold() :
-        print(reptriche1)
-        print(msg.author.name, reptriche2)
+        print (reptriche1)
+        print (msg.author.name, reptriche2)
         return False# valeur qui bloque la questionx si l'utilisateur tente de rerépondre bon
     else: 
         return True
@@ -132,11 +132,11 @@ def reptricheur(top3NamesQx, repx,  msg) :
         #casefold pour ignorer la casse majuscule, minuscule ou mélangées
 def repondre_quest(msg, repx, top3NamesQx, ontBonMaisTropTardQx, Qx):
     if msg.content.casefold() == repx.casefold() and reptricheur(top3NamesQx, repx, msg) == True :
-        print(msggagne,Qx)
-        print(msg.author.name)
+        print (msggagne,Qx)
+        print (msg.author.name)
         top3NamesQx.append(msg.author.name)
-        print('gagné', Qx, '=', len(top3NamesQx))
-        print('gagné', Qx, 'mais late =', len(ontBonMaisTropTardQx))
+        print ('gagné', Qx, '=', len(top3NamesQx))
+        print ('gagné', Qx, 'mais late =', len(ontBonMaisTropTardQx))
         return True
 
 def fichreaderq1() :
@@ -159,7 +159,7 @@ def podiumsave() :
     global totdico, top3NamesQY
     i = 3#score
     # x=0#indice
-    print('top3NameQY=', top3NamesQY)
+    print ('top3NameQY=', top3NamesQY)
     for s in top3NamesQY :
         print ('current_challenge!', current_challenge)
         # if i<=0:#permet d'éviter un score négatif
@@ -174,13 +174,13 @@ def podiumsave() :
                     totdico[s] = i
                     # x+=1
                     i -= 1
-                    print('exception')
+                    print ('exception')
             elif current_challenge == 1 :
                 totdico[s] = i
                 # x+=1
                 i -= 1
             else :
-                print('fini')
+                print ('fini')
     return totdico
 
 def podiumnum(message) :
@@ -190,29 +190,29 @@ def podiumnum(message) :
     podiuming = delimited[0]
     numberpodiuming = delimited[1]
     numberpodium = int(numberpodiuming)
-    print("message= " + message.content)
-    print("podiuming= " + podiuming)
-    print("numberpodium= " + numberpodiuming)
+    print ("message= " + message.content)
+    print ("podiuming= " + podiuming)
+    print ("numberpodium= " + numberpodiuming)
     return typed, delimited, podiuming, numberpodiuming, numberpodium
 # def fact_malus(bomdiggybombom, od, totdicoinc, totdicoincrease, message_author_name, totdico):#bug refcato
     #  while od<=len(totdico) :
     #             # for cle, valeur in sorted(totdico.items(), key=itemgetter(1), reverse=True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
     #             for cle, valeur in totdico.items() : #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
-    #                 # print('im here')
+    #                 # print ('im here')
     #                 # print ('cle', cle)
     #                 # print ('valeur', valeur)
     #                 # print ('msg.author.name', message_author_name)
     #                 if cle == message_author_name and bomdiggybombom == 0 and totdicoincrease==0 :
-    #                     # print("we are here")
-    #                     # print(totdico[0])
-    #                     # print(totdico[1])
-    #                     # print(totdico[cle])
-    #                     # print(totdico[2])#br
-    #                     # print(totdico[3])#à tester
+    #                     # print ("we are here")
+    #                     # print (totdico[0])
+    #                     # print (totdico[1])
+    #                     # print (totdico[cle])
+    #                     # print (totdico[2])#br
+    #                     # print (totdico[3])#à tester
     #                     totdico[cle]-=2# 2 points de malus pour non respect des consignes ou totdico[cle]=valeur-2
     #                     # totdico[cle]-=-2# 2 points de malus pour non respect des consignes#-1 pour 3 fait indice-2
     #                     bomdiggybombom+=1
-    #                     print('bomdiggybombom')
+    #                     print ('bomdiggybombom')
     #                 else :
     #                     # totdico[message.author.name]=0#RuntimeError: dictionary changed size during iteration
     #                     totdicoinc+=1#RuntimeError: dictionary changed size during iteration
@@ -220,7 +220,7 @@ def podiumnum(message) :
     #             od+=1
                 #cette partie bug en refacto ci-dessous
     #             if totdicoinc == 1 and bomdiggybombom == 0 :# si l'utilisateur n'est pas dans totdico la boucle s'exécute parfois même si l'user y est d'où le bomdiggy
-    #                 print("im 367")
+    #                 print ("im 367")
     #                 totdico[message.author.name]=0#RuntimeError: dictionary changed size during iteration
     #                 totdico[message.author.name]-=2
     #                 totdicoincrease+=1          
@@ -244,12 +244,12 @@ async def on_message(message) :
         global f, g, h
 
         if message.author.id != BOTman_id:
-            print("Je suis", message.author.name)
-            print("Actuellement les valeurs sont :")
-            print("my_channel_id, BOTman_id, myAuthorId", \
+            print ("Je suis", message.author.name)
+            print ("Actuellement les valeurs sont :")
+            print ("my_channel_id, BOTman_id, myAuthorId", \
                 my_channel_id, BOTman_id, myAuthorId)
             
-            print("Message initial", message)
+            print ("Message initial", message)
 
 
         # if message.content == 'Podium!!' \
@@ -271,7 +271,7 @@ async def on_message(message) :
         #             await message.channel.send('Gagnant tot= '+str(totdico))
         #             # await message.channel.send('utilisateur '+ top3NamesQY[x]+ ' Top '+str(j)+ ' a '+str(i)+ ' points' )
         #             # i-=1
-        #             print('totdico', totdico)
+        #             print ('totdico', totdico)
         #     except (IndexError):
         #         print (" fini")#Impossible de trouver l'élément dans la liste
 
@@ -281,7 +281,7 @@ async def on_message(message) :
             init_var_score()   #j=cbeme, x=indice, i=score
             try:
                 while i <= 3 and j <= 3 and x < 3 :
-                    await message.channel.send(top3NamesQY[x]+ ' Top '+str(j)+ ' a '+str(i)+ ' points' )
+                    await message.channel.send(top3NamesQY[x] + ' Top ' + str(j) + ' a ' + str(i) + ' points' )
                     i -= 1
                     j += 1
                     x += 1
@@ -294,13 +294,13 @@ async def on_message(message) :
                 await message.channel.send("Veuillez attendre que le challenge soit terminé ou faites Podium!!!")
             try :
                 o = 1
-                while o <= len(totdico):
-                    for cle, valeur in sorted(totdico.items(), key=itemgetter(1), reverse=True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
+                while o <= len(totdico) :
+                    for cle, valeur in sorted(totdico.items(), key = itemgetter(1), reverse = True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
                             # if valeur>0 : 
-                        print('utilisateur {}'.format(cle)+ ' Top '+str(o)+ ' a '+ '{} points'.format(valeur) )
-                        await message.channel.send('utilisateur {}'.format(cle)+ ' Top '+str(o)+ ' a '+ '{} points'.format(valeur) )
+                        print ('utilisateur {}'.format(cle) +  ' Top ' + str(o)+ ' a ' + '{} points'.format(valeur) )
+                        await message.channel.send('utilisateur {}'.format(cle) + ' Top '+str(o) + ' a ' + '{} points'.format(valeur) )
                         o += 1
-            except (IndexError):
+            except (IndexError) :
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
 
         if message.content.casefold() == '!!podium'.casefold() :
@@ -309,19 +309,19 @@ async def on_message(message) :
             try :
                 if current_challenge>1 :
                     challengeprec = current_challenge-2
-                    print('chall', challengeprec)
-                    print("nbQxallgagnantx, top3NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
-                    print(len(top3NamesQall), top3NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
+                    print ('chall', challengeprec)
+                    print ("nbQxallgagnantx, top3NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
+                    print (len(top3NamesQall), top3NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
                 while i <= 3 and j <= 3 and x < 3 :
-                    print('x=',x)
-                    print('j=',j)
-                    print('i=',i)
-                    await message.channel.send('utilisateur '+ str(top3NamesQall[challengeprec][x])+ ' Top '+str(j)+ ' a '+str(i)+ ' points' )
+                    print ('x=', x)
+                    print ('j=', j)
+                    print ('i=', i)
+                    await message.channel.send('utilisateur ' + str(top3NamesQall[challengeprec][x]) + ' Top ' + str(j) + ' a ' + str(i) + ' points' )
                     i -= 1
                     j += 1
                     x += 1
             except (IndexError) :
-                await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
+                await message.channel.send("Personne d'autres a gagné") #Impossible de trouver l'élément dans la liste
     # Pour les personnes qui peuvent lancer le Challenge
         if message.content == 'Challenge!!' \
             and message.author.id in (myAuthorId, 68913448029152873, 480045172630224916) :
@@ -345,9 +345,9 @@ async def on_message(message) :
             if current_challenge > 0 :
                 try :
                     podiumsave()
-                    await message.channel.send('Gagnant tot= '+str(totdico))
-                    print('totdico', totdico)
-                    print("top3NamesQY!!",top3NamesQY)
+                    await message.channel.send('Gagnant tot= ' + str(totdico))
+                    print ('totdico', totdico)
+                    print ("top3NamesQY!!", top3NamesQY)
                 except (IndexError):
                     print (" fini")#Impossible de trouver l'élément dans la liste
             current_challenge += 1
@@ -364,68 +364,68 @@ async def on_message(message) :
         #     await bot.send_message(message.channel, "{}, your message has been censored.".format(message.author.mention))
         #     await bot.delete_message(message)
        
-        # print('cr',current_challenge)
-        print('listcr', listchallenger[current_challenge-1])
+        # print ('cr',current_challenge)
+        print ('listcr', listchallenger[current_challenge-1])
         if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 :
         # if message.content.casefold() == listchallenger[current_challenge].casefold() :
             
-            print(message.content)
+            print (message.content)
             await message.delete()#discord.errors.Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
-            await message.channel.send(message.author.name+" Vous devez saisir la réponse en message privée!!! \n -2Points ROHH!! ```Bart: Wohooh t'es trop ...```")
-            print('i am here')
+            await message.channel.send(message.author.name + " Vous devez saisir la réponse en message privée!!! \n -2Points ROHH!! ```Bart: Wohooh t'es trop ...```")
+            print ('i am here')
             init_od_totidcoinc_totdicoincrease()      
             #od pour parcourir le totdico #totdicoinc pour les gens qui n'existe pas dans totdico #totdicoincrease pour ne pas rentrer dans la boucle Clodomir
           
-            print('bomdiggybombom', bomdiggybombom)
+            print ('bomdiggybombom', bomdiggybombom)
             # if current_challenge == 1 :
             #     # fini_challenge(top3NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY)
             #     podiumsave()
-            print('od', od)
-            print('lentotdico', len(totdico))
-            # print('current_challenge', current_challenge)
+            print ('od', od)
+            print ('lentotdico', len(totdico))
+            # print ('current_challenge', current_challenge)
             # while od<=len(totdico) or current_challenge == 1:
             # while od<=len(totdico) or message.content == listchallenger[current_challenge-1] :#boucle infinie
             # while message.content == listchallenger[current_challenge-1] and current_challenge == 1 : #boucle infinie empeche de passer au challenge 2
             #boucle while Clodomir permet de retirer aux utilisateurs dans totdico les malus des gens qui répondent dans le channel
             # fact_malus(bomdiggybombom, od, totdicoinc, totdicoincrease, message.author.name, totdico)# bug avec refacto
-            while od<=len(totdico) :
+            while od <= len(totdico) :
                 # for cle, valeur in sorted(totdico.items(), key=itemgetter(1), reverse=True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
                 for cle, valeur in totdico.items() : #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
-                    # print('im here')
+                    # print ('im here')
                     # print ('cle', cle)
                     # print ('valeur', valeur)
                     # print ('msg.author.name', message.author.name)
                     if cle == message.author.name and bomdiggybombom == 0 and totdicoincrease == 0 :
-                        # print("we are here")
-                        # print(totdico[0])
-                        # print(totdico[1])
-                        # print(totdico[cle])
-                        # print(totdico[2])#br
-                        # print(totdico[3])#à tester
+                        # print ("we are here")
+                        # print (totdico[0])
+                        # print (totdico[1])
+                        # print (totdico[cle])
+                        # print (totdico[2])#br
+                        # print (totdico[3])#à tester
                         totdico[cle] -= 2# 2 points de malus pour non respect des consignes ou totdico[cle]=valeur-2
                         # totdico[cle]-=-2# 2 points de malus pour non respect des consignes#-1 pour 3 fait indice-2
                         bomdiggybombom += 1
-                        print('bomdiggybombom')
+                        print ('bomdiggybombom')
                     else :
                         # totdico[message.author.name]=0#RuntimeError: dictionary changed size during iteration
                         totdicoinc += 1#RuntimeError: dictionary changed size during iteration
                         # totdico[message.author.name]-=2
-                od+=1
+                od += 1
                 if totdicoinc == 1 and bomdiggybombom == 0 :# si l'utilisateur n'est pas dans totdico la boucle s'exécute parfois même si l'user y est d'où le bomdiggy
-                    print("im 367")
+                    print ("im 367")
                     totdico[message.author.name] = 0#RuntimeError: dictionary changed size during iteration
                     totdico[message.author.name] -= 2
                     totdicoincrease += 1          
                     # totdicoinc=0
             # for elem in totdico: 
-            #     print('s',elem)
-            #     print('ttdico',totdico[elem])
+            #     print ('s',elem)
+            #     print ('ttdico',totdico[elem])
             #     if totdico[elem] == message.author.name:
-            #        print('doing')
+            #        print ('doing')
                 #    totdico[elem]-=2# 2 points de malus pour non respect des consignes
             # for s in top3NamesQY : 
-                # print(s)
-                # print(top3NamesQY[s])
+                # print (s)
+                # print (top3NamesQY[s])
                 # if top3NamesQY[s] == message.author.name :
             # await client.delete_message(message)# AttributeError: 'Bot' object has no attribute 'delete_message' AttributeError: 'Bot' object has no attribute 'delete_messages'
 
@@ -446,21 +446,21 @@ async def on_message(message) :
             init_f_g_h() # f=cbeme, g=indice, h=score
             try:
                     if current_challenge > numberpodium :
-                        # print("current_challenge=",current_challenge)
+                        # print ("current_challenge=",current_challenge)
                         # challengeprec=current_challenge-2
                         # challengeprec=int(numberpodium)+1
                         challengeprec = numberpodium-1
-                        print('chall', challengeprec)
-                        print("nbQxallgagnantx, top3NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
-                        print(len(top3NamesQall), top3NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
+                        print ('chall', challengeprec)
+                        print ("nbQxallgagnantx, top3NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
+                        print (len(top3NamesQall), top3NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
                     elif current_challenge == numberpodium :
                         await message.channel.send("Ce challenge est en cours !! Veuillez attendre qu'il soit terminé !")
                     else: 
                         await message.channel.send("Ce challenge n'a pas démarré!!")
                     while h<=3 and f<=3 and g<3 :
-                        print('g=', g)
-                        print('f=', f)
-                        print('h=',h)
+                        print ('g=', g)
+                        print ('f=', f)
+                        print ('h=', h)
                         await message.channel.send('utilisateur ' + str(top3NamesQall[challengeprec][g]) +  ' Top ' + str(f) + ' a '+str(h) + ' points' )
                         h -= 1
                         f += 1
@@ -470,20 +470,20 @@ async def on_message(message) :
 
         # Dans le channel privée et si ce n'est pas le bot
         if isinstance(message.channel, discord.DMChannel) and message.author.id != BOTman_id :
-            print("Message privé : " + message.author.name + ":" + message.content)
+            print ("Message privé : " + message.author.name + ":" + message.content)
             fichreaderq1()
             listchallengerx = listchallenger[current_challenge-1]
-            print("nbQxgagnant, top3NamesQY, ontBonMaisTropTardQY,  perduAnImporteQuelQY")
-            print(len(top3NamesQY), top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
+            print ("nbQxgagnant, top3NamesQY, ontBonMaisTropTardQY,  perduAnImporteQuelQY")
+            print (len(top3NamesQY), top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
             if current_challenge > 1 :
-                print("nbQxallgagnant, top3NamesQall, ontBonMaisTropTardQall,  perduAnImporteQuelQall")
-                print(len(top3NamesQall), top3NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall)
+                print ("nbQxallgagnant, top3NamesQall, ontBonMaisTropTardQall,  perduAnImporteQuelQall")
+                print (len(top3NamesQall), top3NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall)
                 challengeprec = current_challenge-2
-                print('chall', challengeprec)
-                print("nbQxallgagnantx, top3NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
-                print(len(top3NamesQall), top3NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
-            # print('message utilisateur=', message.content)
-            # print('réponse=', listchallengerx)
+                print ('chall', challengeprec)
+                print ("nbQxallgagnantx, top3NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
+                print (len(top3NamesQall), top3NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
+            # print ('message utilisateur=', message.content)
+            # print ('réponse=', listchallengerx)
             if reptricheur(top3NamesQY, listchallengerx, message) != True :
                 await message.channel.send(reptriche1) 
             
@@ -507,36 +507,36 @@ async def on_message(message) :
                 await message.channel.send('Mauvaise réponse') 
                 perduAnImporteQuelQY.append(message.author.name)
 
-            print("nbQxgagnant, top3NamesQY, ontBonMaisTropTardQY,  perduAnImporteQuelQY", "totdico")
-            print(len(top3NamesQY), top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY, totdico)
+            print ("nbQxgagnant, top3NamesQY, ontBonMaisTropTardQY,  perduAnImporteQuelQY", "totdico")
+            print (len(top3NamesQY), top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY, totdico)
 
         # Dans le channel général et si c'est moi/Augustin bientôt        
         # elif message.author.name == myAuthorId:
         elif message.author.name == 'AMINE AA':
-            print("Mon message dans le channel général :", message.content)
+            print ("Mon message dans le channel général :", message.content)
             # await message.add_reaction(emoji = '\N{THUMBS UP SIGN}') 
         #Si ce n'est pas le bot
         elif not isinstance(message.channel, discord.DMChannel) and message.author.id == BOTman_id :
-            print("Message du BOT dans le channel général :", message.content)
+            print ("Message du BOT dans le channel général :", message.content)
             # await message.add_reaction(emoji = '\N{THUMBS UP SIGN}')
 
         # Dans le channel et si c'est n'importe qui autre que moi
         elif not isinstance(message.channel, discord.DMChannel) :
-            print("Message par qq d'autres du channel :", message.content)
+            print ("Message par qq d'autres du channel :", message.content)
             # await message.add_reaction(emoji = '\N{THUMBS DOWN SIGN}')
         # Message du Bot     
         elif message.author.id == BOTman_id :
-            print("Message du bot :", message.content)
+            print ("Message du bot :", message.content)
             # await message.add_reaction(emoji = '\N{THUMBS UP SIGN}') 
         #si channel n'est le channel du prof/le mien par Augustin
         elif message.channel.id != my_channel_id :
             return
         # Tous les autres cas
         else :
-            print("Tous les autres cas :", message.content)
+            print ("Tous les autres cas :", message.content)
             # await message.add_reaction(emoji = '\N{THUMBS DOWN SIGN}')
     except (RuntimeError) :
-        print("Une erreur est survenue...Fermeture")
+        print ("Une erreur est survenue...Fermeture")
         sys.exit(1)        
 
 client.run(token[0])
