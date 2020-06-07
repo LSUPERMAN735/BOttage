@@ -162,7 +162,7 @@ def podiumsave() :
         print ('current_challenge!', current_challenge)
         # if i<=0:#permet d'éviter un score négatif
         #     i=0#0 pour tous les gens en retard ou perdant
-        if i > 0 :
+        if i > 0 : #permet de ne prendre que le top x avec point positif
             if current_challenge > 1 : 
                 try: 
                     totdico[s] += i
@@ -295,7 +295,7 @@ async def on_message(message) :
                 o = 1
                 while o <= len(totdico) :
                     for cle, valeur in sorted(totdico.items(), key = itemgetter(1), reverse = True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
-                            # if valeur>0 : 
+                        # if valeur>0 : #ne met ni d'erreur mais n'affiche pas que les valeurs supérieurs à 0
                         print ('utilisateur {}'.format(cle) +  ' Top ' + str(o) + ' a ' + '{} points'.format(valeur) )
                         await message.channel.send('utilisateur {}'.format(cle) + ' Top '+str(o) + ' a ' + '{} points'.format(valeur) )
                         o += 1
@@ -416,6 +416,8 @@ async def on_message(message) :
             # while message.content == listchallenger[current_challenge-1] and current_challenge == 1 : #boucle infinie empeche de passer au challenge 2
             #boucle while Clodomir permet de retirer aux utilisateurs dans totdico les malus des gens qui répondent dans le channel
             # fact_malus(bomdiggybombom, od, totdicoinc, totdicoincrease, message.author.name, totdico)# bug avec refacto
+           
+           #boucle pour le current_challenge==1 qui ne fonctionne pas
             while od <= len(totdico) and current_challenge == 1 :
                 print('im391 totdico', totdico)
                 # if message.content == listchallenger[current_challenge-1] :
