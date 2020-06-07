@@ -55,7 +55,6 @@ repbotlate1bis = 'Soyez plus rapide à la prochaine question '
 #init variable global podium
 o = 1#cbeme
 totdico = {}
-
 # mondico={}
 # q=3#score
 # p=0#indice
@@ -239,7 +238,7 @@ async def on_message(message) :
         global top3NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall, poder
         global j, x, i
         global current_challenge, totdico, top3NamesQY
-        global bomdiggybombom, od, totdicoinc, totdicoincrease
+        global bomdiggybombom, od, totdicoinc, totdicoincrease, boomboom
         global f, g, h
 
         if message.author.id != BOTman_id:
@@ -321,19 +320,47 @@ async def on_message(message) :
                     x += 1
             except (IndexError) :
                 await message.channel.send("Personne d'autres a gagné") #Impossible de trouver l'élément dans la liste
+                 #afficher le podium du challenge terminé que l'on souhaite voir
+        if message.content.startswith('!podium') :
+            podiumnum(message)
+            init_f_g_h() # f=cbeme, g=indice, h=score
+            try:
+                    if current_challenge > numberpodium :
+                        # print ("current_challenge=",current_challenge)
+                        # challengeprec=current_challenge-2
+                        # challengeprec=int(numberpodium)+1
+                        challengeprec = numberpodium-1
+                        print ('chall', challengeprec)
+                        print ("nbQxallgagnantx, top3NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
+                        print (len(top3NamesQall), top3NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
+                    elif current_challenge == numberpodium :
+                        await message.channel.send("Ce challenge est en cours !! Veuillez attendre qu'il soit terminé !")
+                    else: 
+                        await message.channel.send("Ce challenge n'a pas démarré!!")
+                    while h<=3 and f<=3 and g<3 :
+                        print ('g=', g)
+                        print ('f=', f)
+                        print ('h=', h)
+                        await message.channel.send('utilisateur ' + str(top3NamesQall[challengeprec][g]) +  ' Top ' + str(f) + ' a '+str(h) + ' points' )
+                        h -= 1
+                        f += 1
+                        g += 1
+            except (IndexError) :
+                await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
+
     # Pour les personnes qui peuvent lancer le Challenge
         if message.content == 'Challenge!!' \
             and message.author.id in (myAuthorId, 68913448029152873, 480045172630224916) :
             
             if (current_challenge >= 1) :
-                fini_challenge(top3NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY)
+                fini_challenge(top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
 
             if current_challenge == 0 :
                 init_list()
             fichreaderq1()
             
             if current_challenge == len(listchallengeq) :
-                fini_challenge(top3NamesQY,ontBonMaisTropTardQY, perduAnImporteQuelQY)
+                fini_challenge(top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
                 podiumsave()
                 await message.channel.send('Gagnant tot= '+str(totdico))
                 await message.channel.send("Tous les challenges sont désormais terminés")
@@ -364,10 +391,10 @@ async def on_message(message) :
         #     await bot.delete_message(message)
        
         # print ('cr',current_challenge)
-        print ('listcr', listchallenger[current_challenge-1])
+        # if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and current_challenge < len(listchallengeq) :
         if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 :
         # if message.content.casefold() == listchallenger[current_challenge].casefold() :
-            
+        # print ('listcr', listchallenger[current_challenge-1])
             print (message.content)
             await message.delete()#discord.errors.Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
             await message.channel.send(message.author.name + " Vous devez saisir la réponse en message privée!!! \n -2Points ROHH!! ```Bart: Wohooh t'es trop ...```")
@@ -387,6 +414,23 @@ async def on_message(message) :
             # while message.content == listchallenger[current_challenge-1] and current_challenge == 1 : #boucle infinie empeche de passer au challenge 2
             #boucle while Clodomir permet de retirer aux utilisateurs dans totdico les malus des gens qui répondent dans le channel
             # fact_malus(bomdiggybombom, od, totdicoinc, totdicoincrease, message.author.name, totdico)# bug avec refacto
+            while od <= len(totdico) and current_challenge == 1 :
+                print('im391 totdico', totdico)
+                # if message.content == listchallenger[current_challenge-1] :
+                #     totdico[message.author.name] = 0#RuntimeError: dictionary changed size during iteration
+                #     totdico[message.author.name] -= 2
+                #     print('im395')
+                for cle, valeur in totdico.items() : #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
+                    if cle == message.author.name and bomdiggybombom == 0 and totdicoincrease == 0 :
+                        totdico[cle] -= 2# 2 points de malus pour non respect des consignes ou totdico[cle]=valeur-2
+                        bomdiggybombom += 1
+                        print ('bomboom')
+                    else :
+                        totdicoinc += 1#RuntimeError: dictionary changed size during iteration
+                        print('boombom')
+                od += 1
+                boomboom += 1
+            
             while od <= len(totdico) :
                 # for cle, valeur in sorted(totdico.items(), key=itemgetter(1), reverse=True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
                 for cle, valeur in totdico.items() : #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
@@ -427,7 +471,8 @@ async def on_message(message) :
                 # print (top3NamesQY[s])
                 # if top3NamesQY[s] == message.author.name :
             # await client.delete_message(message)# AttributeError: 'Bot' object has no attribute 'delete_message' AttributeError: 'Bot' object has no attribute 'delete_messages'
-
+        # elif message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and challengefinaled == 0 :
+        #     print ('Tous les Challenges sont terminés !!!')
         if message.content.casefold() == 'help!!'.casefold() :
             await message.channel.send('```!!podium affiche le podium précédent pour tous les utilisateurs```'+\
                 '```!podium x affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```'\
@@ -439,34 +484,7 @@ async def on_message(message) :
             # await message.channel.send('```Podium!!! voir le podium du challenge actuel pour les admin/prof```')
             # await message.channel.send("```Podium!! destiné à forcer l'actualisation du bot destiné aux bots```")
 
-        #afficher le podium du challenge terminé que l'on souhaite voir
-        if message.content.startswith('!podium') :
-            podiumnum(message)
-            init_f_g_h() # f=cbeme, g=indice, h=score
-            try:
-                    if current_challenge > numberpodium :
-                        # print ("current_challenge=",current_challenge)
-                        # challengeprec=current_challenge-2
-                        # challengeprec=int(numberpodium)+1
-                        challengeprec = numberpodium-1
-                        print ('chall', challengeprec)
-                        print ("nbQxallgagnantx, top3NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
-                        print (len(top3NamesQall), top3NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
-                    elif current_challenge == numberpodium :
-                        await message.channel.send("Ce challenge est en cours !! Veuillez attendre qu'il soit terminé !")
-                    else: 
-                        await message.channel.send("Ce challenge n'a pas démarré!!")
-                    while h<=3 and f<=3 and g<3 :
-                        print ('g=', g)
-                        print ('f=', f)
-                        print ('h=', h)
-                        await message.channel.send('utilisateur ' + str(top3NamesQall[challengeprec][g]) +  ' Top ' + str(f) + ' a '+str(h) + ' points' )
-                        h -= 1
-                        f += 1
-                        g += 1
-            except (IndexError) :
-                await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
-
+       
         # Dans le channel privée et si ce n'est pas le bot
         if isinstance(message.channel, discord.DMChannel) and message.author.id != BOTman_id :
             print ("Message privé : " + message.author.name + ":" + message.content)
