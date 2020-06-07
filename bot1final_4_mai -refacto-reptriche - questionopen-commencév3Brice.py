@@ -240,7 +240,7 @@ async def on_message(message) :
         global current_challenge, totdico, top3NamesQY
         global bomdiggybombom, od, totdicoinc, totdicoincrease, boomboom
         global f, g, h
-
+        
         if message.author.id != BOTman_id:
             print ("Je suis", message.author.name)
             print ("Actuellement les valeurs sont :")
