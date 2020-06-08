@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
-#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may,21may,  25 may,27, 29 may,5juin,6juin,7juin
+#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may,21may,  25 may,27, 29 may,5juin,6juin,7juin, 8juin
 #sort added for podiumglobal and added !podium x, podiumsave dans challenge!!
 #lisibility added
 import sys
@@ -294,11 +294,16 @@ async def on_message(message) :
             try :
                 o = 1
                 while o <= len(totdico) :
+                    #    for cle, valeur in sorted(totdico.items(), key = itemgetter(1) > 0, reverse = True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
+# TypeError: '>' not supported between instances of 'operator.itemgetter' and 'int'
                     for cle, valeur in sorted(totdico.items(), key = itemgetter(1), reverse = True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
                         # if valeur>0 : #ne met ni d'erreur mais n'affiche pas que les valeurs supérieurs à 0
-                        print ('utilisateur {}'.format(cle) +  ' Top ' + str(o) + ' a ' + '{} points'.format(valeur) )
-                        await message.channel.send('utilisateur {}'.format(cle) + ' Top '+str(o) + ' a ' + '{} points'.format(valeur) )
-                        o += 1
+                        while valeur > 0 and o <= len(totdico): #ne met ni d'erreur mais n'affiche pas que les valeurs supérieurs à 0
+                            print('clé', cle)
+                            print('valeur', valeur)
+                            print ('utilisateur {}'.format(cle) +  ' Top ' + str(o) + ' a ' + '{} points'.format(valeur) )
+                            await message.channel.send('utilisateur {}'.format(cle) + ' Top '+str(o) + ' a ' + '{} points'.format(valeur) )
+                            o += 1
             except (IndexError) :
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
 
@@ -364,7 +369,7 @@ async def on_message(message) :
             if current_challenge == len(listchallengeq) :
                 fini_challenge(top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
                 podiumsave()
-                await message.channel.send('Gagnant tot= '+str(totdico))
+                await message.channel.send('Gagnant tot= ' + str(totdico))
                 await message.channel.send("Tous les challenges sont désormais terminés")
                 current_challenge += 1
 
@@ -401,7 +406,11 @@ async def on_message(message) :
             await message.delete()#discord.errors.Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
             await message.channel.send(message.author.name + " Vous devez saisir la réponse en message privée!!! \n -2Points ROHH!! ```Bart: Wohooh t'es trop ...```")
             print ('i am here')
-            init_od_totidcoinc_totdicoincrease()      
+            init_od_totidcoinc_totdicoincrease() 
+            # totdicoinc = 0
+            # totdicoincrease = 0
+            # bomdiggybombom = 0
+
             #od pour parcourir le totdico #totdicoinc pour les gens qui n'existe pas dans totdico #totdicoincrease pour ne pas rentrer dans la boucle Clodomir
           
             print ('bomdiggybombom', bomdiggybombom)
@@ -410,6 +419,8 @@ async def on_message(message) :
             #     podiumsave()
             print ('od', od)
             print ('lentotdico', len(totdico))
+            print ('totdicoinc', totdicoinc)
+            print ('totdicoincrease', totdicoincrease)
             # print ('current_challenge', current_challenge)
             # while od<=len(totdico) or current_challenge == 1:
             # while od<=len(totdico) or message.content == listchallenger[current_challenge-1] :#boucle infinie
@@ -418,30 +429,31 @@ async def on_message(message) :
             # fact_malus(bomdiggybombom, od, totdicoinc, totdicoincrease, message.author.name, totdico)# bug avec refacto
            
            #boucle pour le current_challenge==1 qui ne fonctionne pas
-            while od <= len(totdico) and current_challenge == 1 :
-                print('im391 totdico', totdico)
-                # if message.content == listchallenger[current_challenge-1] :
-                #     totdico[message.author.name] = 0#RuntimeError: dictionary changed size during iteration
-                #     totdico[message.author.name] -= 2
-                #     print('im395')
-                for cle, valeur in totdico.items() : #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
-                    if cle == message.author.name and bomdiggybombom == 0 and totdicoincrease == 0 :
-                        totdico[cle] -= 2# 2 points de malus pour non respect des consignes ou totdico[cle]=valeur-2
-                        bomdiggybombom += 1
-                        print ('bomboom')
-                    else :
-                        totdicoinc += 1#RuntimeError: dictionary changed size during iteration
-                        print('boombom')
-                od += 1
-                boomboom += 1
+            # while od <= len(totdico) and current_challenge == 1 :
+            #     print('im391 totdico', totdico)
+            #     # if message.content == listchallenger[current_challenge-1] :
+            #     #     totdico[message.author.name] = 0#RuntimeError: dictionary changed size during iteration
+            #     #     totdico[message.author.name] -= 2
+            #     #     print('im395')
+            #     for cle, valeur in totdico.items() : #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
+            #         if cle == message.author.name and bomdiggybombom == 0 and totdicoincrease == 0 :
+            #             totdico[cle] -= 2# 2 points de malus pour non respect des consignes ou totdico[cle]=valeur-2
+            #             bomdiggybombom += 1
+            #             print ('bomboom')
+            #         else :
+            #             totdicoinc += 1#RuntimeError: dictionary changed size during iteration
+            #             print('boombom')
+            #     od += 1
+            #     boomboom += 1
             
             while od <= len(totdico) :
                 # for cle, valeur in sorted(totdico.items(), key=itemgetter(1), reverse=True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
                 for cle, valeur in totdico.items() : #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
-                    # print ('im here')
+                    print ('im here 451')
                     # print ('cle', cle)
                     # print ('valeur', valeur)
                     # print ('msg.author.name', message.author.name)
+                    # totdicoinc += 1# pour passer s'il n'existe pas dans la liste
                     if cle == message.author.name and bomdiggybombom == 0 and totdicoincrease == 0 :
                         # print ("we are here")
                         # print (totdico[0])
@@ -452,18 +464,20 @@ async def on_message(message) :
                         totdico[cle] -= 2# 2 points de malus pour non respect des consignes ou totdico[cle]=valeur-2
                         # totdico[cle]-=-2# 2 points de malus pour non respect des consignes#-1 pour 3 fait indice-2
                         bomdiggybombom += 1
-                        print ('bomdiggybombom')
+                        print ('bomdiggybombom!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
                     else :
                         # totdico[message.author.name]=0#RuntimeError: dictionary changed size during iteration
-                        totdicoinc += 1#RuntimeError: dictionary changed size during iteration
+                        totdicoinc += 1
                         # totdico[message.author.name]-=2
                 od += 1
                 if totdicoinc == 1 and bomdiggybombom == 0 :# si l'utilisateur n'est pas dans totdico la boucle s'exécute parfois même si l'user y est d'où le bomdiggy
                     print ("im 367")
                     totdico[message.author.name] = 0#RuntimeError: dictionary changed size during iteration
                     totdico[message.author.name] -= 2
-                    totdicoincrease += 1          
-                    # totdicoinc=0
+                    totdicoincrease += 1 
+                    bomdiggybombom = 0
+                    # totdicoinc=0 #préférable de retirer
+                    # totdicoincrease = 0#ne retire pas les points sinon
             # for elem in totdico: 
             #     print ('s',elem)
             #     print ('ttdico',totdico[elem])
@@ -481,7 +495,8 @@ async def on_message(message) :
             await message.channel.send('```!!podium affiche le podium précédent pour tous les utilisateurs```'+\
                 '```!podium x affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```'\
                 + "```PodiumGlobal!! affiche le podium Global des challenges terminés destinés aux profs```" +\
-                '```Challenge!! lancer le challenge ou passer le challenge admin/prof```' + '```Podium!!! voir le podium du challenge actuel pour les admin/prof```')
+                '```Challenge!! lancer le challenge ou passer le challenge admin/prof```' + '```Podium!!! voir le podium du challenge actuel pour les admin/prof```'+\
+                    '```!podium 0 Affiche le podium du dernier challenge terminé```')
             # await message.channel.send('```!podium x affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```')
             # await message.channel.send("```PodiumGlobal!! affiche le podium Global des challenges terminés destinés aux profs```")
             # await message.channel.send('```Challenge!! lancer le challenge ou passer le challenge admin/prof```')
