@@ -23,6 +23,8 @@ brice_Id = 68913448029152873
 brice_identifiant = 689134480291528710
 admin_Id = 480045172630224916
 
+prof_grp_id = 690133601605386264
+dev_grp_id = 719298857191604274
 # poder=0 #pour empêcher que si on tape Podium!! cela modifie le score
 # e=0# 
 
@@ -63,11 +65,11 @@ totdico = {}
 def init_od_totidcoinc_totdicoincrease() :
     global bomdiggybombom, od, totdicoinc, totdicoincrease, boomboom
     boomboom = 0
-    bomdiggybombom = 0#empeche une réexucution de la boucle bug bizarre
+    bomdiggybombom = 0#empêche une réexucution de la boucle bug bizarre
     od = 0
     totdicoinc = 0 
     totdicoincrease = 0
-def init_var_score() :
+def init_var_score() :# *2 car comme ça si deux vlients envoie un message sur chaque salon différent ainsi les variables sont indépendants
     global j, x, i 
     j = 1#cbeme
     x = 0#indice
@@ -357,7 +359,7 @@ async def on_message(message) :
 
     # Pour les personnes qui peuvent lancer le Challenge
         if message.content == 'Challenge!!' \
-            and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) :
+            and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) or prof_grp_id in [y.id for y in message.author.roles] or dev_grp_id in [y.id for y in message.author.roles] :
             
             if (current_challenge >= 1) :
                 fini_challenge(top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
