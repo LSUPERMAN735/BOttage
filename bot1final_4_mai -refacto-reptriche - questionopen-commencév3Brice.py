@@ -9,6 +9,7 @@ import discord
 from discord.ext import commands
 from operator import itemgetter
 import asyncio
+from datetime import datetime
 
 tok = open("token.txt", "r")
 token = tok.readlines()
@@ -497,7 +498,7 @@ async def on_message(message) :
             # await client.delete_message(message)# AttributeError: 'Bot' object has no attribute 'delete_message' AttributeError: 'Bot' object has no attribute 'delete_messages'
         # elif message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and challengefinaled == 0 :
         #     print ('Tous les Challenges sont terminés !!!')
-       
+
         # Dans le channel privée et si ce n'est pas le bot
         if isinstance(message.channel, discord.DMChannel) and message.author.id != BOTman_id :
             print ("Message privé : " + message.author.name + ":" + message.content)
@@ -505,6 +506,12 @@ async def on_message(message) :
             listchallengerx = listchallenger[current_challenge-1]
             print ("nbQxgagnant, top3NamesQY, ontBonMaisTropTardQY,  perduAnImporteQuelQY")
             print (len(top3NamesQY), top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
+            str(datetime.now())
+            time_current_splitter = typed.split(' ') 
+            time_current = time_current_splitter[1]
+            debut_time='00:01:00.000000'
+            final_time='05:01:00.000000'
+            # if time_current
             if current_challenge > 1 :
                 print ("nbQxallgagnant, top3NamesQall, ontBonMaisTropTardQall,  perduAnImporteQuelQall")
                 print (len(top3NamesQall), top3NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall)
@@ -591,5 +598,10 @@ async def on_message(message) :
 # @client.event
 # async def on_reaction_add(reaction, user):
     
-
+# @bot.command(pass_context=True)
+# async def checkreacts(ctx):
+#     msg1 = await bot.say("React to me!")
+#     custom_emoji = get(ctx.message.server.emojis, name="custom_emoji")
+#     reaction = await bot.wait_for_reaction(['\N{SMILE}', custom_emoji], msg1)
+#     await bot.say("You responded with {}".format(reaction.emoji))
 client.run(token[0])
