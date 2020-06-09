@@ -37,6 +37,9 @@ perduAnImporteQuelQ = []
 #variable
 current_challenge = 0
 exp_counter_podium = 0
+help_counter = 0
+podium_global_counter = 0
+double_exp_podium_counter = 0
 ####
 # Events
 ####
@@ -90,36 +93,6 @@ def fini_challenge(top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY) :
     ontBonMaisTropTardQall.append(ontBonMaisTropTardQY)
     perduAnImporteQuelQall.append(perduAnImporteQuelQY)
 
-# def podium_user_mini():
-#     global challengeprec
-#     if current_challenge>1:
-#         challengeprec=current_challenge-2
-#         print ('chall',challengeprec)
-#         print ("nbQxallgagnantx, top3NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
-#         print (len(top3NamesQall), top3NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
-# def list_player_for_score():
-#     global e
-#     e=0
-#     for x in top3NamesQY: 
-#         top3NamesQY[e]=[]
-
-# def score():
-#     global j,x,i
-#     j=1#cbeme
-#     x=0#indice
-#     i=3#score
-#     try:
-#         while i<=3 and j<=3 and x<3:
-#             print ('x=',x)
-#             print ('j=',j)
-#             print ('i=',i)
-#             mondico[x]=i
-#             print ('utilisateur '+ top3NamesQY[x]+ ' Top '+j+ ' a '+i+ ' points' )
-#             i-=1
-#             j+=1
-#             x+=1
-#     except (IndexError):
-#         print ("Impossible de trouver l'élément dans la liste")
 
 def reptricheur(top3NamesQx, repx,  msg) :
     if msg.author.name in top3NamesQx and msg.content.casefold() == repx.casefold() :
@@ -155,7 +128,7 @@ def fichreaderq1() :
     fichdeqr.close()
     return quest, rep
 
-def podiumsave() :
+def podiumsave(message_author_name) :
     global totdico, top3NamesQY
     i = 3#score
     # x=0#indice
@@ -175,9 +148,12 @@ def podiumsave() :
                     # x+=1
                     i -= 1
                     print ('exception')
-            elif current_challenge == 1 :
+            elif current_challenge == 1 and message_author_name not in totdico :
                 totdico[s] = i
                 # x+=1
+                i -= 1
+            elif current_challenge == 1 and message_author_name in totdico :
+                totdico[s] += i
                 i -= 1
             else :
                 print ('fini')
@@ -200,35 +176,7 @@ def fact_malus(totdico, message_author_name) : # sert à retirer les points malu
                 totdico[message_author_name] -= 2
             else : 
                 totdico[message_author_name] = -2
-    #  while od<=len(totdico) :
-    #             # for cle, valeur in sorted(totdico.items(), key=itemgetter(1), reverse=True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
-    #             for cle, valeur in totdico.items() : #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
-    #                 # print ('im here')
-    #                 # print ('cle', cle)
-    #                 # print ('valeur', valeur)
-    #                 # print ('msg.author.name', message_author_name)
-    #                 if cle == message_author_name and bomdiggybombom == 0 and totdicoincrease==0 :
-    #                     # print ("we are here")
-    #                     # print (totdico[0])
-    #                     # print (totdico[1])
-    #                     # print (totdico[cle])
-    #                     # print (totdico[2])#br
-    #                     # print (totdico[3])#à tester
-    #                     totdico[cle]-=2# 2 points de malus pour non respect des consignes ou totdico[cle]=valeur-2
-    #                     # totdico[cle]-=-2# 2 points de malus pour non respect des consignes#-1 pour 3 fait indice-2
-    #                     bomdiggybombom+=1
-    #                     print ('bomdiggybombom')
-    #                 else :
-    #                     # totdico[message.author.name]=0#RuntimeError: dictionary changed size during iteration
-    #                     totdicoinc+=1#RuntimeError: dictionary changed size during iteration
-    #                     # totdico[message.author.name]-=2
-    #             od+=1
-                #cette partie bug en refacto ci-dessous
-    #             if totdicoinc == 1 and bomdiggybombom == 0 :# si l'utilisateur n'est pas dans totdico la boucle s'exécute parfois même si l'user y est d'où le bomdiggy
-    #                 print ("im 367")
-    #                 totdico[message.author.name]=0#RuntimeError: dictionary changed size during iteration
-    #                 totdico[message.author.name]-=2
-    #                 totdicoincrease+=1          
+   
 @client.event
 async def on_ready() :
     print ('Challenge Bot est prêt.')
@@ -239,15 +187,10 @@ async def on_ready() :
 async def on_message(message) :
     try:
         # global appel_membre, appel, absents, presents
-        # global e
-        # global o,q,p
-        global exp_counter_podium
+        global exp_counter_podium, help_counter, double_exp_podium_counter, podium_global_counter
         global o
         global top3NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall, poder
-        # global j, x, i
         global current_challenge, totdico, top3NamesQY
-        # global bomdiggybombom, od, totdicoinc, totdicoincrease, boomboom
-        # global f, g, h
         
         if message.author.id != BOTman_id:
             print ("Je suis", message.author.name)
@@ -256,30 +199,6 @@ async def on_message(message) :
                 my_channel_id, BOTman_id, myAuthorId)
             
             print ("Message initial", message)
-
-
-        # if message.content == 'Podium!!' \
-        #     and message.author.id in (myAuthorId, 68913448029152873, 480045172630224916) :
-        #     poder+=1
-        # if message.content == 'Podium!!' \
-        #     and message.author.id in (myAuthorId, 68913448029152873, 480045172630224916,BOTman_id) :
-        #     # score()
-        #     # j=1#cbeme
-        #     # x=0#indice
-        #     # i=3#score
-        #     try:
-        #             podiumsave()
-        #             while poder>0:
-        #                 totdico[top3NamesQY[p]]-=i
-        #                 x+=1
-        #                 # i-=1
-        #                 poder-=1
-        #             await message.channel.send('Gagnant tot= '+str(totdico))
-        #             # await message.channel.send('utilisateur '+ top3NamesQY[x]+ ' Top '+str(j)+ ' a '+str(i)+ ' points' )
-        #             # i-=1
-        #             print ('totdico', totdico)
-        #     except (IndexError):
-        #         print (" fini")#Impossible de trouver l'élément dans la liste
 
         if message.content.casefold() == 'Podium!!!'.casefold() \
             and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) : #current_podiums
@@ -297,6 +216,7 @@ async def on_message(message) :
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
         
         if message.content.casefold() == 'PodiumGlobal!!'.casefold() :
+            podium_global_counter += 1
             # and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916, clara_oswald) : #podium global par les admins
             # and prof_grp_id in [y.id for y in Member(message.author).roles] or dev_grp_id in [y.id for y in Member(message.author).roles] : #podium global par les admins
             # and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) or prof_grp_id in [y.id for y in message.author.roles] or dev_grp_id in [y.id for y in message.author.roles] : #podium global par les admins
@@ -319,10 +239,29 @@ async def on_message(message) :
                         s+='utilisateur' + str(cle) + ' Top ' + str(o) + ' a ' + str(valeur) + ' points' + '\n'
                         await message.channel.send(s)
                         o += 1
+                if podium_global_counter in (1, 2, 7, 9, 13, 15, 25, 29, 31, 39, 41, 45, 50, 53, 55, 60, 65, 67, 78, 85) and message.author.id not in (brice_identifiant, myAuthorId) :
+                        if message.author.name in totdico and current_challenge > 1 :
+                            print(totdico[message.author.name])
+                            totdico[message.author.name] += 2
+                            await message.channel.send('Bravo à ' + message.author.name + ' BENDER : est allé vous cherchez 2 points bonus dans le FUTURama\
+                                \n c\' est bien de checker :)')
+                            if message.author.dm_channel == None : 
+                                help_message = 'l\'user ' + message.author.name + ' à gagner 2 pts avec podiumprec, current_challenge:'+ str(current_challenge)
+                                await message.author.create_dm()
+                                await message.author.send(str(help_message))    
+                        elif message.author.name not in totdico and message.author.name not in top3NamesQY : 
+                            totdico[message.author.name] = 2
+                            await message.channel.send('Bravo à ' + message.author.name + ' BENDER : est allé vous cherchez vos 2 er points bonus dans le FUTURama\
+                                \n c\' est bien de checker')
+                            if message.author.dm_channel == None :
+                                help_message = 'l\'user ' + message.author.name + ' à gagner ses 3ers pts avec podiumprec, current_challenge:'+ str(current_challenge)
+                                await message.author.create_dm()
+                                await message.author.send(str(help_message))   
             except (IndexError) :
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
 
         if message.content.casefold() == '!!podium'.casefold() :
+            double_exp_podium_counter += 1
             # score()
             f = 1#cbeme
             g = 0#indice
@@ -341,6 +280,24 @@ async def on_message(message) :
                     h -= 1
                     f += 1
                     g += 1
+                if double_exp_podium_counter in (1, 2, 7, 9, 13, 15, 25, 29, 31, 39, 41, 45, 50, 53, 55, 60, 65, 67, 78, 85, 90) :
+                        if message.author.name in totdico and current_challenge > 1 :
+                            print(totdico[message.author.name])
+                            totdico[message.author.name] += 2
+                            await message.channel.send('Bravo à ' + message.author.name + ' Phoebe Halliwell : est allé vous cherchez 2 points bonus avec sa magie\
+                                \n c\' est bien de tester :)')
+                            if message.author.dm_channel == None : 
+                                help_message = 'l\'user ' + message.author.name + ' à gagner 2 pts avec podiumprec, current_challenge:'+ str(current_challenge)
+                                await message.author.create_dm()
+                                await message.author.send(str(help_message))    
+                        elif message.author.name not in totdico and message.author.name not in top3NamesQY : 
+                            totdico[message.author.name] = 3
+                            await message.channel.send('Bravo à ' + message.author.name + ' Phoebe Halliwell : est allé vous cherchez vos 3 er points bonus avec sa magie \
+                                \n c\' est bien de tester')
+                            if message.author.dm_channel == None :
+                                help_message = 'l\'user ' + message.author.name + ' à gagner ses 3ers pts avec podiumprec, current_challenge:'+ str(current_challenge)
+                                await message.author.create_dm()
+                                await message.author.send(str(help_message))   
             except (IndexError) :
                 await message.channel.send("Personne d'autres a gagné") #Impossible de trouver l'élément dans la liste
                  #afficher le podium du challenge terminé que l'on souhaite voir
@@ -366,7 +323,8 @@ async def on_message(message) :
                     else: 
                         await message.channel.send("Ce challenge n'a pas démarré!!")
                     if exp_counter_podium in (3, 5, 10, 15, 20, 27, 30, 39, 45, 47, 50, 51, 55, 60, 65, 67, 78, 85, 90) :
-                        if message.author.name in totdico :
+                        if message.author.name in totdico and current_challenge > 1 :
+                            print(totdico[message.author.name])
                             totdico[message.author.name] += 2
                             print("i'm368")
                             await message.channel.send('Bravo à ' + message.author.name + ' Clara OSWALD : est allé vous cherchez 2 points bonus dans le Tardis')
@@ -375,7 +333,7 @@ async def on_message(message) :
                             # await client.send_message(user, str(exp_podium_message))
                             # user_brice=str(brice_identifiant)
                             # await client.send_message(user_brice, str(exp_podium_message))
-                        else : 
+                        elif message.author.name not in totdico and message.author.name not in top3NamesQY :
                             totdico[message.author.name] = 2
                             await message.channel.send('Bravo à ' + message.author.name + ' Clara OSWALD : est allé vous cherchez vos 2 er points bonus dans le Tardis')
                             # user=str(476338851871326219)
@@ -409,7 +367,7 @@ async def on_message(message) :
             
             if current_challenge == len(listchallengeq) :
                 fini_challenge(top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
-                podiumsave()
+                podiumsave(message.author.name)
                 await message.channel.send('Gagnant tot= ' + str(totdico))
                 await message.channel.send("Tous les challenges sont désormais terminés")
                 current_challenge += 1
@@ -418,7 +376,7 @@ async def on_message(message) :
             # await message.channel.send('Réponse sous la forme : en MP')
             if current_challenge > 0 :
                 try :
-                    podiumsave()
+                    podiumsave(message.author.name)
                     await message.channel.send('Gagnant tot= ' + str(totdico))
                     print ('totdico', totdico)
                     print ("top3NamesQY!!", top3NamesQY)
@@ -438,6 +396,55 @@ async def on_message(message) :
         #     await bot.send_message(message.channel, "{}, your message has been censored.".format(message.author.mention))
         #     await bot.delete_message(message)
        
+       
+        if message.content.casefold() == 'help!!'.casefold() :
+            help_counter += 1
+            await message.channel.send('```!!podium affiche le podium précédent pour tous les utilisateurs```'+\
+                '```!podium x affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```'\
+                + "```PodiumGlobal!! affiche le podium Global des challenges terminés destinés pour tous les utilisateurs```" +\
+                '```Challenge!! lancer le challenge ou passer le challenge admin/prof```' +'```!podium 0 Affiche le podium du dernier challenge terminé pour tous les utilisateurs```'\
+                + '```Podium!!! voir le podium du challenge actuel pour les admin/prof```')
+            if help_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) :
+                        if message.author.name in totdico and current_challenge > 1 :
+                            print(totdico[message.author.name])
+                            totdico[message.author.name] += 2
+                            print("i'm368")
+                            await message.channel.send('Bravo à ' + message.author.name + ' Kara Danvers : est allé vous cherchez 2 points bonus en volant\
+                                \n c\' est bien de lire l\'aide :)')
+                            if message.author.dm_channel == None : 
+                            # if client.get_member(myAuthorId) == True :
+                                print('im500')
+                                help_message = 'l\'user ' + message.author.name + ' à gagner 2 pts avec help, current_challenge:'+ str(current_challenge)
+                                await message.author.create_dm()
+                                await message.author.send(str(help_message))    
+                        # elif message.author.name in top3NamesQY and current_challenge == 1 :
+                        #     # print(top3NamesQY[message.author.name])
+                        #     # print(top3NamesQY)
+                        #     print(totdico)
+                        #     totdico[message.author.name] += 2
+                        #     print("i'm368!")
+                        #     await message.channel.send('Bravo à ' + message.author.name + ' Kara Danvers : est allé vous cherchez 2 points bonus en volant\
+                        #         \n c\' est bien de lire l\'aide :)')
+                        #     if message.author.dm_channel == None : 
+                        #         print('im500!')
+                        #         help_message = 'l\'user ' + message.author.name + ' à gagner 2 pts avec help, current_challenge:'+ str(current_challenge)
+                        #         await message.author.create_dm()
+                        #         await message.author.send(str(help_message))    
+                        elif message.author.name not in totdico and message.author.name not in top3NamesQY : 
+                            totdico[message.author.name] = 3
+                            await message.channel.send('Bravo à ' + message.author.name + ' Kara Danvers : est allé vous cherchez vos 3 er points bonus en volant \
+                                \n c\' est bien il faut toujours lire la consigne avant de commencer')
+                            if message.author.dm_channel == None :
+                            # if client.get_member(myAuthorId) == True :
+                                print('im500')
+                                help_message = 'l\'user ' + message.author.name + ' à gagner ses 3ers pts avec help, current_challenge:'+ str(current_challenge)
+                                await message.author.create_dm()
+                                await message.author.send(str(help_message))   
+            # await message.channel.send('```!podium x affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```')
+            # await message.channel.send("```PodiumGlobal!! affiche le podium Global des challenges terminés destinés aux profs```")
+            # await message.channel.send('```Challenge!! lancer le challenge ou passer le challenge admin/prof```')
+            # await message.channel.send('```Podium!!! voir le podium du challenge actuel pour les admin/prof```')
+            # await message.channel.send("```Podium!! destiné à forcer l'actualisation du bot destiné aux bots```")
         # print ('cr',current_challenge)
         # if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and current_challenge < len(listchallengeq) :
         if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 :
@@ -482,18 +489,6 @@ async def on_message(message) :
             # await client.delete_message(message)# AttributeError: 'Bot' object has no attribute 'delete_message' AttributeError: 'Bot' object has no attribute 'delete_messages'
         # elif message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and challengefinaled == 0 :
         #     print ('Tous les Challenges sont terminés !!!')
-        if message.content.casefold() == 'help!!'.casefold() :
-            await message.channel.send('```!!podium affiche le podium précédent pour tous les utilisateurs```'+\
-                '```!podium x affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```'\
-                + "```PodiumGlobal!! affiche le podium Global des challenges terminés destinés aux profs```" +\
-                '```Challenge!! lancer le challenge ou passer le challenge admin/prof```' + '```Podium!!! voir le podium du challenge actuel pour les admin/prof```'+\
-                    '```!podium 0 Affiche le podium du dernier challenge terminé```')
-            # await message.channel.send('```!podium x affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```')
-            # await message.channel.send("```PodiumGlobal!! affiche le podium Global des challenges terminés destinés aux profs```")
-            # await message.channel.send('```Challenge!! lancer le challenge ou passer le challenge admin/prof```')
-            # await message.channel.send('```Podium!!! voir le podium du challenge actuel pour les admin/prof```')
-            # await message.channel.send("```Podium!! destiné à forcer l'actualisation du bot destiné aux bots```")
-
        
         # Dans le channel privée et si ce n'est pas le bot
         if isinstance(message.channel, discord.DMChannel) and message.author.id != BOTman_id :
@@ -519,8 +514,8 @@ async def on_message(message) :
                 # await message.channel.send(msggagne+str(current_challenge))      
                 await message.channel.send(msggagne + str(current_challenge) + "\n" + homer)    
                 print('im519')    
-                # if message.author.dm_channel == True: 
-                if client.get_member(myAuthorId) == True :
+                if message.author.dm_channel == True : 
+                # if client.get_member(myAuthorId) == True :
                     print('im520')
                     exp_podium_message='l\'user ' + message.author.name + 'à gagner au challenge'+ str(current_challenge)
                     await message.author.create_dm()
