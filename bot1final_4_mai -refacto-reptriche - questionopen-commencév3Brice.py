@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
-#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may,21may,  25 may,27, 29 may,5juin,6juin,7juin, 8juin
+#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may,21may,  25 may,27, 29 may,5juin,6juin,7juin, 8juin, 9juin
+#9juin
 #sort added for podiumglobal and added !podium x, podiumsave dans challenge!!
 #lisibility added
 import sys
@@ -35,7 +36,7 @@ perduAnImporteQuelQall = []
 perduAnImporteQuelQ = []
 #variable
 current_challenge = 0
-
+exp_counter_podium = 0
 ####
 # Events
 ####
@@ -195,10 +196,10 @@ def podiumnum(message) :
     return typed, delimited, podiuming, numberpodiuming, numberpodium
 
 def fact_malus(totdico, message_author_name) : # sert à retirer les points malus si réponse dans le salon sauf si challenge 1
-             if message_author_name in totdico :
-                totdico[message.author.name] -= 2
+            if message_author_name in totdico :
+                totdico[message_author_name] -= 2
             else : 
-                totdico[message.author.name] = -2
+                totdico[message_author_name] = -2
     #  while od<=len(totdico) :
     #             # for cle, valeur in sorted(totdico.items(), key=itemgetter(1), reverse=True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
     #             for cle, valeur in totdico.items() : #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
@@ -240,6 +241,7 @@ async def on_message(message) :
         # global appel_membre, appel, absents, presents
         # global e
         # global o,q,p
+        global exp_counter_podium
         global o
         global top3NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall, poder
         # global j, x, i
@@ -279,7 +281,7 @@ async def on_message(message) :
         #     except (IndexError):
         #         print (" fini")#Impossible de trouver l'élément dans la liste
 
-        if message.content == 'Podium!!!' \
+        if message.content.casefold() == 'Podium!!!'.casefold() \
             and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) : #current_podiums
             # score()
             f = 1#cbeme
@@ -310,11 +312,11 @@ async def on_message(message) :
                 for cle, valeur in sorted(totdico.items(), key = itemgetter(1), reverse = True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
                     if valeur > 0 : #ne met ni d'erreur mais n'affiche pas que les valeurs supérieurs à 0
                     # while valeur > 0 and o <= len(totdico): #ne met ni d'erreur mais n'affiche pas que les valeurs supérieurs à 0
-                        # print('clé', cle)
-                        # print('valeur', valeur)
+                        print('clé', cle)
+                        print('valeur', valeur)
                         print ('utilisateur {}'.format(cle) +  ' Top ' + str(o) + ' a ' + '{} points'.format(valeur) )
                         await message.channel.send('utilisateur {}'.format(cle) + ' Top '+str(o) + ' a ' + '{} points'.format(valeur) )
-                        s+="utilisateur {}'.format(cle) +  ' Top ' + str(o) + ' a ' + '{} points'.format(valeur)+'\n'"
+                        s+='utilisateur' + str(cle) + ' Top ' + str(o) + ' a ' + str(valeur) + ' points' + '\n'
                         await message.channel.send(s)
                         o += 1
             except (IndexError) :
@@ -344,6 +346,8 @@ async def on_message(message) :
                  #afficher le podium du challenge terminé que l'on souhaite voir
        
         if message.content.startswith('!podium') :
+            exp_counter_podium += 1
+            print('podium', exp_counter_podium)
             podiumnum(message)
             f = 1#cbeme
             g = 0#indice
@@ -361,6 +365,24 @@ async def on_message(message) :
                         await message.channel.send("Ce challenge est en cours !! Veuillez attendre qu'il soit terminé !")
                     else: 
                         await message.channel.send("Ce challenge n'a pas démarré!!")
+                    if exp_counter_podium in (3, 5, 10, 15, 20, 27, 30, 39, 45, 47, 50, 51, 55, 60, 65, 67, 78, 85, 90) :
+                        if message.author.name in totdico :
+                            totdico[message.author.name] += 2
+                            print("i'm368")
+                            await message.channel.send('Bravo à ' + message.author.name + ' Clara OSWALD : est allé vous cherchez 2 points bonus dans le Tardis')
+                            # user=str(476338851871326219)
+                            # exp_podium_message='l\'user ' + message.author.name + '2 points grâce à !Podium \n gagné grâce à ' + exp_counter_podium + 'fois'
+                            # await client.send_message(user, str(exp_podium_message))
+                            # user_brice=str(brice_identifiant)
+                            # await client.send_message(user_brice, str(exp_podium_message))
+                        else : 
+                            totdico[message.author.name] = 2
+                            await message.channel.send('Bravo à ' + message.author.name + ' Clara OSWALD : est allé vous cherchez vos 2 er points bonus dans le Tardis')
+                            # user=str(476338851871326219)
+                            # exp_podium_message='l\'user ' + message.author.name + 'ses 2 er points grâce à !Podium \n gagné grâce à ' + str(exp_counter_podium) + 'fois'
+                            # await client.send_message(user, str(exp_podium_message))
+                            # user_brice=str(brice_identifiant)
+                            # await client.send_message(user_brice, str(exp_podium_message))
                     while h <= 3 and f <= 3 and g < 3 :
                         print ('g=', g)
                         print ('f=', f)
@@ -373,7 +395,7 @@ async def on_message(message) :
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
 
     # Pour les personnes qui peuvent lancer le Challenge
-        if message.content == 'Challenge!!' \
+        if message.content.casefold() == 'Challenge!!'.casefold() \
              and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916, clara_oswald) :
             # and prof_grp_id in [y.id for y in Member(message.author).roles] or dev_grp_id in [y.id for y in Member(message.author).roles] :
             # and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) or prof_grp_id in [y.id for y in message.author.roles] or dev_grp_id in [y.id for y in message.author.roles] :
@@ -419,11 +441,12 @@ async def on_message(message) :
         # print ('cr',current_challenge)
         # if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and current_challenge < len(listchallengeq) :
         if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 :
+        # if message.content == listchallenger[current_challenge-1] or message.content == 'la bonne réponse est ' + listchallenger[current_challenge - 1] and message.channel.id == my_channel_id3 :
         # if message.content.casefold() == listchallenger[current_challenge].casefold() :
         # print ('listcr', listchallenger[current_challenge-1])
             print (message.content)
             await message.delete()#discord.errors.Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
-            await message.channel.send(message.author.name + " Vous devez saisir la réponse en message privée!!! \n -2Points ROHH!! ```Attention Bart vous avez recevoir une punition ...```")
+            await message.channel.send(message.author.name + " Vous devez saisir la réponse en message privée!!! \n -2Points ROHH!! ```Attention Bart tu vas avoir une punition ...```")
             # print ('i am here')
             # init_od_totidcoinc_totdicoincrease() 
             # totdicoinc = 0
@@ -443,7 +466,7 @@ async def on_message(message) :
             #     totdico[message.author.name] -= 2
             # else : 
             #     totdico[message.author.name] = -2
-            fact_malus (totdico, message.author.name)  
+            fact_malus (totdico, message.author.name)   #Boucle clodomir V2
                     # totdicoinc=0 #préférable de retirer
                     # totdicoincrease = 0#ne retire pas les points sinon
             # for elem in totdico: 
@@ -493,10 +516,22 @@ async def on_message(message) :
                 await message.channel.send(reptriche1) 
             
             if repondre_quest(message, listchallengerx, top3NamesQY, ontBonMaisTropTardQY,'Q' + str(current_challenge)) == True :
-                # await message.channel.send(msggagne+str(current_challenge))             
-                await message.channel.send(msggagne + str(current_challenge) + "\n" + homer)             
-                # await message.channel.send(homer)      
-                perduAnImporteQuelQY.append(message.author.name)
+                # await message.channel.send(msggagne+str(current_challenge))      
+                await message.channel.send(msggagne + str(current_challenge) + "\n" + homer)    
+                print('im519')    
+                # if message.author.dm_channel == True: 
+                if client.get_member(myAuthorId) == True :
+                    print('im520')
+                    exp_podium_message='l\'user ' + message.author.name + 'à gagner au challenge'+ str(current_challenge)
+                    await message.author.create_dm()
+                    await message.author.send(str(exp_podium_message))     
+
+                
+                # await message.channel.send(homer) 
+    
+                    # await client.send_message(user, )
+                    # user_brice=str(brice_identifiant)
+                    # await client.send_message(myAuthorId, str(exp_podium_message))
 
             if len(top3NamesQY) > 3 :
                 await message.channel.send(repbotlate1)
@@ -505,7 +540,7 @@ async def on_message(message) :
             
             if message.content.casefold() == listchallengerx.casefold() and reptricheur(top3NamesQY, listchallengerx, message) != True :
             #     await message.channel.send(homer)      
-                  truc = None#cette fonction sert à n'envoyer que si c'est la mauvaise réponseet ou l'utilisateur reparticipe
+                  truc = None#cette fonction sert à n'envoyer que si c'est la mauvaise réponseet ou l'utilisateur reparticipe évite le else
             elif message.author.name in top3NamesQY : # cette fonction permet de ne pas afficher de message au tricheur
                 arretedeparticiper = None#arretedeparticiper bordel permet d'utiliser cette fonction
             else :
