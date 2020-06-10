@@ -263,7 +263,7 @@ async def on_message(message) :
                                 await message.channel.send('Bravo à ' + message.author.name + ' BENDER : est allé vous cherchez 2 points bonus dans le FUTURama\
                                     \n c\'est bien de checker :)')
                                 await message.channel.send(file=discord.File('./assets/bender.gif'))
-                                podium_global_message = message.author.name + ' à gagner 2 pts avec podiumglob, current_challenge: '+ str(current_challenge) + ' car'\
+                                podium_global_message = message.author.name + ' à gagner 2 pts avec podiumglob, current_challenge: '+ str(current_challenge) + ' car '\
                                     + str(podium_global_counter) + ' fois'
                                 await client.get_user(myAuthorId).send(podium_global_message)
                             elif message.author.name not in totdico and message.author.name not in top3NamesQY : 
@@ -271,7 +271,7 @@ async def on_message(message) :
                                 await message.channel.send('Bravo à ' + message.author.name + ' BENDER : est allé vous cherchez vos 2 er points bonus dans le FUTURama\
                                     \n c\'est bien de checker')
                                 await message.channel.send(file=discord.File('./assets/bender.gif'))
-                                podium_global_message = message.author.name + ' à gagner ses 3ers pts avec podiumglob, current_challenge: '+ str(current_challenge) + ' car'\
+                                podium_global_message = message.author.name + ' à gagner ses 3ers pts avec podiumglob, current_challenge: '+ str(current_challenge) + ' car '\
                                     + str(podium_global_counter) + ' fois'
                                 await client.get_user(myAuthorId).send(podium_global_message)
                                 
@@ -298,7 +298,7 @@ async def on_message(message) :
                         totdico[message.author.name] += 2
                         await message.channel.send('Bravo à ' + message.author.name + ' Phoebe Halliwell : est allé vous cherchez 2 points bonus avec sa magie :)')
                         await message.channel.send(file=discord.File('./assets/charmed2.gif'))
-                        double_exp_podium_message = message.author.name + ' à gagner 2 pts avec podiumprec, current_challenge: '+ str(current_challenge) + ' car'\
+                        double_exp_podium_message = message.author.name + ' à gagner 2 pts avec podiumprec, current_challenge: '+ str(current_challenge) + ' car '\
                              + str(double_exp_podium_counter) + ' fois'
                         await client.get_user(myAuthorId).send(double_exp_podium_message)
                          
@@ -306,7 +306,7 @@ async def on_message(message) :
                         totdico[message.author.name] = 3
                         await message.channel.send('Bravo à ' + message.author.name + ' Phoebe Halliwell : est allé vous cherchez vos 3 er points bonus avec sa magie')
                         await message.channel.send(file=discord.File('./assets/charmed2.gif'))
-                        double_exp_podium_message = message.author.name + ' à gagner ses 3ers pts avec podiumprec, current_challenge: '+ str(current_challenge) + ' car'\
+                        double_exp_podium_message = message.author.name + ' à gagner ses 3ers pts avec podiumprec, current_challenge: '+ str(current_challenge) + ' car '\
                              + str(double_exp_podium_counter) + ' fois'
                         await client.get_user(myAuthorId).send(double_exp_podium_message)
 
@@ -352,14 +352,14 @@ async def on_message(message) :
                         print("i'm368")
                         await message.channel.send('Bravo à ' + message.author.name + ' Clara OSWALD : est allé vous cherchez 2 points bonus dans le Tardis')
                         await message.channel.send(file=discord.File('./assets/tardis.gif'))
-                        exp_podium_message=message.author.name + '2 points grâce à !Podium \n gagné grâce à ' + str(exp_counter_podium) + ' fois'
+                        exp_podium_message=message.author.name + '2 points grâce à !Podium \n gagné grâce à podiumx car ' + str(exp_counter_podium) + ' fois'
                         await client.get_user(myAuthorId).send(exp_podium_message)
 
                     elif message.author.name not in totdico and message.author.name not in top3NamesQY :
                         totdico[message.author.name] = 2
                         await message.channel.send('Bravo à ' + message.author.name + ' Clara OSWALD : est allé vous cherchez vos 2 er points bonus dans le Tardis')
                         await message.channel.send(file=discord.File('./assets/tardis.gif'))
-                        exp_podium_message=message.author.name + 'ses 2er points grâce à !Podium \n gagné grâce à ' + str(exp_counter_podium) + ' fois'
+                        exp_podium_message=message.author.name + 'ses 2er points grâce à !Podium \n gagné grâce à podiumx car ' + str(exp_counter_podium) + ' fois'
                         await client.get_user(myAuthorId).send(exp_podium_message)
 
                 while h <= 3 and f <= 3 and g < 3 :
@@ -423,14 +423,14 @@ async def on_message(message) :
                             await message.channel.send('Bravo à ' + message.author.name + ' Kara Danvers : est allé vous cherchez 2 points bonus en volant\
                                 \n c\'est bien de lire l\'aide :)')
                             await message.channel.send(file=discord.File('./assets/kara.gif'))
-                            help_message = message.author.name + ' a gagné 2 pts avec help, au challenge:' + str(current_challenge) + ' car ' + str(help_counter) + 'fois'
+                            help_message = message.author.name + ' a gagné 2 pts avec help, au challenge:' + str(current_challenge) + ' car ' + str(help_counter) + ' fois'
                             await client.get_user(myAuthorId).send(help_message)
                         elif message.author.name not in totdico and message.author.name not in top3NamesQY : 
                             totdico[message.author.name] = 3
                             await message.channel.send('Bravo à ' + message.author.name + ' Kara Danvers : est allé vous cherchez vos 3 er points bonus en volant \
                                 \n c\'est bien il faut toujours lire la consigne avant de commencer')
                             await message.channel.send(file=discord.File('./assets/kara.gif'))
-                            help_message = message.author.name + ' a gagné ses 3ers pts avec help, au challenge:' + str(current_challenge) + ' car '+ str(help_counter) + 'fois'
+                            help_message = message.author.name + ' a gagné ses 3ers pts avec help, au challenge:' + str(current_challenge) + ' car '+ str(help_counter) + ' fois'
                             await client.get_user(myAuthorId).send(help_message)
 
 
