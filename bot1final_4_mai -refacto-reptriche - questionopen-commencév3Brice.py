@@ -34,7 +34,6 @@ dev_grp_id = 719298857191604274
 top3NamesQall = []
 ontBonMaisTropTardQall = []
 perduAnImporteQuelQall = []
-perduAnImporteQuelQ = []
 #variable
 current_challenge = 0
 exp_counter_podium = 0
@@ -47,10 +46,10 @@ double_exp_podium_counter = 0
 client = commands.Bot(command_prefix='.')
 
 # #challenge rép -> fichier fichreaderq1() fini les brut
-
-#réponse du bot
+#réponse rapide réponse type du bot
+#réponse du bot en cas de victoire
 msggagne = 'Vous avez bon à la question'
-#réponse bot
+#réponse bot en cas de de victoire
 homer = 'Homer: Woohoo!! Vous êtes trop fort!!'
 # rep triche:
 reptriche1 = 'Vous avez déjà participé ! Faîtes autre chose !!'
@@ -126,8 +125,8 @@ def podiumsave(message_author_name) : #time comp added
     global totdico, top3NamesQY
     global debut_time, debut_final, zetime, heure_bool
     zetime = datetime.now()
-    debut_time = 00
-    final_time = 5
+    debut_time = 00 #22 utc
+    final_time = 22 #3 utc
     heure_bool = 0
     if debut_time <= zetime.hour <= final_time :
         print ('heure! :', zetime.hour)
@@ -142,8 +141,7 @@ def podiumsave(message_author_name) : #time comp added
         # if i<=0:#permet d'éviter un score négatif
         #     i=0#0 pour tous les gens en retard ou perdant
         if i > 0 : #permet de ne prendre que le top x avec point positif
-            if current_challenge > 1 and heure_bool == 0 : 
-                timing()
+            if current_challenge >= 1 and heure_bool == 0 : 
                 try: 
                     totdico[s] += i
                     i -= 1
@@ -151,14 +149,14 @@ def podiumsave(message_author_name) : #time comp added
                     totdico[s] = i
                     i -= 1
                     print ('exception')
-            elif current_challenge == 1 and message_author_name not in totdico and heure_bool == 0 :
-                totdico[s] = i
-                i -= 1
-            elif current_challenge == 1 and message_author_name in totdico and heure_bool == 0  :
-                totdico[s] += i
-                i -= 1
+            # elif current_challenge == 1 and message_author_name not in totdico and heure_bool == 0 :
+            #     totdico[s] = i
+            #     i -= 1
+            # elif current_challenge == 1 and message_author_name in totdico and heure_bool == 0  :
+            #     totdico[s] = totdico[s] + i
+            #     i -= 1
 
-            elif current_challenge > 1 and heure_bool == 1 : 
+            elif current_challenge >= 1 and heure_bool == 1 : 
                 try: 
                     totdico[s] += i * 2
                     i -= 1
@@ -166,12 +164,12 @@ def podiumsave(message_author_name) : #time comp added
                     totdico[s] = i * 2
                     i -= 1
                     print ('exception')
-            elif current_challenge == 1 and message_author_name not in totdico and heure_bool == 1 :
-                totdico[s] = i * 2
-                i -= 1
-            elif current_challenge == 1 and message_author_name in totdico and heure_bool == 1 :
-                totdico[s] += i * 2
-                i -= 1
+            # elif current_challenge == 1 and message_author_name not in totdico and heure_bool == 1 :
+            #     totdico[s] = i * 2
+            #     i -= 1
+            # elif current_challenge == 1 and message_author_name in totdico and heure_bool == 1 :
+            #     totdico[s] = totdico[s] + i * 2
+            #     i -= 1
             else :
                 print ('fini')
     return totdico
@@ -311,9 +309,9 @@ async def on_message(message) :
                         await client.get_user(myAuthorId).send(double_exp_podium_message)
 
                 while h <= 3 and f <= 3 and g < 3 :
-                    print ('g=', g)
-                    print ('f=', f)
-                    print ('h=', h)
+                    # print ('g=', g)
+                    # print ('f=', f)
+                    # print ('h=', h)
                     await message.channel.send('utilisateur ' + str(top3NamesQall[challengeprec][g]) +  ' Top ' + str(f) + ' a '+str(h) + ' points' )
                     h -= 1
                     f += 1
@@ -349,7 +347,7 @@ async def on_message(message) :
                     if message.author.name in totdico and current_challenge > 1 :
                         print(totdico[message.author.name])
                         totdico[message.author.name] += 2
-                        print("i'm368")
+                        # print("i'm368")
                         await message.channel.send('Bravo à ' + message.author.name + ' Clara OSWALD : est allé vous cherchez 2 points bonus dans le Tardis')
                         await message.channel.send(file=discord.File('./assets/tardis.gif'))
                         exp_podium_message=message.author.name + '2 points grâce à !Podium \n gagné grâce à podiumx car ' + str(exp_counter_podium) + ' fois'
@@ -363,9 +361,9 @@ async def on_message(message) :
                         await client.get_user(myAuthorId).send(exp_podium_message)
 
                 while h <= 3 and f <= 3 and g < 3 :
-                    print ('g=', g)
-                    print ('f=', f)
-                    print ('h=', h)
+                    # print ('g=', g)
+                    # print ('f=', f)
+                    # print ('h=', h)
                     await message.channel.send('utilisateur ' + str(top3NamesQall[challengeprec][g]) +  ' Top ' + str(f) + ' a '+str(h) + ' points' )
                     h -= 1
                     f += 1
@@ -379,7 +377,6 @@ async def on_message(message) :
              and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916, clara_oswald) :
             # and prof_grp_id in [y.id for y in Member(message.author).roles] or dev_grp_id in [y.id for y in Member(message.author).roles] :
             # and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) or prof_grp_id in [y.id for y in message.author.roles] or dev_grp_id in [y.id for y in message.author.roles] :
-             # and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) :
             if (current_challenge >= 1) :
                 fini_challenge(top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
 
@@ -418,19 +415,18 @@ async def on_message(message) :
             if help_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
                         # if message.author.name in totdico and current_challenge > 1 :
                         if message.author.name in totdico and current_challenge > 1 :
-                            print(totdico[message.author.name])
                             totdico[message.author.name] += 2
                             await message.channel.send('Bravo à ' + message.author.name + ' Kara Danvers : est allé vous cherchez 2 points bonus en volant\
                                 \n c\'est bien de lire l\'aide :)')
                             await message.channel.send(file=discord.File('./assets/kara.gif'))
-                            help_message = message.author.name + ' a gagné 2 pts avec help, au challenge:' + str(current_challenge) + ' car ' + str(help_counter) + ' fois'
+                            help_message = message.author.name + ' a gagné 2 pts avec help, au challenge: ' + str(current_challenge) + ' car ' + str(help_counter) + ' fois'
                             await client.get_user(myAuthorId).send(help_message)
                         elif message.author.name not in totdico and message.author.name not in top3NamesQY : 
                             totdico[message.author.name] = 3
                             await message.channel.send('Bravo à ' + message.author.name + ' Kara Danvers : est allé vous cherchez vos 3 er points bonus en volant \
                                 \n c\'est bien il faut toujours lire la consigne avant de commencer')
                             await message.channel.send(file=discord.File('./assets/kara.gif'))
-                            help_message = message.author.name + ' a gagné ses 3ers pts avec help, au challenge:' + str(current_challenge) + ' car '+ str(help_counter) + ' fois'
+                            help_message = message.author.name + ' a gagné ses 3ers pts avec help, au challenge: ' + str(current_challenge) + ' car '+ str(help_counter) + ' fois'
                             await client.get_user(myAuthorId).send(help_message)
 
 
@@ -515,13 +511,13 @@ async def on_message(message) :
                 # podiumsave(message.author.name)
                 mytime = datetime.now()
                 xdebut_time = 00
-                xfinal_time = 5
+                xfinal_time = 22
                 if xdebut_time <= mytime.hour <= xfinal_time :
                     print ('heure! :', mytime.hour)#debug
                     await message.channel.send('Vos points ont été doublés')
                     await client.get_user(myAuthorId).send(message.author.name + " points doublé au Challenge " + str(current_challenge))
                 else :
-                    print ('elseheure :', zetime)#debug
+                    print ('elseheure :', mytime)#debug
 
             if len(top3NamesQY) > 3 :
                 await message.channel.send(repbotlate1)
