@@ -126,7 +126,7 @@ def podiumsave(message_author_name) : #time comp added
     global debut_time, debut_final, zetime, heure_bool
     zetime = datetime.now()
     debut_time = 00 #22 utc
-    final_time = 22 #3 utc
+    final_time = 5 #3 utc
     heure_bool = 0
     if debut_time <= zetime.hour <= final_time :
         print ('heure! :', zetime.hour)
@@ -244,16 +244,19 @@ async def on_message(message) :
             try :
                 o = 1
                 s = ''
+                formatage = ''
                 for cle, valeur in sorted(totdico.items(), key = itemgetter(1), reverse = True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
                     if valeur > 0 and current_challenge > 1 : #ne met ni d'erreur mais n'affiche pas que les valeurs supérieurs à 0 pour bloquer l'affichage 
-                        print('clé', cle)
-                        print('valeur', valeur)
+                        # print('clé', cle)
+                        # print('valeur', valeur)
                         # print ('utilisateur {}'.format(cle) +  ' Top ' + str(o) + ' a ' + '{} points'.format(valeur) )
-                        await message.channel.send('utilisateur {}'.format(cle) + ' Top '+str(o) + ' a ' + '{} points'.format(valeur) )
-                        s += str(cle) + ' Top ' + str(o) + ' a ' + str(valeur) + ' points' + '\n'
-                        await message.channel.send(s)
+                        # await message.channel.send('utilisateur {}'.format(cle) + ' Top '+str(o) + ' a ' + '{} points'.format(valeur) )
+                        # formatage+='user {}'.format(cle) + ' Top '+str(o) + ' a ' + '{} points'.format(valeur) + '\n'
+                        # await message.channel.send(formatage)
+                        s = s + str(cle) + ' Top ' + str(o) + ' a ' + str(valeur) + ' points' + '\n'
                         o += 1
-
+                await message.channel.send(s)
+                
                 if podium_global_counter in (1, 2, 7, 9, 14, 15, 21, 23, 31, 39, 41, 45, 50, 53, 55, 60, 65, 67, 78, 85) and message.author.id not in (brice_identifiant, brice_identifiant) :
                             if message.author.name in totdico :
                                 # print(totdico[message.author.name])
@@ -413,7 +416,7 @@ async def on_message(message) :
                 '```!podium 0 Affiche le podium du dernier challenge terminé pour tous les utilisateurs```' + '```Challenge!! lancer le challenge ou passer le challenge admin/prof```'\
                 + '```Podium!!! voir le podium du challenge actuel pour les admin/prof```')
             if help_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
-                        # if message.author.name in totdico and current_challenge > 1 :
+                        # if message.author.name in totdico  :
                         if message.author.name in totdico and current_challenge > 1 :
                             totdico[message.author.name] += 2
                             await message.channel.send('Bravo à ' + message.author.name + ' Kara Danvers : est allé vous cherchez 2 points bonus en volant\
@@ -511,7 +514,7 @@ async def on_message(message) :
                 # podiumsave(message.author.name)
                 mytime = datetime.now()
                 xdebut_time = 00
-                xfinal_time = 22
+                xfinal_time = 5
                 if xdebut_time <= mytime.hour <= xfinal_time :
                     print ('heure! :', mytime.hour)#debug
                     await message.channel.send('Vos points ont été doublés')
