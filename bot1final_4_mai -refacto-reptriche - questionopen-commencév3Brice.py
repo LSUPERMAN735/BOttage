@@ -5,12 +5,14 @@
 #sort added for podiumglobal and added !podium x, podiumsave dans challenge!!
 #lisibility added, gif, time easteregg
 #crédits Amine ABDOUL-AZID, Brice AUGUSTIN, UPEC
+#licence MIT à copier avec les termes
 import sys
 import discord
 from discord.ext import commands
 from operator import itemgetter
 import asyncio
 from datetime import datetime
+import random
 
 tok = open("token.txt", "r")
 token = tok.readlines()
@@ -30,16 +32,32 @@ clara_oswald = 718446180429725746
 prof_grp_id = 690133601605386264
 dev_grp_id = 719298857191604274
 
+role_roi = 719298857191604274
+
 
 top3NamesQall = []
 ontBonMaisTropTardQall = []
 perduAnImporteQuelQall = []
 #variable
 current_challenge = 0
+#easteregg counter
 exp_counter_podium = 0
 help_counter = 0
 podium_global_counter = 0
 double_exp_podium_counter = 0
+credits_counter = 0
+show_counter = 0
+
+perdu_counter = 0
+block_yes_or_no = 0
+
+#liste to block to one easteregg for people by categories
+credits_gagnant = []
+exp_gagnant_podium = []
+help_gagnant = []
+podium_global_gagnant = []
+double_exp_podium_gagnant = []
+show_gagnant = []
 ####
 # Events
 ####
@@ -82,8 +100,8 @@ def reptricheur(top3NamesQx, repx,  msg) :
         print (reptriche1)
         print (msg.author.name, reptriche2)
         return False# valeur qui bloque la questionx si l'utilisateur tente de rerépondre bon
-    else: 
-        return True
+    else: #commentable
+        return True #commentable
 
         #casefold pour ignorer la casse majuscule, minuscule ou mélangées
 def repondre_quest(msg, repx, top3NamesQx, ontBonMaisTropTardQx, Qx):
@@ -91,8 +109,8 @@ def repondre_quest(msg, repx, top3NamesQx, ontBonMaisTropTardQx, Qx):
         print (msggagne,Qx)
         print (msg.author.name)
         top3NamesQx.append(msg.author.name)
-        print ('gagné', Qx, '=', len(top3NamesQx))
-        print ('gagné', Qx, 'mais late =', len(ontBonMaisTropTardQx))
+        print ('gagné', Qx, '=', len(top3NamesQx)) #debug
+        print ('gagné', Qx, 'mais late =', len(ontBonMaisTropTardQx)) #debug
         return True
 
 def fichreaderq1() :
@@ -131,8 +149,8 @@ def podiumsave(message_author_name) : #time comp added
     if debut_time <= zetime.hour <= final_time :
         print ('heure! :', zetime.hour)
         heure_bool += 1
-    else :
-        print ('elseheure! :', zetime.hour)
+    else :#commentable
+        print ('elseheure! :', zetime.hour)#commentable
 
     i = 3#score
     print ('top3NameQY=', top3NamesQY)
@@ -148,13 +166,7 @@ def podiumsave(message_author_name) : #time comp added
                 except KeyError :
                     totdico[s] = i
                     i -= 1
-                    print ('exception')
-            # elif current_challenge == 1 and message_author_name not in totdico and heure_bool == 0 :
-            #     totdico[s] = i
-            #     i -= 1
-            # elif current_challenge == 1 and message_author_name in totdico and heure_bool == 0  :
-            #     totdico[s] = totdico[s] + i
-            #     i -= 1
+                    print ('exception')#debug
 
             elif current_challenge >= 1 and heure_bool == 1 : 
                 try: 
@@ -163,15 +175,9 @@ def podiumsave(message_author_name) : #time comp added
                 except KeyError :
                     totdico[s] = i * 2
                     i -= 1
-                    print ('exception')
-            # elif current_challenge == 1 and message_author_name not in totdico and heure_bool == 1 :
-            #     totdico[s] = i * 2
-            #     i -= 1
-            # elif current_challenge == 1 and message_author_name in totdico and heure_bool == 1 :
-            #     totdico[s] = totdico[s] + i * 2
-            #     i -= 1
-            else :
-                print ('fini')
+                    print ('exception')#debug
+            else :#commentable
+                print ('fini')#commentable
     return totdico
 
 def podiumnum(message) :
@@ -181,9 +187,9 @@ def podiumnum(message) :
     podiuming = delimited[0]
     numberpodiuming = delimited[1]
     numberpodium = int(numberpodiuming)
-    print ("message= " + message.content)
-    print ("podiuming= " + podiuming)
-    print ("numberpodium= " + numberpodiuming)
+    print ("message= " + message.content)#debug
+    print ("podiuming= " + podiuming)#debug
+    print ("numberpodium= " + numberpodiuming) #debug
     return typed, delimited, podiuming, numberpodiuming, numberpodium
 
 def fact_malus(totdico, message_author_name) : # sert à retirer les points malus si réponse dans le salon sauf si challenge 1
@@ -202,12 +208,14 @@ async def on_ready() :
 async def on_message(message) :
     try:
         # global appel_membre, appel, absents, presents
+        global perdu_counter, block_yes_or_no
+        global credits_gagnant, exp_gagnant_podium, help_gagnant, podium_global_gagnant, double_exp_podium_gagnant, show_gagnant
         global exp_counter_podium, help_counter, double_exp_podium_counter, podium_global_counter, debut_time, final_time, zetime, heure_bool
         global o
         global top3NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall, poder
         global current_challenge, totdico, top3NamesQY
-        
-        if message.author.id != BOTman_id:
+        zeid = message.author.id
+        if message.author.id != BOTman_id :
             print ("Je suis", message.author.name)
             print ("Actuellement les valeurs sont :")
             print ("my_channel_id, BOTman_id, myAuthorId", \
@@ -216,7 +224,7 @@ async def on_message(message) :
             print ("Message initial", message)
 
         if message.content.casefold() == 'Podium!!!'.casefold() \
-            and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) : #current_podiums only for admins/dev/teachers
+            and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) and role_roi in [y.id for y in message.author.roles] : #current_podiums only for admins/dev/teachers
             f = 1#cbeme
             g = 0#indice
             h = 3#score
@@ -231,12 +239,11 @@ async def on_message(message) :
                 # await message.channel.send(file=discord.File('./assets/done.gif'))
 
         
-        if message.content.casefold() == 'PodiumGlobal!!'.casefold() :
+        if message.content.casefold() == 'PodiumGlobal!!'.casefold() and role_roi in [y.id for y in message.author.roles] :
             podium_global_counter += 1
             # print ('podium_global_counter', podium_global_counter)
             # and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916, clara_oswald) : #podium global par les admins
             # and prof_grp_id in [y.id for y in Member(message.author).roles] or dev_grp_id in [y.id for y in Member(message.author).roles] : #podium global par les admins
-            # and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) or prof_grp_id in [y.id for y in message.author.roles] or dev_grp_id in [y.id for y in message.author.roles] : #podium global par les admins
             # and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) or prof_grp_id in [y.id for y in message.author.roles] or dev_grp_id in [y.id for y in message.author.roles] : #podium global par les admins
             if current_challenge == 1 :
                 await message.channel.send("Veuillez attendre que le challenge soit terminé ou faites Podium!!! si vous êtes prof")
@@ -256,30 +263,45 @@ async def on_message(message) :
                         s = s + str(cle) + ' Top ' + str(o) + ' a ' + str(valeur) + ' points' + '\n'
                         o += 1
                 await message.channel.send(s)
+                if s == '' : 
+                    await message.channel.send("Personne d'autres a gagné") 
+                    await message.channel.send(file=discord.File('./assets/done.gif')) 
+                #Impossible de trouver l'élément dans la liste
                 
                 if podium_global_counter in (1, 2, 7, 9, 14, 15, 21, 23, 31, 39, 41, 45, 50, 53, 55, 60, 65, 67, 78, 85) and message.author.id not in (brice_identifiant, brice_identifiant) :
                             if message.author.name in totdico :
                                 # print(totdico[message.author.name])
                                 totdico[message.author.name] += 2
-                                await message.channel.send('Bravo à ' + message.author.name + ' BENDER : est allé vous cherchez 2 points bonus dans le FUTURama\
+                                # await message.channel.send('Bravo à ' + message.author.name + ' BENDER : est allé vous cherchez 2 points bonus dans le FUTURama\
+                                #     \n c\'est bien de checker :)')
+                                await client.get_user(message.author.name).send('Bravo à ' + message.author.name + ' BENDER : est allé vous cherchez 2 points bonus dans le FUTURama\
                                     \n c\'est bien de checker :)')
-                                await message.channel.send(file=discord.File('./assets/bender.gif'))
+                                # await message.channel.send(file=discord.File('./assets/bender.gif'))
+                                await client.get_user(message.author.name).send(file=discord.File('./assets/bender.gif'))
                                 podium_global_message = message.author.name + ' a gagné 2 pts avec podiumglob, current_challenge: '+ str(current_challenge) + ' car '\
                                     + str(podium_global_counter) + ' fois'
                                 await client.get_user(myAuthorId).send(podium_global_message)
+                                await client.get_user(brice_identifiant).send(podium_global_message)
                             elif message.author.name not in totdico and message.author.name not in top3NamesQY : 
                                 totdico[message.author.name] = 2
-                                await message.channel.send('Bravo à ' + message.author.name + ' BENDER : est allé vous cherchez vos 2 er points bonus dans le FUTURama\
+                                # await message.channel.send('Bravo à ' + message.author.name + ' BENDER : est allé vous cherchez vos 2 er points bonus dans le FUTURama\
+                                #     \n c\'est bien de checker')
+                                await client.get_user(message.author.name).send('Bravo à ' + message.author.name\
+                                     + ' BENDER : est allé vous cherchez vos 2 er points bonus dans le FUTURama\
                                     \n c\'est bien de checker')
-                                await message.channel.send(file=discord.File('./assets/bender.gif'))
+                                # await message.channel.send(file=discord.File('./assets/bender.gif'))
+                                await client.get_user(message.author.name).send(file=discord.File('./assets/bender.gif'))
                                 podium_global_message = message.author.name + ' a gagné ses 3ers pts avec podiumglob, current_challenge: '+ str(current_challenge) + ' car '\
                                     + str(podium_global_counter) + ' fois'
                                 await client.get_user(myAuthorId).send(podium_global_message)
+                                await client.get_user(brice_identifiant).send(podium_global_message)
                                 
             except (IndexError) :
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
+                await message.channel.send(file=discord.File('./assets/done.gif'))
 
-        if message.content.casefold() == '!!podium'.casefold() :
+
+        if message.content.casefold() == '!!podium'.casefold() and role_roi in [y.id for y in message.author.roles] :
             double_exp_podium_counter += 1
             # print ('double_exp_podium_counter', double_exp_podium_counter)
             f = 1#cbeme
@@ -297,19 +319,26 @@ async def on_message(message) :
                 if double_exp_podium_counter in (1, 2, 7, 9, 13, 15, 25, 29, 31, 39, 41, 45, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant):
                     if message.author.name in totdico and current_challenge > 1 :
                         totdico[message.author.name] += 2
-                        await message.channel.send('Bravo à ' + message.author.name + ' Phoebe Halliwell : est allé vous cherchez 2 points bonus avec sa magie :)')
-                        await message.channel.send(file=discord.File('./assets/charmed2.gif'))
+                        # await message.channel.send('Bravo à ' + message.author.name + ' Phoebe Halliwell : est allé vous cherchez 2 points bonus avec sa magie :)')
+                        await client.get_user(message.author.name).send('Bravo à ' + message.author.name + ' Phoebe Halliwell : est allé vous cherchez 2 points bonus avec sa magie :)')
+                        # await message.channel.send(file=discord.File('./assets/charmed2.gif'))
+                        await client.get_user(message.author.name).send(file=discord.File('./assets/charmed2.gif'))
                         double_exp_podium_message = message.author.name + ' a gagné 2 pts avec podiumprec, current_challenge: '+ str(current_challenge) + ' car '\
                              + str(double_exp_podium_counter) + ' fois'
                         await client.get_user(myAuthorId).send(double_exp_podium_message)
+                        await client.get_user(brice_identifiant).send(double_exp_podium_message)
                          
                     elif message.author.name not in totdico and message.author.name not in top3NamesQY : 
                         totdico[message.author.name] = 3
-                        await message.channel.send('Bravo à ' + message.author.name + ' Phoebe Halliwell : est allé vous cherchez vos 3 er points bonus avec sa magie')
-                        await message.channel.send(file=discord.File('./assets/charmed2.gif'))
+                        # await message.channel.send('Bravo à ' + message.author.name + ' Phoebe Halliwell : est allé vous cherchez vos 3 er points bonus avec sa magie')
+                        await client.get_user(message.author.name).send('Bravo à ' + message.author.name + \
+                            ' Phoebe Halliwell : est allé vous cherchez vos 3 er points bonus avec sa magie')
+                        # await message.channel.send(file=discord.File('./assets/charmed2.gif'))
+                        await client.get_user(message.author.name).send(file=discord.File('./assets/charmed2.gif'))
                         double_exp_podium_message = message.author.name + ' a gagné ses 3ers pts avec podiumprec, current_challenge: '+ str(current_challenge) + ' car '\
                              + str(double_exp_podium_counter) + ' fois'
                         await client.get_user(myAuthorId).send(double_exp_podium_message)
+                        await client.get_user(brice_identifiant).send(double_exp_podium_message)
 
                 while h <= 3 and f <= 3 and g < 3 :
                     # print ('g=', g)
@@ -325,7 +354,7 @@ async def on_message(message) :
                 await message.channel.send(file=discord.File('./assets/done.gif'))
                 
                 #afficher le podium du challenge terminé que l'on souhaite voir
-        if message.content.startswith('!podium') :
+        if message.content.startswith('!podium') and role_roi in [y.id for y in message.author.roles] :
             exp_counter_podium += 1
             print('podium', exp_counter_podium)
             podiumnum(message)
@@ -352,16 +381,22 @@ async def on_message(message) :
                         totdico[message.author.name] += 2
                         # print("i'm368")
                         await message.channel.send('Bravo à ' + message.author.name + ' Clara OSWALD : est allé vous cherchez 2 points bonus dans le Tardis')
+                        await client.get_user(message.author.name).send('Bravo à ' + message.author.name + ' Clara OSWALD : est allé vous cherchez 2 points bonus dans le Tardis')
                         await message.channel.send(file=discord.File('./assets/tardis.gif'))
+                        await client.get_user(message.author.name).send(file=discord.File('./assets/tardis.gif'))
                         exp_podium_message=message.author.name + '2 points grâce à !Podium \n gagné grâce à podiumx car ' + str(exp_counter_podium) + ' fois'
                         await client.get_user(myAuthorId).send(exp_podium_message)
+                        await client.get_user(brice_identifiant).send(exp_podium_message)
 
                     elif message.author.name not in totdico and message.author.name not in top3NamesQY :
                         totdico[message.author.name] = 2
                         await message.channel.send('Bravo à ' + message.author.name + ' Clara OSWALD : est allé vous cherchez vos 2 er points bonus dans le Tardis')
+                        await client.get_user(message.author.name).send('Bravo à ' + message.author.name + ' Clara OSWALD : est allé vous cherchez vos 2 er points bonus dans le Tardis')
                         await message.channel.send(file=discord.File('./assets/tardis.gif'))
+                        await client.get_user(message.author.name).send(file=discord.File('./assets/tardis.gif'))
                         exp_podium_message=message.author.name + 'ses 2er points grâce à !Podium \n gagné grâce à podiumx car ' + str(exp_counter_podium) + ' fois'
                         await client.get_user(myAuthorId).send(exp_podium_message)
+                        await client.get_user(brice_identifiant).send(exp_podium_message)
 
                 while h <= 3 and f <= 3 and g < 3 :
                     # print ('g=', g)
@@ -374,6 +409,7 @@ async def on_message(message) :
             except (IndexError) :
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
                 await message.channel.send(file=discord.File('./assets/done.gif'))
+                
 
     # Pour les personnes qui peuvent lancer le Challenge
         if message.content.casefold() == 'Challenge!!'.casefold() \
@@ -408,30 +444,90 @@ async def on_message(message) :
 
        
        
-        if message.content.casefold() == 'help!!'.casefold() :
+        if message.content.casefold() == 'help!!'.casefold() and role_roi in [y.id for y in message.author.roles] :
             help_counter += 1
             await message.channel.send('```!!podium affiche le podium précédent à partir du Challenge 2 pour tous les utilisateurs```'+\
                 '```!podium x affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```'\
                 + "```PodiumGlobal!! affiche le podium Global des challenges terminés destinés pour tous les utilisateurs```" +\
-                '```!podium 0 Affiche le podium du dernier challenge terminé pour tous les utilisateurs```' + '```Challenge!! lancer le challenge ou passer le challenge admin/prof```'\
+                '```!podium 0 Affiche le podium du dernier challenge terminé pour tous les utilisateurs```' +\
+                 '```Show : Affiche les consignes du challenge en cours pour tous les utilisateurs ```'+\
+                    '```Credits!! : Affiche les crédits concepteur pour tous les utilisateurs```'+\
+                    '```Challenge!! lancer le challenge ou passer le challenge admin/prof```'\
                 + '```Podium!!! voir le podium du challenge actuel pour les admin/prof```')
             if help_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
                         # if message.author.name in totdico  :
                         if message.author.name in totdico and current_challenge > 1 :
                             totdico[message.author.name] += 2
-                            await message.channel.send('Bravo à ' + message.author.name + ' Kara Danvers : est allé vous cherchez 2 points bonus en volant\
+                            
+                            # await message.channel.send('Bravo à ' + message.author.name + ' Kara Danvers : est allé vous cherchez 2 points bonus en volant\
+                            #     \n c\'est bien de lire l\'aide :)')
+                            await client.get_user(zeid).send('Bravo à ' + message.author.name + ' Kara Danvers : est allé vous cherchez 2 points bonus en volant\
                                 \n c\'est bien de lire l\'aide :)')
-                            await message.channel.send(file=discord.File('./assets/kara.gif'))
+                            # await message.channel.send(file=discord.File('./assets/kara.gif'))
+                            await client.get_user(zeid).send(file=discord.File('./assets/kara.gif'))
                             help_message = message.author.name + ' a gagné 2 pts avec help, au challenge: ' + str(current_challenge) + ' car ' + str(help_counter) + ' fois'
                             await client.get_user(myAuthorId).send(help_message)
+                            await client.get_user(brice_identifiant).send(help_message)
                         elif message.author.name not in totdico and message.author.name not in top3NamesQY : 
                             totdico[message.author.name] = 3
-                            await message.channel.send('Bravo à ' + message.author.name + ' Kara Danvers : est allé vous cherchez vos 3 er points bonus en volant \
-                                \n c\'est bien il faut toujours lire la consigne avant de commencer')
-                            await message.channel.send(file=discord.File('./assets/kara.gif'))
+                            # await message.channel.send('Bravo à ' + message.author.name + ' Kara Danvers : est allé vous cherchez vos 3 er points bonus en volant \
+                            #     \n c\'est bien il faut toujours lire la consigne avant de commencer')
+                            await client.get_user(zeid).send('Bravo à ' + message.author.name + ' Kara Danvers : est allé vous cherchez vos 3 er points bonus en volant\
+                                \n c\'est bien de lire l\'aide :)')
+                            # await message.channel.send(file=discord.File('./assets/kara.gif'))
+                            await client.get_user(zeid).send(file=discord.File('./assets/kara.gif'))
                             help_message = message.author.name + ' a gagné ses 3ers pts avec help, au challenge: ' + str(current_challenge) + ' car '+ str(help_counter) + ' fois'
                             await client.get_user(myAuthorId).send(help_message)
+                            await client.get_user(brice_identifiant).send(help_message)
+        
+        if message.content.casefold() == 'credits!!'.casefold() and role_roi in [y.id for y in message.author.roles] :
+            await message.channel.send('Créé par Amine AA/ABDOUL-AZID, Brice Augustin, amine.abdoul-azid@etu.u-pec.fr/brice.augustin@u-pec.fr UPEC Copyleft https://github.com/LSUPERMAN735')
+            credits_counter += 1
+            if help_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
+            if message.author.name in totdico and current_challenge > 1 and message.author.name not in credits_gagnant :
+                totdico[message.author.name] += 2
+                credits_gagnant +=  message.author.name
+                await client.get_user(zeid).send('Bravo à ' + message.author.name + ' Alan : vous fait mangé 2 points bonus \
+                    \n c\'est bien de se renseigner sur les créateurs :)')
+                await client.get_user(zeid).send(file=discord.File('./assets/alan.gif'))
+                credits_message = message.author.name + ' a gagné 2 pts avec credits, au challenge: ' + str(current_challenge) + ' car ' + str(credits_counter) + ' fois'
+                await client.get_user(myAuthorId).send(credits_message)
+                await client.get_user(brice_identifiant).send(credits_message)
+            elif message.author.name not in totdico and message.author.name not in top3NamesQY and message.author.name not in credits_gagnant : 
+                totdico[message.author.name] = 3
+                credits_gagnant +=  message.author.name
+                await client.get_user(zeid).send('Bravo à ' + message.author.name + ' Alan : vous fait mangé 3 er points bonus \
+                    \n c\'est bien de se renseigner sur les créateurs :)')
+                await client.get_user(zeid).send(file=discord.File('./assets/alan.gif'))
+                credits_message = message.author.name + ' a gagné ses 3ers pts avec credits, au challenge: ' + str(current_challenge) + ' car '+ str(credits_counter) + ' fois'
+                await client.get_user(myAuthorId).send(credits_message)
+                await client.get_user(brice_identifiant).send(credits_message)
+            elif message.author.name in totdico and current_challenge > 1 and message.author.name in credits_gagnant :
+                await client.get_user(zename).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
+                credits_counter -= 1
 
+        if message.content.casefold() == 'show!!'.casefold() and role_roi in [y.id for y in message.author.roles] :
+            await message.channel.send(listchallengeq[current_challenge])
+            show_counter += 1
+            if message.author.name in totdico and current_challenge > 1 and message.author.name not in show_gagnant :
+                totdico[message.author.name] += 2
+                show_gagnant +=  message.author.name
+                await client.get_user(zeid).send('Bravo à ' + message.author.name + ' Alan : vous fait mangé 2 points bonus :)')
+                await client.get_user(zeid).send(file=discord.File('./assets/natsu.gif'))
+                show_message = message.author.name + ' a gagné 2 pts avec show, au challenge: ' + str(current_challenge) + ' car ' + str(show_counter) + ' fois'
+                await client.get_user(myAuthorId).send(show_message)
+                await client.get_user(brice_identifiant).send(show_message)
+            elif message.author.name not in totdico and message.author.name not in top3NamesQY and message.author.name not in credits_gagnant : 
+                totdico[message.author.name] = 3
+                show_gagnant +=  message.author.name
+                await client.get_user(zeid).send('Bravo à ' + message.author.name + ' Natsu : vous fait mangé 3 er points bonus :)')
+                await client.get_user(zeid).send(file=discord.File('./assets/natsu.gif'))
+                show_message = message.author.name + ' a gagné ses 3ers pts avec show, au challenge: ' + str(current_challenge) + ' car '+ str(show_counter) + ' fois'
+                await client.get_user(myAuthorId).send(show_message)
+                await client.get_user(brice_identifiant).send(show_message)
+            elif message.author.name in totdico and current_challenge > 1 and message.author.name in show_gagnant :
+                await client.get_user(zename).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
+                show_counter -= 1
 
         # if reaction.emoji == '👍' :
         #     if message.author.name in totdico and current_challenge > 1 :
@@ -456,16 +552,16 @@ async def on_message(message) :
             #     await message.channel.send(file=discord.File('./assets/tardise.gif'))
         
         
-        # print ('cr',current_challenge)
+        # print ('cr',current_challenge)#debug
         # if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and current_challenge < len(listchallengeq) :
-        if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 :
+        if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and role_roi in [y.id for y in message.author.roles] :#boucle limitant les réponses dans le salon avec malus
         # if message.content == listchallenger[current_challenge-1] or message.content == 'la bonne réponse est ' + listchallenger[current_challenge - 1] and message.channel.id == my_channel_id3 :
         # if message.content.casefold() == listchallenger[current_challenge].casefold() :
         # print ('listcr', listchallenger[current_challenge-1])
             print (message.content)
             await message.delete()#discord.errors.Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
             await message.channel.send(message.author.name + " Vous devez saisir la réponse en message privée!!! \n -2Points ROHH!! ```Attention Bart tu vas avoir une punition ...```")
-            await message.channel.send(file=discord.File('./assets/bartpu.gif'))
+            await message.channel.send(file=discord.File('./assets/bartpu.gif'))#sauf bart en publique
             #boucle while Clodomir permet de retirer aux utilisateurs dans totdico les malus des gens qui répondent dans le channel
             # if message.author.name in totdico :
             #     totdico[message.author.name] -= 2
@@ -479,6 +575,7 @@ async def on_message(message) :
 
         # Dans le channel privée et si ce n'est pas le bot
         if isinstance(message.channel, discord.DMChannel) and message.author.id != BOTman_id :
+        # if isinstance(message.channel, discord.DMChannel) and message.author.id != BOTman_id and role_roi in [y.id for y in message.author.roles] :
             print ("Message privé : " + message.author.name + ":" + message.content)
             fichreaderq1()
             listchallengerx = listchallenger[current_challenge-1]
@@ -510,7 +607,8 @@ async def on_message(message) :
                 # await message.channel.send(msggagne+str(current_challenge))      
                 await message.channel.send(msggagne + str(current_challenge) + "\n" + homer)  
                 await message.channel.send(file=discord.File('./assets/homer.gif'))
-                await client.get_user(myAuthorId).send(message.author.name + " a gagné au Challenge " + str(current_challenge))
+                await client.get_user(myAuthorId).send(message.author.name + " a bon au Challenge " + str(current_challenge))
+                await client.get_user(brice_identifiant).send(message.author.name + " a bon au Challenge " + str(current_challenge))
                 # podiumsave(message.author.name)
                 mytime = datetime.now()
                 xdebut_time = 00
@@ -519,8 +617,9 @@ async def on_message(message) :
                     print ('heure! :', mytime.hour)#debug
                     await message.channel.send('Vos points ont été doublés')
                     await client.get_user(myAuthorId).send(message.author.name + " points doublé au Challenge " + str(current_challenge))
-                else :
-                    print ('elseheure :', mytime)#debug
+                    await client.get_user(brice_identifiant).send(message.author.name + " points doublé au Challenge " + str(current_challenge))
+                else :#commentable
+                    print ('elseheure :', mytime)#debug commentable
 
             if len(top3NamesQY) > 3 :
                 await message.channel.send(repbotlate1)
@@ -529,13 +628,18 @@ async def on_message(message) :
             
             if message.content.casefold() == listchallengerx.casefold() and reptricheur(top3NamesQY, listchallengerx, message) != True :
             #     await message.channel.send(homer)      
-                  truc = None#cette fonction sert à n'envoyer que si c'est la mauvaise réponseet ou l'utilisateur reparticipe évite le else
-            elif message.author.name in top3NamesQY : # cette fonction permet de ne pas afficher de message au tricheur
-                arretedeparticiper = None#arretedeparticiper bordel permet d'utiliser cette fonction
+                truc = None#cette fonction sert à n'envoyer que si c'est la mauvaise réponseet ou l'utilisateur reparticipe 
+            elif message.author.name in top3NamesQY : # cette fonction permet de ne pas afficher de message au tricheur et évite le else
+                arretedeparticiper = None #arretedeparticiper bordel permet d'utiliser cette fonction
             else :
+                perdu_images = ['./assets/perdu.gif', './assets/ohno.gif', './assets/ohnoo.gif']
+                perdu_counter += 1
                 await message.channel.send('Mauvaise réponse') 
                 perduAnImporteQuelQY.append(message.author.name)
-                await message.channel.send(file=discord.File('./assets/perdu.gif'))
+                # await message.channel.send(file=discord.File(random.choice(perdu_images)))
+                if perdu_counter in (1, 3, 5, 8, 9, 11, 13, 15, 16, 18, 20, 25, 26, 29, 30, 33 , 35, 39, 41, 43, 45, 47, 49, 50, 55, 60, 65, 67, 78, 85, 90, 95, 100, 105, 107, 108, 109,\
+                     111, 113, 115, 121, 123, 125, 127, 129, 130, 135, 140, 145, 150, 165, 175, 184, 190, 195, 200, 201, 202, 203, 204) : 
+                    await message.channel.send(file=discord.File(random.choice(perdu_images)))
 
 
             print ("nbQxgagnant, top3NamesQY, ontBonMaisTropTardQY,  perduAnImporteQuelQY", "totdico")
@@ -563,8 +667,8 @@ async def on_message(message) :
             print ("Message du bot :", message.content)
             # await message.add_reaction(emoji = '\N{THUMBS UP SIGN}') 
         #si channel n'est le channel du prof/le mien par Augustin
-        elif message.channel.id != my_channel_id :
-            return
+        elif message.channel.id != my_channel_id :#commentable
+            return#commentable
         # Tous les autres cas
         else :
             print ("Tous les autres cas :", message.content)
