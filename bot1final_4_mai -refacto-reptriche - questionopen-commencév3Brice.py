@@ -33,8 +33,7 @@ clara_oswald = 718446180429725746
 
 prof_grp_id = 690133601605386264
 dev_grp_id = 719298857191604274
-
-role_roi = 719298857191604274
+role_roi_id = 719298857191604274
 
 
 top3NamesQall = []
@@ -220,7 +219,7 @@ async def on_message(message) :
             print ("Message initial", message)
 
         if message.content.casefold() == 'Podium!!!'.casefold() \
-            and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) and role_roi in [y.id for y in message.author.roles] : #current_podiums only for admins/dev/teachers
+            and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) and role_roi_id in [y.id for y in message.author.roles] : #current_podiums only for admins/dev/teachers
             f = 1#cbeme
             g = 0#indice
             h = 3#score
@@ -234,7 +233,7 @@ async def on_message(message) :
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
 
         
-        if message.content.casefold() == 'PodiumGlobal!!'.casefold() and role_roi in [y.id for y in message.author.roles] :
+        if message.content.casefold() == 'PodiumGlobal!!'.casefold() and role_roi_id in [y.id for y in message.author.roles] :
             podium_global_counter += 1
             # print ('podium_global_counter', podium_global_counter)
             r.id in (myAuthorId, brice_identifiant, 480045172630224916) or prof_grp_id in [y.id for y in message.author.roles] or dev_grp_id in [y.id for y in message.author.roles] : #podium global par les admins
@@ -286,7 +285,7 @@ async def on_message(message) :
                 await message.channel.send(file=discord.File('./assets/done.gif'))
 
 
-        if message.content.casefold() == '!!podium'.casefold() and role_roi in [y.id for y in message.author.roles] :
+        if message.content.casefold() == '!!podium'.casefold() and role_roi_id in [y.id for y in message.author.roles] :
             double_exp_podium_counter += 1
             # print ('double_exp_podium_counter', double_exp_podium_counter)
             f = 1#cbeme
@@ -336,7 +335,7 @@ async def on_message(message) :
                 await message.channel.send(file=discord.File('./assets/done.gif'))
                 
                 #afficher le podium du challenge terminé que l'on souhaite voir
-        if message.content.startswith('!podium') and role_roi in [y.id for y in message.author.roles] :
+        if message.content.startswith('!podium') and role_roi_id in [y.id for y in message.author.roles] :
             exp_counter_podium += 1
             print ('podium', exp_counter_podium)
             podiumnum(message)
@@ -426,7 +425,7 @@ async def on_message(message) :
 
        
        
-        if message.content.casefold() == 'help!!'.casefold() and role_roi in [y.id for y in message.author.roles] :
+        if message.content.casefold() == 'help!!'.casefold() and role_roi_id in [y.id for y in message.author.roles] :
             help_counter += 1
             await message.channel.send('```!!podium affiche le podium précédent à partir du Challenge 2 pour tous les utilisateurs```'+\
                 '```!podium x affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```'\
@@ -459,7 +458,7 @@ async def on_message(message) :
                             await client.get_user(zeid).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
                             help_counter -= 1
         
-        if message.content.casefold() == 'credits!!'.casefold() and role_roi in [y.id for y in message.author.roles] :
+        if message.content.casefold() == 'credits!!'.casefold() and role_roi_id in [y.id for y in message.author.roles] :
             await message.channel.send('Créé par Amine AA/ABDOUL-AZID, Brice Augustin, amine.abdoul-azid@etu.u-pec.fr/brice.augustin@u-pec.fr UPEC Copyleft https://github.com/LSUPERMAN735 \
                 Licence MIT')
             credits_counter += 1
@@ -486,7 +485,7 @@ async def on_message(message) :
                     await client.get_user(zeid).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
                     credits_counter -= 1
 
-        if message.content.casefold() == 'show!!'.casefold() and role_roi in [y.id for y in message.author.roles] :
+        if message.content.casefold() == 'show!!'.casefold() and role_roi_id in [y.id for y in message.author.roles] :
             await message.channel.send(listchallengeq[current_challenge-1])
             show_counter += 1
             if show_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
@@ -537,7 +536,7 @@ async def on_message(message) :
         
         # print ('cr',current_challenge)#debug
         # if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and current_challenge < len(listchallengeq) :
-        if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and role_roi in [y.id for y in message.author.roles] :#boucle limitant les réponses dans le salon avec malus
+        if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and role_roi_id in [y.id for y in message.author.roles] :#boucle limitant les réponses dans le salon avec malus
             print (message.content)
             await message.delete()#discord.errors.Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
             await message.channel.send(zename + " Vous devez saisir la réponse en message privée!!! \n -2Points ROHH!! ```Attention Bart tu vas avoir une punition ...```")
