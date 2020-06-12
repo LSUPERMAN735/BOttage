@@ -276,10 +276,11 @@ async def on_message(message) :
                         # await message.channel.send(formatage)
                         s = s + str(cle) + ' Top ' + str(o) + ' a ' + str(valeur) + ' points' + '\n'
                         o += 1
-                await message.channel.send(s)
                 if s == '' : 
                     await message.channel.send("Personne d'autres a gagné") 
                     await message.channel.send(file=discord.File('./assets/done.gif')) 
+                else : 
+                    await message.channel.send(s)
                 #Impossible de trouver l'élément dans la liste
                 
                 if podium_global_counter in (1, 2, 7, 9, 14, 15, 21, 23, 31, 39, 41, 45, 50, 53, 55, 60, 65, 67, 78, 85) and message.author.id not in (brice_identifiant, brice_identifiant) :
@@ -469,6 +470,9 @@ async def on_message(message) :
             if isuniq_list[current_challenge] == 'uniq' :
                 await message.channel.send('Ce test est bloqué à une participation')
                 thisisuniq = 1
+            else :#commentable
+                block_it = []
+                thisuniq = 0
             current_challenge += 1
             init_list()
 
@@ -663,9 +667,10 @@ async def on_message(message) :
                 else :#commentable
                     print ('elseheure :', mytime)#debug commentable
             elif thisisuniq != 1 and repondre_quest(message, listchallengerx, top3NamesQY, ontBonMaisTropTardQY,'Q' + str(current_challenge)) == True : # si ce n'est pas une question uniqe
-                # await message.channel.send(msggagne+str(current_challenge))      
+                # await message.channel.send(msggagne+str(current_challenge))     
+                block_it = []
                 await message.channel.send(msggagne + str(current_challenge) + "\n" + homer)  
-                await message.channel.send(file=discord.File('./assets/homer.gif'))
+                await message.channel.send(file=discord.File('./assets/natsu.gif'))
                 await client.get_user(myAuthorId).send(zename + " a bon au Challenge " + str(current_challenge))
                 await client.get_user(brice_identifiant).send(zename + " a bon au Challenge " + str(current_challenge))
                 # podiumsave(zename)
