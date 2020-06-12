@@ -84,6 +84,10 @@ o = 1#cbeme
 totdico = {}
 thisisuniq = 0
 #définition des fonctions
+# if thisisuniq == 0 :
+#     print('imhere88 ')
+#     block_it = []
+#     thisuniq = 0
 
 def init_list() :
     global top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY
@@ -230,7 +234,9 @@ async def on_message(message) :
         zeid = message.author.id
         zename = message.author.name
         # block_it = []
-
+        if thisisuniq == 0 :
+            block_it = []
+            thisuniq = 0
         if message.author.id != BOTman_id :
             print ("Je suis", zename)
             print ("Actuellement les valeurs sont :")
@@ -467,15 +473,16 @@ async def on_message(message) :
                     print ('totdico', totdico)
                     print ("top3NamesQY!!", top3NamesQY)
                     block_it = []
-                    del block_it[:]
+                    # del block_it[:] #forcer le reset 
                 except (IndexError) :
                     print ("fini")#Impossible de trouver l'élément dans la liste
             if isuniq_list[current_challenge] == 'uniq' :
                 await message.channel.send('Ce test est bloqué à une participation')
                 thisisuniq = 1
             else :#bloc commentable
-                block_it = []
-                thisuniq = 0
+                # print('imhere 483')#debug
+                # block_it = []
+                thisisuniq = 0
             current_challenge += 1
             init_list()
 
@@ -648,7 +655,7 @@ async def on_message(message) :
             if reptricheur(top3NamesQY, listchallengerx, message) != True :
                 await message.channel.send(reptriche1) 
             # print('isuniq', isuniq)
-
+            print('thisisuniq', thisisuniq)
                     #si question uniq alors on laisse participer
             if zename not in block_it and thisisuniq == 1 and repondre_quest(message, listchallengerx, top3NamesQY, ontBonMaisTropTardQY,'Q' + str(current_challenge)) == True :
                 # await message.channel.send(msggagne+str(current_challenge))     
@@ -669,11 +676,11 @@ async def on_message(message) :
                     await client.get_user(brice_identifiant).send(zename + " points doublé au Challenge " + str(current_challenge))
                 else :#commentable
                     print ('elseheure :', mytime)#debug commentable
-            elif thisisuniq != 1 and repondre_quest(message, listchallengerx, top3NamesQY, ontBonMaisTropTardQY,'Q' + str(current_challenge)) == True : # si ce n'est pas une question uniqe
+            elif thisisuniq == 0 and repondre_quest(message, listchallengerx, top3NamesQY, ontBonMaisTropTardQY,'Q' + str(current_challenge)) == True : # si ce n'est pas une question uniqe
                 # await message.channel.send(msggagne+str(current_challenge))     
-                block_it = []
+                # block_it = []
                 await message.channel.send(msggagne + str(current_challenge) + "\n" + homer)  
-                await message.channel.send(file=discord.File('./assets/natsu.gif'))
+                await message.channel.send(file=discord.File('./assets/homerr.gif'))
                 await client.get_user(myAuthorId).send(zename + " a bon au Challenge " + str(current_challenge))
                 await client.get_user(brice_identifiant).send(zename + " a bon au Challenge " + str(current_challenge))
                 # podiumsave(zename)
