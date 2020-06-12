@@ -50,6 +50,8 @@ credits_counter = 0
 show_counter = 0
 
 perdu_counter = 0
+# thisisuniq = 0 # commentable normalement
+
 block_it = []
 isuniq_list = [] #car buggue sinon
 #liste to block to one easteregg for people by categories
@@ -78,10 +80,8 @@ reptriche2 = 'tente de tricher!!'
 repbotlate1 = 'Mais 3 autres personnes ont déjà gagné, vous êtes trop lent donc 0 point '
 repbotlate1bis = 'Soyez plus rapide à la prochaine question '
 
-#init variable global podium
-o = 1#cbeme
+
 totdico = {}
-thisisuniq = 0
 #définition des fonctions
 
 def init_list() :
@@ -202,7 +202,7 @@ async def on_message(message) :
         global perdu_counter, block_it,  show_counter, credits_counter , isuniq, thisisuniq
         global credits_gagnant, exp_gagnant_podium, help_gagnant, podium_global_gagnant, double_exp_podium_gagnant, show_gagnant
         global exp_counter_podium, help_counter, double_exp_podium_counter, podium_global_counter, debut_time, final_time, zetime, heure_bool
-        global o
+        # global o
         global top3NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall, poder
         global current_challenge, totdico, top3NamesQY
         zeid = message.author.id
@@ -241,7 +241,7 @@ async def on_message(message) :
                 await message.channel.send("Veuillez attendre que le challenge soit terminé ou faites Podium!!! si vous êtes prof")
       
             try :
-                o = 1
+                o = 1#init variable global podium
                 s = ''
                 formatage = ''
                 for cle, valeur in sorted(totdico.items(), key = itemgetter(1), reverse = True): #itemgetter 1 car on trie par rapport au score, reverse true trier a>b
