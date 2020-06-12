@@ -51,8 +51,8 @@ credits_counter = 0
 show_counter = 0
 
 perdu_counter = 0
-block_yes_or_no = 0
-
+block_it = []
+isuniq_list = [] #car buggue sinon
 #liste to block to one easteregg for people by categories
 credits_gagnant = []
 exp_gagnant_podium = []
@@ -68,7 +68,7 @@ client = commands.Bot(command_prefix='.')
 # #challenge rép -> fichier fichreaderq1() fini les brut
 #réponse rapide réponse type du bot
 #réponse du bot en cas de victoire
-msggagne = 'Vous avez bon à la question'
+msggagne = 'Vous avez bon à la question '
 #réponse bot en cas de de victoire
 homer = 'Homer: Woohoo!! Vous êtes trop fort!!'
 # rep triche:
@@ -82,7 +82,7 @@ repbotlate1bis = 'Soyez plus rapide à la prochaine question '
 #init variable global podium
 o = 1#cbeme
 totdico = {}
-
+thisisuniq = 0
 #définition des fonctions
 
 def init_list() :
@@ -116,7 +116,7 @@ def repondre_quest(msg, repx, top3NamesQx, ontBonMaisTropTardQx, Qx):
         return True
 
 def fichreaderq1() :
-    global quest, rep, listchallengeq, listchallenger
+    global quest, rep, listchallengeq, listchallenger, rep2, isuniq
     fichdeqr = open("myq.txt", "r")
     lignes = fichdeqr.readlines()
     listchallengeq = []
@@ -127,7 +127,18 @@ def fichreaderq1() :
         quest = delims[0]
         listchallengeq.append(quest)
         rep = delims[1]
+        print('130', rep)
         listchallenger.append(rep)
+        isuniq = delims[2]
+        isuniq_list.append(isuniq)
+        print('133', isuniq)
+        # delims2 = q.split('@')
+        # rep2 = delims2[0]
+        # print('134', rep2)
+        # isituniq = delims2[1] #delims2[1] AttributeError: 'list' object has no attribute 'split'
+        # print('1136', isituniq)
+
+
     fichdeqr.close()
     return quest, rep
 # def timing():
@@ -210,7 +221,7 @@ async def on_ready() :
 async def on_message(message) :
     try:
         # global appel_membre, appel, absents, presents
-        global perdu_counter, block_yes_or_no,  show_counter, credits_counter 
+        global perdu_counter, block_it,  show_counter, credits_counter , isuniq, thisisuniq
         global credits_gagnant, exp_gagnant_podium, help_gagnant, podium_global_gagnant, double_exp_podium_gagnant, show_gagnant
         global exp_counter_podium, help_counter, double_exp_podium_counter, podium_global_counter, debut_time, final_time, zetime, heure_bool
         global o
@@ -278,10 +289,10 @@ async def on_message(message) :
                                 podium_global_gagnant.append(zename)
                                 # await message.channel.send('Bravo à ' + zename + ' BENDER : est allé vous cherchez 2 points bonus dans le FUTURama\
                                 #     \n c\'est bien de checker :)')
-                                await client.get_user(zename).send('Bravo à ' + zename + ' BENDER : est allé vous cherchez 2 points bonus dans le FUTURama\
+                                await client.get_user(zeid).send('Bravo à ' + zename + ' BENDER : est allé vous cherchez 2 points bonus dans le FUTURama\
                                     \n c\'est bien de checker :)')
                                 # await message.channel.send(file=discord.File('./assets/bender.gif'))
-                                await client.get_user(zename).send(file=discord.File('./assets/bender.gif'))
+                                await client.get_user(zeid).send(file=discord.File('./assets/bender.gif'))
                                 podium_global_message = zename + ' a gagné 2 pts avec podiumglob, current_challenge: '+ str(current_challenge) + ' car '\
                                     + str(podium_global_counter) + ' fois'
                                 await client.get_user(myAuthorId).send(podium_global_message)
@@ -291,7 +302,7 @@ async def on_message(message) :
                                 podium_global_gagnant.append(zename)
                                 # await message.channel.send('Bravo à ' + zename + ' BENDER : est allé vous cherchez vos 2 er points bonus dans le FUTURama\
                                 #     \n c\'est bien de checker')
-                                await client.get_user(zename).send('Bravo à ' + zename\
+                                await client.get_user(zeid).send('Bravo à ' + zename\
                                      + ' BENDER : est allé vous cherchez vos 2 er points bonus dans le FUTURama\
                                     \n c\'est bien de checker')
                                 # await message.channel.send(file=discord.File('./assets/bender.gif'))
@@ -328,9 +339,9 @@ async def on_message(message) :
                         totdico[zename] += 2
                         double_exp_podium_gagnant.append(zename)
                         # await message.channel.send('Bravo à ' + zename + ' Phoebe Halliwell : est allé vous cherchez 2 points bonus avec sa magie :)')
-                        await client.get_user(zename).send('Bravo à ' + zename + ' Phoebe Halliwell : est allé vous cherchez 2 points bonus avec sa magie :)')
+                        await client.get_user(zeid).send('Bravo à ' + zename + ' Phoebe Halliwell : est allé vous cherchez 2 points bonus avec sa magie :)')
                         # await message.channel.send(file=discord.File('./assets/charmed2.gif'))
-                        await client.get_user(zename).send(file=discord.File('./assets/charmed2.gif'))
+                        await client.get_user(zeid).send(file=discord.File('./assets/charmed2.gif'))
                         double_exp_podium_message = zename + ' a gagné 2 pts avec podiumprec, current_challenge: '+ str(current_challenge) + ' car '\
                              + str(double_exp_podium_counter) + ' fois'
                         await client.get_user(myAuthorId).send(double_exp_podium_message)
@@ -340,10 +351,10 @@ async def on_message(message) :
                         totdico[zename] = 3
                         double_exp_podium_gagnant.append(zename)
                         # await message.channel.send('Bravo à ' + zename + ' Phoebe Halliwell : est allé vous cherchez vos 3 er points bonus avec sa magie')
-                        await client.get_user(zename).send('Bravo à ' + zename + \
+                        await client.get_user(zeid).send('Bravo à ' + zename + \
                             ' Phoebe Halliwell : est allé vous cherchez vos 3 er points bonus avec sa magie')
                         # await message.channel.send(file=discord.File('./assets/charmed2.gif'))
-                        await client.get_user(zename).send(file=discord.File('./assets/charmed2.gif'))
+                        await client.get_user(zeid).send(file=discord.File('./assets/charmed2.gif'))
                         double_exp_podium_message = zename + ' a gagné ses 3ers pts avec podiumprec, current_challenge: '+ str(current_challenge) + ' car '\
                              + str(double_exp_podium_counter) + ' fois'
                         await client.get_user(myAuthorId).send(double_exp_podium_message)
@@ -392,9 +403,9 @@ async def on_message(message) :
                         totdico[zename] += 2
                         exp_gagnant_podium.append(zename)
                         # await message.channel.send('Bravo à ' + zename + ' Clara OSWALD : est allé vous cherchez 2 points bonus dans le Tardis')
-                        await client.get_user(zename).send('Bravo à ' + zename + ' Clara OSWALD : est allé vous cherchez 2 points bonus dans le Tardis')
+                        await client.get_user(zeid).send('Bravo à ' + zename + ' Clara OSWALD : est allé vous cherchez 2 points bonus dans le Tardis')
                         # await message.channel.send(file=discord.File('./assets/tardis.gif'))
-                        await client.get_user(zename).send(file=discord.File('./assets/tardis.gif'))
+                        await client.get_user(zeid).send(file=discord.File('./assets/tardis.gif'))
                         exp_podium_message=zename + '2 points grâce à !Podium \n gagné grâce à podiumx car ' + str(exp_counter_podium) + ' fois'
                         await client.get_user(myAuthorId).send(exp_podium_message)
                         await client.get_user(brice_identifiant).send(exp_podium_message)
@@ -403,9 +414,9 @@ async def on_message(message) :
                         totdico[zename] = 2
                         exp_gagnant_podium.append(zename)
                         # await message.channel.send('Bravo à ' + zename + ' Clara OSWALD : est allé vous cherchez vos 2 er points bonus dans le Tardis')
-                        await client.get_user(zename).send('Bravo à ' + zename + ' Clara OSWALD : est allé vous cherchez vos 2 er points bonus dans le Tardis')
+                        await client.get_user(zeid).send('Bravo à ' + zename + ' Clara OSWALD : est allé vous cherchez vos 2 er points bonus dans le Tardis')
                         # await message.channel.send(file=discord.File('./assets/tardis.gif'))
-                        await client.get_user(zename).send(file=discord.File('./assets/tardis.gif'))
+                        await client.get_user(zeid).send(file=discord.File('./assets/tardis.gif'))
                         exp_podium_message=zename + 'ses 2er points grâce à !Podium \n gagné grâce à podiumx car ' + str(exp_counter_podium) + ' fois'
                         await client.get_user(myAuthorId).send(exp_podium_message)
                         await client.get_user(brice_identifiant).send(exp_podium_message)
@@ -452,8 +463,12 @@ async def on_message(message) :
                     await message.channel.send('Gagnant tot= ' + str(totdico))
                     print ('totdico', totdico)
                     print ("top3NamesQY!!", top3NamesQY)
+                    block_it = []
                 except (IndexError) :
                     print ("fini")#Impossible de trouver l'élément dans la liste
+            if isuniq_list[current_challenge] == 'uniq' :
+                await message.channel.send('Ce test est bloqué à une participation')
+                thisisuniq = 1
             current_challenge += 1
             init_list()
 
@@ -625,8 +640,29 @@ async def on_message(message) :
 
             if reptricheur(top3NamesQY, listchallengerx, message) != True :
                 await message.channel.send(reptriche1) 
-            
-            if repondre_quest(message, listchallengerx, top3NamesQY, ontBonMaisTropTardQY,'Q' + str(current_challenge)) == True :
+            # print('isuniq', isuniq)
+
+                    #si question uniq alors on laisse participer
+            if zename not in block_it and thisisuniq == 1 and repondre_quest(message, listchallengerx, top3NamesQY, ontBonMaisTropTardQY,'Q' + str(current_challenge)) == True :
+                # await message.channel.send(msggagne+str(current_challenge))     
+                # block_it.append(zename) #debug
+                await message.channel.send('blockit'+str( block_it)) #debug
+                await message.channel.send(msggagne + str(current_challenge) + "\n" + homer)  
+                await message.channel.send(file=discord.File('./assets/homer.gif'))
+                await client.get_user(myAuthorId).send(zename + " a bon au Challenge " + str(current_challenge))
+                await client.get_user(brice_identifiant).send(zename + " a bon au Challenge " + str(current_challenge))
+                # podiumsave(zename)
+                mytime = datetime.now()
+                xdebut_time = 00
+                xfinal_time = 5
+                if xdebut_time <= mytime.hour <= xfinal_time :
+                    print ('heure! :', mytime.hour)#debug
+                    await message.channel.send('Vos points ont été doublés')
+                    await client.get_user(myAuthorId).send(zename + " points doublé au Challenge " + str(current_challenge))
+                    await client.get_user(brice_identifiant).send(zename + " points doublé au Challenge " + str(current_challenge))
+                else :#commentable
+                    print ('elseheure :', mytime)#debug commentable
+            elif thisisuniq != 1 and repondre_quest(message, listchallengerx, top3NamesQY, ontBonMaisTropTardQY,'Q' + str(current_challenge)) == True : # si ce n'est pas une question uniqe
                 # await message.channel.send(msggagne+str(current_challenge))      
                 await message.channel.send(msggagne + str(current_challenge) + "\n" + homer)  
                 await message.channel.send(file=discord.File('./assets/homer.gif'))
@@ -643,7 +679,12 @@ async def on_message(message) :
                     await client.get_user(brice_identifiant).send(zename + " points doublé au Challenge " + str(current_challenge))
                 else :#commentable
                     print ('elseheure :', mytime)#debug commentable
-
+            #si l'utilisateur a déjà participé # na'ffiche rien bizarre
+            # elif zename in block_it and thisisuniq == 1 and repondre_quest(message, listchallengerx, top3NamesQY, ontBonMaisTropTardQY,'Q' + str(current_challenge)) == True  :
+            if zename in block_it and thisisuniq == 1 :
+                await message.channel.send('Vous êtes limité à une participation pour ce Challenge!!')
+                if message.content.casefold() == listchallenger[current_challenge-1].casefold() : # voir si mettre en prod
+                    await message.channel.send('Vous avez bon mais c\'est trop tard')
             if len(top3NamesQY) > 3 :
                 await message.channel.send(repbotlate1)
                 await message.channel.send(repbotlate1bis)
@@ -658,6 +699,7 @@ async def on_message(message) :
                 perdu_images = ['./assets/perdu.gif', './assets/ohno.gif', './assets/ohnoo.gif']
                 perdu_counter += 1
                 await message.channel.send('Mauvaise réponse') 
+                block_it.append(zename)
                 perduAnImporteQuelQY.append(zename)
                 # await message.channel.send(file=discord.File(random.choice(perdu_images)))
                 if perdu_counter in (1, 3, 5, 8, 9, 11, 13, 15, 16, 18, 20, 25, 26, 29, 30, 33 , 35, 39, 41, 43, 45, 47, 49, 50, 55, 60, 65, 67, 78, 85, 90, 95, 100, 105, 107, 108, 109,\
