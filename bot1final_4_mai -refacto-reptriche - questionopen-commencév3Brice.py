@@ -483,51 +483,52 @@ async def on_message(message) :
         if message.content.casefold() == 'credits!!'.casefold() and role_roi in [y.id for y in message.author.roles] :
             await message.channel.send('Créé par Amine AA/ABDOUL-AZID, Brice Augustin, amine.abdoul-azid@etu.u-pec.fr/brice.augustin@u-pec.fr UPEC Copyleft https://github.com/LSUPERMAN735')
             credits_counter += 1
-            if help_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
-            if message.author.name in totdico and current_challenge > 1 and message.author.name not in credits_gagnant :
-                totdico[message.author.name] += 2
-                credits_gagnant +=  message.author.name
-                await client.get_user(zeid).send('Bravo à ' + message.author.name + ' Alan : vous fait mangé 2 points bonus \
-                    \n c\'est bien de se renseigner sur les créateurs :)')
-                await client.get_user(zeid).send(file=discord.File('./assets/alan.gif'))
-                credits_message = message.author.name + ' a gagné 2 pts avec credits, au challenge: ' + str(current_challenge) + ' car ' + str(credits_counter) + ' fois'
-                await client.get_user(myAuthorId).send(credits_message)
-                await client.get_user(brice_identifiant).send(credits_message)
-            elif message.author.name not in totdico and message.author.name not in top3NamesQY and message.author.name not in credits_gagnant : 
-                totdico[message.author.name] = 3
-                credits_gagnant +=  message.author.name
-                await client.get_user(zeid).send('Bravo à ' + message.author.name + ' Alan : vous fait mangé 3 er points bonus \
-                    \n c\'est bien de se renseigner sur les créateurs :)')
-                await client.get_user(zeid).send(file=discord.File('./assets/alan.gif'))
-                credits_message = message.author.name + ' a gagné ses 3ers pts avec credits, au challenge: ' + str(current_challenge) + ' car '+ str(credits_counter) + ' fois'
-                await client.get_user(myAuthorId).send(credits_message)
-                await client.get_user(brice_identifiant).send(credits_message)
-            elif message.author.name in totdico and current_challenge > 1 and message.author.name in credits_gagnant :
-                await client.get_user(zename).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
-                credits_counter -= 1
+            if credits_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
+                if message.author.name in totdico and current_challenge > 1 and message.author.name not in credits_gagnant :
+                    totdico[message.author.name] += 2
+                    credits_gagnant +=  message.author.name
+                    await client.get_user(zeid).send('Bravo à ' + message.author.name + ' Alan : vous fait mangé 2 points bonus \
+                        \n c\'est bien de se renseigner sur les créateurs :)')
+                    await client.get_user(zeid).send(file=discord.File('./assets/alan.gif'))
+                    credits_message = message.author.name + ' a gagné 2 pts avec credits, au challenge: ' + str(current_challenge) + ' car ' + str(credits_counter) + ' fois'
+                    await client.get_user(myAuthorId).send(credits_message)
+                    await client.get_user(brice_identifiant).send(credits_message)
+                elif message.author.name not in totdico and message.author.name not in top3NamesQY and message.author.name not in credits_gagnant : 
+                    totdico[message.author.name] = 3
+                    credits_gagnant +=  message.author.name
+                    await client.get_user(zeid).send('Bravo à ' + message.author.name + ' Alan : vous fait mangé 3 er points bonus \
+                        \n c\'est bien de se renseigner sur les créateurs :)')
+                    await client.get_user(zeid).send(file=discord.File('./assets/alan.gif'))
+                    credits_message = message.author.name + ' a gagné ses 3ers pts avec credits, au challenge: ' + str(current_challenge) + ' car '+ str(credits_counter) + ' fois'
+                    await client.get_user(myAuthorId).send(credits_message)
+                    await client.get_user(brice_identifiant).send(credits_message)
+                elif message.author.name in totdico and current_challenge > 1 and message.author.name in credits_gagnant :
+                    await client.get_user(zename).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
+                    credits_counter -= 1
 
         if message.content.casefold() == 'show!!'.casefold() and role_roi in [y.id for y in message.author.roles] :
             await message.channel.send(listchallengeq[current_challenge])
             show_counter += 1
-            if message.author.name in totdico and current_challenge > 1 and message.author.name not in show_gagnant :
-                totdico[message.author.name] += 2
-                show_gagnant +=  message.author.name
-                await client.get_user(zeid).send('Bravo à ' + message.author.name + ' Alan : vous fait mangé 2 points bonus :)')
-                await client.get_user(zeid).send(file=discord.File('./assets/natsu.gif'))
-                show_message = message.author.name + ' a gagné 2 pts avec show, au challenge: ' + str(current_challenge) + ' car ' + str(show_counter) + ' fois'
-                await client.get_user(myAuthorId).send(show_message)
-                await client.get_user(brice_identifiant).send(show_message)
-            elif message.author.name not in totdico and message.author.name not in top3NamesQY and message.author.name not in credits_gagnant : 
-                totdico[message.author.name] = 3
-                show_gagnant +=  message.author.name
-                await client.get_user(zeid).send('Bravo à ' + message.author.name + ' Natsu : vous fait mangé 3 er points bonus :)')
-                await client.get_user(zeid).send(file=discord.File('./assets/natsu.gif'))
-                show_message = message.author.name + ' a gagné ses 3ers pts avec show, au challenge: ' + str(current_challenge) + ' car '+ str(show_counter) + ' fois'
-                await client.get_user(myAuthorId).send(show_message)
-                await client.get_user(brice_identifiant).send(show_message)
-            elif message.author.name in totdico and current_challenge > 1 and message.author.name in show_gagnant :
-                await client.get_user(zename).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
-                show_counter -= 1
+            if show_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
+                if message.author.name in totdico and current_challenge > 1 and message.author.name not in show_gagnant :
+                    totdico[message.author.name] += 2
+                    show_gagnant +=  message.author.name
+                    await client.get_user(zeid).send('Bravo à ' + message.author.name + ' Alan : vous fait mangé 2 points bonus :)')
+                    await client.get_user(zeid).send(file=discord.File('./assets/natsu.gif'))
+                    show_message = message.author.name + ' a gagné 2 pts avec show, au challenge: ' + str(current_challenge) + ' car ' + str(show_counter) + ' fois'
+                    await client.get_user(myAuthorId).send(show_message)
+                    await client.get_user(brice_identifiant).send(show_message)
+                elif message.author.name not in totdico and message.author.name not in top3NamesQY and message.author.name not in credits_gagnant : 
+                    totdico[message.author.name] = 3
+                    show_gagnant +=  message.author.name
+                    await client.get_user(zeid).send('Bravo à ' + message.author.name + ' Natsu : vous fait mangé 3 er points bonus :)')
+                    await client.get_user(zeid).send(file=discord.File('./assets/natsu.gif'))
+                    show_message = message.author.name + ' a gagné ses 3ers pts avec show, au challenge: ' + str(current_challenge) + ' car '+ str(show_counter) + ' fois'
+                    await client.get_user(myAuthorId).send(show_message)
+                    await client.get_user(brice_identifiant).send(show_message)
+                elif message.author.name in totdico and current_challenge > 1 and message.author.name in show_gagnant :
+                    await client.get_user(zename).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
+                    show_counter -= 1
 
         # if reaction.emoji == '👍' :
         #     if message.author.name in totdico and current_challenge > 1 :
