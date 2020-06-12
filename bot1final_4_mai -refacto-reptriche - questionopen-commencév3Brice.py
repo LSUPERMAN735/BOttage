@@ -229,6 +229,8 @@ async def on_message(message) :
         global current_challenge, totdico, top3NamesQY
         zeid = message.author.id
         zename = message.author.name
+        # block_it = []
+
         if message.author.id != BOTman_id :
             print ("Je suis", zename)
             print ("Actuellement les valeurs sont :")
@@ -465,12 +467,13 @@ async def on_message(message) :
                     print ('totdico', totdico)
                     print ("top3NamesQY!!", top3NamesQY)
                     block_it = []
+                    del block_it[:]
                 except (IndexError) :
                     print ("fini")#Impossible de trouver l'élément dans la liste
             if isuniq_list[current_challenge] == 'uniq' :
                 await message.channel.send('Ce test est bloqué à une participation')
                 thisisuniq = 1
-            else :#commentable
+            else :#bloc commentable
                 block_it = []
                 thisuniq = 0
             current_challenge += 1
