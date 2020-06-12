@@ -5,7 +5,9 @@
 #sort added for podiumglobal and added !podium x, podiumsave dans challenge!!
 #lisibility added, gif, time easteregg
 #crédits Amine ABDOUL-AZID, Brice AUGUSTIN, UPEC
-#licence MIT à copier avec les termes
+#licence GNU V3 à copier avec les termes
+#    GNU GENERAL PUBLIC LICENSE
+#    Version 3, 29 June 2007
 import sys
 import discord
 from discord.ext import commands
@@ -498,7 +500,8 @@ async def on_message(message) :
                             help_counter -= 1
         
         if message.content.casefold() == 'credits!!'.casefold() and role_roi in [y.id for y in message.author.roles] :
-            await message.channel.send('Créé par Amine AA/ABDOUL-AZID, Brice Augustin, amine.abdoul-azid@etu.u-pec.fr/brice.augustin@u-pec.fr UPEC Copyleft https://github.com/LSUPERMAN735')
+            await message.channel.send('Créé par Amine AA/ABDOUL-AZID, Brice Augustin, amine.abdoul-azid@etu.u-pec.fr/brice.augustin@u-pec.fr UPEC Copyleft https://github.com/LSUPERMAN735 \
+                Licence MIT')
             credits_counter += 1
             if credits_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
                 if zename in totdico and current_challenge > 1 and zename not in credits_gagnant :
