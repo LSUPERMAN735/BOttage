@@ -18,7 +18,7 @@ import random
 
 #tok = open("token.txt", "r")
 #token = tok.readlines()
-token = "NzIxMzc2ODQ4MjM1NDYyNjk3.XuTuKA.L7lmTyzCwEtqDSGw33iJfZDs1ls"
+#token = "NzIxMzc2ODQ4MjM1NDYyNjk3.XuTuKA.L7lmTyzCwEtqDSGw33iJfZDs1ls"
 
 my_channel_id = 705073195077730344
 my_channel_id2 = 706529394318901328
@@ -670,4 +670,4 @@ async def on_message(message) :
 #     custom_emoji = get(ctx.message.server.emojis, name="custom_emoji")
 #     reaction = await bot.wait_for_reaction(['\N{SMILE}', custom_emoji], msg1)
 #     await bot.say("You responded with {}".format(reaction.emoji))
-client.run(token)
+client.run(sys.argv[1])
