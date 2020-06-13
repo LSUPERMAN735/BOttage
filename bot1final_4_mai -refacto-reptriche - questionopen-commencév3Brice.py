@@ -51,7 +51,7 @@ credits_counter = 0
 show_counter = 0
 
 perdu_counter = 0
-# thisisuniq = 0 # commentable normalement
+thisisuniq = 0 # commentable normalement
 
 block_it = []
 isuniq_list = [] #car buggue sinon
@@ -237,7 +237,7 @@ async def on_message(message) :
         if message.content.casefold() == 'PodiumGlobal!!'.casefold() and role_roi_id in [y.id for y in message.author.roles] :
             podium_global_counter += 1
             # print ('podium_global_counter', podium_global_counter)
-            r.id in (myAuthorId, brice_identifiant, 480045172630224916) or prof_grp_id in [y.id for y in message.author.roles] or dev_grp_id in [y.id for y in message.author.roles] : #podium global par les admins
+            #r.id in (myAuthorId, brice_identifiant, 480045172630224916) or prof_grp_id in [y.id for y in message.author.roles] or dev_grp_id in [y.id for y in message.author.roles] : #podium global par les admins
             if current_challenge == 1 :
                 await message.channel.send("Veuillez attendre que le challenge soit terminé ou faites Podium!!! si vous êtes prof")
       
