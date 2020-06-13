@@ -18,7 +18,7 @@ import random
 
 #tok = open("token.txt", "r")
 #token = tok.readlines()
-token = NzIxMzc2ODQ4MjM1NDYyNjk3.XuTuKA.L7lmTyzCwEtqDSGw33iJfZDs1ls
+token = "NzIxMzc2ODQ4MjM1NDYyNjk3.XuTuKA.L7lmTyzCwEtqDSGw33iJfZDs1ls"
 
 my_channel_id = 705073195077730344
 my_channel_id2 = 706529394318901328
