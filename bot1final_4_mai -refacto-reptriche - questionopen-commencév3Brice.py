@@ -234,8 +234,8 @@ async def on_message(message) :
 
         
         if message.content.casefold() == 'PodiumGlobal!!'.casefold() and role_roi_id in [y.id for y in message.author.roles] : #podium global par les admins
+            podium_global_counter += 1
             if current_challenge == 1 :
-                podium_global_counter += 1
             # print ('podium_global_counter', podium_global_counter)
             # r.id in (myAuthorId, brice_identifiant, 480045172630224916) or prof_grp_id in [y.id for y in message.author.roles] or dev_grp_id in [y.id for y in message.author.roles] : 
                 await message.channel.send("Veuillez attendre que le challenge soit terminé ou faites Podium!!! si vous êtes prof")
