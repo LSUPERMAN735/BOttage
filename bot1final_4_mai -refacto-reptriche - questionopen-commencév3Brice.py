@@ -82,8 +82,8 @@ repbotlate1bis = 'Soyez plus rapide à la prochaine question '
 
 
 totdico = {}
-#définition des fonctions
 
+#définition des fonctions
 def init_list() :
     global top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY
     top3NamesQY = []
@@ -101,8 +101,8 @@ def reptricheur(top3NamesQx, repx,  msg) :
         print (reptriche1)
         print (msg.author.name, reptriche2)
         return False# valeur qui bloque la questionx si l'utilisateur tente de rerépondre bon
-    else: #commentable
-        return True #commentable
+    else: # à éviter de commenter
+        return True #à éviter de commenter
 
         #casefold pour ignorer la casse majuscule, minuscule ou mélangées
 def repondre_quest(msg, repx, top3NamesQx, ontBonMaisTropTardQx, Qx):
@@ -287,7 +287,7 @@ async def on_message(message) :
 
         if message.content.casefold() == '!!podium'.casefold() and role_roi_id in [y.id for y in message.author.roles] :
             double_exp_podium_counter += 1
-            # print ('double_exp_podium_counter', double_exp_podium_counter)
+            # print ('double_exp_podium_counter', double_exp_podium_counter) #debug
             f = 1#cbeme
             g = 0#indice
             h = 3#score
