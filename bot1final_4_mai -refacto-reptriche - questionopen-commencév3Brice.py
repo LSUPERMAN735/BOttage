@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
-#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may,21may,  25 may,27, 29 may,5juin,6juin,7juin, 8juin, 9juin
-#9juin
+#4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may,21may, 25 may,27, 29 may,5juin,6juin,7juin, 8juin, 9juin, 10juin
+#11juin, 12juin et rapport 13juin
 #sort added for podiumglobal and added !podium x, podiumsave dans challenge!!
 #lisibility added, gif, time easteregg
 #crédits Amine ABDOUL-AZID, Brice AUGUSTIN, UPEC
@@ -50,7 +50,7 @@ credits_counter = 0
 show_counter = 0
 
 perdu_counter = 0
-# thisisuniq = 0 # commentable normalement
+thisisuniq = 0 # commentable normalement
 
 block_it = []
 isuniq_list = [] #car buggue sinon
@@ -233,11 +233,11 @@ async def on_message(message) :
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
 
         
-        if message.content.casefold() == 'PodiumGlobal!!'.casefold() and role_roi_id in [y.id for y in message.author.roles] :
-            podium_global_counter += 1
-            # print ('podium_global_counter', podium_global_counter)
-            r.id in (myAuthorId, brice_identifiant, 480045172630224916) or prof_grp_id in [y.id for y in message.author.roles] or dev_grp_id in [y.id for y in message.author.roles] : #podium global par les admins
+        if message.content.casefold() == 'PodiumGlobal!!'.casefold() and role_roi_id in [y.id for y in message.author.roles] : #podium global par les admins
             if current_challenge == 1 :
+                podium_global_counter += 1
+            # print ('podium_global_counter', podium_global_counter)
+            # r.id in (myAuthorId, brice_identifiant, 480045172630224916) or prof_grp_id in [y.id for y in message.author.roles] or dev_grp_id in [y.id for y in message.author.roles] : 
                 await message.channel.send("Veuillez attendre que le challenge soit terminé ou faites Podium!!! si vous êtes prof")
       
             try :
