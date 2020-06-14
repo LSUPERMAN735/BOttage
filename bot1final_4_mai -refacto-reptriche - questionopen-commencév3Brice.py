@@ -33,7 +33,8 @@ clara_oswald = 718446180429725746
 
 prof_grp_id = 690133601605386264
 dev_grp_id = 719298857191604274
-role_FI1_id = 689162064341893133 #role FI1
+role_FI1_id = 719298857191604274
+# role_FI1_id = 689162064341893133 #role FI1
 
 
 top10NamesQall = []
@@ -354,7 +355,7 @@ async def on_message(message) :
                 elif current_challenge == numberpodium :
                     await message.channel.send("Ce challenge est en cours !! Veuillez attendre qu'il soit terminé !")
                 else: 
-                    await message.channel.send("Ce challenge n'a pas démarré!!")
+                    await message.channel.send("Ce challenge n'a pas démarré !!")
                 
                 if exp_counter_podium in (3, 5, 10, 15, 20, 27, 30, 39, 45, 47, 50, 51, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
                     
@@ -400,7 +401,10 @@ async def on_message(message) :
             if current_challenge == 0 :
                 init_list()
             fichreaderqx()
+            await message.channel.send(listchallengeq[current_challenge])
             
+            # await message.channel.send('conj'+ str(current_challenge))#debug
+            # await message.channel.send('conj2'+ str(len(listchallengeq)))#debug
             if current_challenge == len(listchallengeq) :
                 fini_challenge(top10NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
                 podiumsave()
@@ -409,7 +413,6 @@ async def on_message(message) :
                 await message.channel.send("Tous les challenges sont désormais terminés")
                 current_challenge += 1
 
-            await message.channel.send(listchallengeq[current_challenge])
             if current_challenge > 0 :
                 try :
                     podiumsave()
@@ -417,7 +420,7 @@ async def on_message(message) :
                     # await message.channel.send('Gagnant tot= ' + str(totdico))
                     print ('totdico', totdico) #debug
                     print ("top10NamesQY!!", top10NamesQY) #debug
-                    block_it = []
+                    block_it = [] #sert au challenge unique
                     # del block_it[:] #forcer le reset 
                 except (IndexError) :
                     print ("fini")#Impossible de trouver l'élément dans la liste
@@ -520,7 +523,7 @@ async def on_message(message) :
         # print ('cr',current_challenge)#debug
         # if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and current_challenge < len(listchallengeq) :
         if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and role_FI1_id in [y.id for y in message.author.roles] :#boucle limitant les réponses dans le salon avec malus
-            print (message.content)
+            print (message.content)#debug
             await message.delete()#discord.errors.Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
             await message.channel.send(zename + " Vous devez saisir la réponse en message privée!!! \n -2Points ROHH!! ```Attention Bart tu vas avoir une punition ...```")
             await message.channel.send(file=discord.File('./assets/bartpu.gif'))#sauf bart en publique
@@ -582,7 +585,7 @@ async def on_message(message) :
                 else :#commentable
                     print ('elseheure :', mytime)#debug commentable
             #si l'utilisateur a déjà participé  #affiche quand même mauvaise réponse
-            if zename in block_it and thisisuniq == 1 :
+            elif zename in block_it and thisisuniq == 1 :
                 await message.channel.send('Vous êtes limité à une participation pour ce Challenge!!')
                 if message.content.casefold() == listchallenger[current_challenge-1].casefold() : # voir si mettre en prod
                     await message.channel.send('Vous avez bon mais c\'est trop tard')
@@ -593,9 +596,9 @@ async def on_message(message) :
             
             if message.content.casefold() == listchallengerx.casefold() and reptricheur(top10NamesQY, listchallengerx, message) != True :
             #     await message.channel.send(homer)      
-                truc = None#cette fonction sert à n'envoyer que si c'est la mauvaise réponseet ou l'utilisateur reparticipe 
-            elif zename in top10NamesQY : # cette fonction permet de ne pas afficher de message au tricheur et évite le else
-                arretedeparticiper = None #arretedeparticiper bordel permet d'utiliser cette fonction
+                truc = None#cette variable sert à n'envoyer que si c'est la mauvaise réponseet ou l'utilisateur reparticipe 
+            elif zename in top10NamesQY : # cette condition permet de ne pas afficher de message au tricheur et évite le else
+                arretedeparticiper = None #arretedeparticiper bordel permet d'utiliser cette condition
             else :
                 perdu_images = ['./assets/perdu.gif', './assets/ohno.gif', './assets/ohnoo.gif']
                 perdu_counter += 1
