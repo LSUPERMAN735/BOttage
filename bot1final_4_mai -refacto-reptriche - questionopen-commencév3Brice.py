@@ -68,7 +68,7 @@ show_gagnant = []
 ####
 client = commands.Bot(command_prefix='.')
 
-# #challenge rép -> fichier fichreaderq1() fini les brut
+# #challenge rép -> fichier fichreaderqx() fini les brut
 #réponse rapide réponse type du bot
 #réponse du bot en cas de victoire
 msggagne = 'Vous avez bon à la question '
@@ -100,8 +100,8 @@ def fini_challenge(top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY) :
 
 def reptricheur(top3NamesQx, repx,  msg) :
     if msg.author.name in top3NamesQx and msg.content.casefold() == repx.casefold() :
-        print (reptriche1)
-        print (msg.author.name, reptriche2)
+        # print (reptriche1) #debug parfois qui buggue commentable
+        # print (msg.author.name, reptriche2) #debug qui buggue parfois commentable
         return False# valeur qui bloque la questionx si l'utilisateur tente de rerépondre bon
     else: # à éviter de commenter
         return True #à éviter de commenter
@@ -109,14 +109,14 @@ def reptricheur(top3NamesQx, repx,  msg) :
         #casefold pour ignorer la casse majuscule, minuscule ou mélangées
 def repondre_quest(msg, repx, top3NamesQx, ontBonMaisTropTardQx, Qx):
     if msg.content.casefold() == repx.casefold() and reptricheur(top3NamesQx, repx, msg) == True :
-        print (msggagne,Qx)
-        print (msg.author.name)
+        print (msggagne,Qx) #debug
+        print (msg.author.name) #debug
         top3NamesQx.append(msg.author.name)
         print ('gagné', Qx, '=', len(top3NamesQx)) #debug
         print ('gagné', Qx, 'mais late =', len(ontBonMaisTropTardQx)) #debug
         return True
 
-def fichreaderq1() :
+def fichreaderqx() :
     global quest, rep, listchallengeq, listchallenger, rep2, isuniq
     fichdeqr = open("myq.txt", "r")
     lignes = fichdeqr.readlines()
@@ -151,7 +151,7 @@ def podiumsave(message_author_name) : #time comp added
     i = 3#score
     print ('top3NameQY=', top3NamesQY)
     for s in top3NamesQY :
-        print ('current_challenge!', current_challenge)
+        print ('current_challenge!', current_challenge) #debug
         if i > 0 : #permet de ne prendre que le top x avec point positif et permet d'éviter un score négatif sauf si affecté en malus pour tous les gens en retard ou perdant
             if current_challenge >= 1 and heure_bool == 0 : 
                 try: 
@@ -397,7 +397,7 @@ async def on_message(message) :
 
             if current_challenge == 0 :
                 init_list()
-            fichreaderq1()
+            fichreaderqx()
             
             if current_challenge == len(listchallengeq) :
                 fini_challenge(top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
@@ -552,7 +552,7 @@ async def on_message(message) :
         # Dans le channel privée et si ce n'est pas le bot
         if isinstance(message.channel, discord.DMChannel) and message.author.id != BOTman_id :
             print ("Message privé : " + zename + ":" + message.content)
-            fichreaderq1()
+            fichreaderqx()
             listchallengerx = listchallenger[current_challenge-1]
             print ("nbQxgagnant, top3NamesQY, ontBonMaisTropTardQY,  perduAnImporteQuelQY")
             print (len(top3NamesQY), top3NamesQY, ontBonMaisTropTardQY, perduAnImporteQuelQY)
