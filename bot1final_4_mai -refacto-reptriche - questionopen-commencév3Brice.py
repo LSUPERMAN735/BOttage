@@ -667,13 +667,13 @@ async def on_message(message) :
 async def on_reaction_add(reaction, user):
 # async def on_reaction_add(reaction, user, message):
   if reaction.emoji == '👍':   
-        print('user', user)
+        print('user', user)#debug
         user2 = str(user)
         userdelim = user2.split('#')
         user2 = userdelim[0]
-        print('user2', user2)
+        print('user2', user2)#debug
         if user2 in totdico and user2!='BOTman' and current_challenge > 1 :
-                print(totdico[user2])
+                print(totdico[user2])#debug
                 totdico[user2] += 2
                 like_list.append(user2)
                 # await bot.say('Bravo à ' + user + ' Clara OSWALD : est allé vous cherchez 2 points bonus dans le Tardis')
