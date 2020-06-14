@@ -133,7 +133,7 @@ def fichreaderqx() :
         isuniq_list.append(isuniq)
 
     fichdeqr.close()
-    return quest, rep
+    return quest, rep, isuniq #commentable
 
 def podiumsave(message_author_name) : #time comp added
     global totdico, top10NamesQY
@@ -143,13 +143,13 @@ def podiumsave(message_author_name) : #time comp added
     final_time = 5 #3 utc
     heure_bool = 0
     if debut_time <= zetime.hour <= final_time :
-        print ('heure! :', zetime.hour)
+        print ('heure! :', zetime.hour) #debug
         heure_bool += 1
     else :#commentable
         print ('elseheure! :', zetime.hour)#commentable
 
-    i = 3#score
-    print ('top3NameQY=', top10NamesQY)
+    i = 10#score
+    print ('top10NameQY=', top10NamesQY) #debug commentable
     for s in top10NamesQY :
         print ('current_challenge!', current_challenge) #debug
         if i > 0 : #permet de ne prendre que le top x avec point positif et permet d'éviter un score négatif sauf si affecté en malus pour tous les gens en retard ou perdant
@@ -172,7 +172,7 @@ def podiumsave(message_author_name) : #time comp added
                     print ('exception')#debug
             else :#commentable
                 print ('fini')#commentable
-    return totdico
+    return totdico #commentable
 
 def podiumnum(message) :
     global typed, delimited, podiuming, numberpodiuming, numberpodium
@@ -204,15 +204,14 @@ async def on_message(message) :
         global perdu_counter, block_it,  show_counter, credits_counter , isuniq, thisisuniq
         global credits_gagnant, exp_gagnant_podium, help_gagnant, podium_global_gagnant, double_exp_podium_gagnant, show_gagnant
         global exp_counter_podium, help_counter, double_exp_podium_counter, podium_global_counter, debut_time, final_time, zetime, heure_bool
-        # global o
         global top10NamesQall, ontBonMaisTropTardQall, perduAnImporteQuelQall, poder
         global current_challenge, totdico, top10NamesQY
         zeid = message.author.id
         zename = message.author.name
-        if thisisuniq == 0 :
-            block_it = []
-            thisuniq = 0
-        if message.author.id != BOTman_id :
+        # if thisisuniq == 0 :# bloc commentable debug
+        #     block_it = []
+        #     thisuniq = 0
+        if message.author.id != BOTman_id : #debug
             print ("Je suis", zename)
             print ("Actuellement les valeurs sont :")
             print ("my_channel_id, BOTman_id, myAuthorId", \
@@ -511,30 +510,7 @@ async def on_message(message) :
                     await client.get_user(zeid).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
                     show_counter -= 1
         # else : #supprimable
-        #     await message.channel.send('Aucun Challenge a été lancé ou tout les challenges sont terminés!!')#supprimable
-
-        # if reaction.emoji == '👍' :
-        #     if zename in totdico and current_challenge > 1 :
-        #         print(totdico[zename])
-        #         totdico[zename] += 2
-        #         await message.channel.send('Bravo à ' + zename + ' Clara OSWALD : est allé vous cherchez 2 points bonus dans le Tardis')
-        #         await message.channel.send(file=discord.File('./assets/tardise.gif'))
-
-        #     elif zename not in totdico and zename not in top10NamesQY :
-        #         totdico[zename] = 2
-        #         await message.channel.send('Bravo à ' + zename + ' Clara OSWALD : est allé vous cherchez vos 2 er points bonus dans le Tardis')
-        #         await message.channel.send(file=discord.File('./assets/tardise.gif'))
-        # elif reaction.emoji == '👎':
-        #     if zename in totdico and current_challenge > 1 :
-        #         totdico[zename] -= 2
-        #         await message.channel.send('Pour ' + zename + ' Clara OSWALD : est allé vous retirez 2 points avec le Tardis')
-        #         await message.channel.send(file=discord.File('./assets/tardise.gif'))
-
-            # elif zename not in totdico and zename not in top10NamesQY :
-            #     totdico[zename] = -2
-            #     await message.channel.send('Pour ' + zename + ' Clara OSWALD : est allé vous retirez vos 2 er points avec le Tardis')
-            #     await message.channel.send(file=discord.File('./assets/tardise.gif'))
-        
+        #     await message.channel.send('Aucun Challenge a été lancé ou tout les challenges sont terminés!!')#supprimable        
         
         # print ('cr',current_challenge)#debug
         # if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and current_challenge < len(listchallengeq) :
@@ -564,7 +540,7 @@ async def on_message(message) :
                 print ('chall', challengeprec)
                 print ("nbQxallgagnantx, top10NamesQallx, ontBonMaisTropTardQallx,  perduAnImporteQuelQallx")
                 print (len(top10NamesQall), top10NamesQall[challengeprec], ontBonMaisTropTardQall[challengeprec], perduAnImporteQuelQall[challengeprec])
-            # print ('réponse=', listchallengerx)
+            # print ('réponse=', listchallengerx) #debug
 
             if reptricheur(top10NamesQY, listchallengerx, message) != True :
                 await message.channel.send(reptriche1) 
@@ -662,7 +638,6 @@ async def on_message(message) :
         print ("Une erreur est survenue...Fermeture")
         sys.exit(1)        
 
-
 @client.event
 async def on_reaction_add(reaction, user):
 # async def on_reaction_add(reaction, user, message):
@@ -682,24 +657,15 @@ async def on_reaction_add(reaction, user):
         elif user2 not in totdico and user2 not in top10NamesQY and user2!='BOTman' :
                 totdico[user2] = 2
                 like_list.append(user2)
-                # await bot.say('Bravo à ' + user + ' Clara OSWALD : est allé vous cherchez vos 2 er points bonus dans le Tardis')
-                # await bot.say(file=discord.File('./assets/tardise.gif'))
+
         elif reaction.emoji == '👎':
             if user2 in totdico and user2!='BOTman' and current_challenge > 1 :
                 totdico[user2] -= 2
                 dislike_list.append(user2)
-                # await bot.say('Pour ' + user + ' Clara OSWALD : est allé vous retirez 2 points avec le Tardis')
-                # await bot.say(file=discord.File('./assets/tardise.gif'))
 
             elif user2 not in totdico and user2!='BOTman' and user2 not in top10NamesQY :
                 totdico[user2] = -2
                 dislike_list.append(user2)
-                # await bot.say('Pour ' + user + ' Clara OSWALD : est allé vous retirez vos 2 er points avec le Tardis')
-                # await bot.say(file=discord.File('./assets/tardise.gif')) 
-# @bot.command(pass_context=True)
-# async def checkreacts(ctx):
-#     msg1 = await bot.say("React to me!")
-#     custom_emoji = get(ctx.message.server.emojis, name="custom_emoji")
-#     reaction = await bot.wait_for_reaction(['\N{SMILE}', custom_emoji], msg1)
-#     await bot.say("You responded with {}".format(reaction.emoji))
+
+
 client.run(token[0])
