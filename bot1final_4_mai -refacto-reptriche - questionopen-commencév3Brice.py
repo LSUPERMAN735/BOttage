@@ -217,7 +217,7 @@ async def on_message(message) :
             print ("Actuellement les valeurs sont :")
             print ("my_channel_id, BOTman_id, myAuthorId", \
                 my_channel_id, BOTman_id, myAuthorId)
-            
+            print('like_list', like_list, 'dislike_list', dislike_list)
             print ("Message initial", message)
 
         if message.content.casefold() == 'Podium!!!'.casefold() \
