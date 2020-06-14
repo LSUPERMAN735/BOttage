@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
 #4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may,21may, 25 may,27, 29 may,5juin,6juin,7juin, 8juin, 9juin, 10juin
-#11juin, 12juin et rapport 13juin
+#11juin, 12juin, 14 juin et rapport 13juin
 #sort added for podiumglobal and added !podium x, podiumsave dans challenge!!
 #lisibility added, gif, time easteregg
 #crédits Amine ABDOUL-AZID, Brice AUGUSTIN, UPEC
