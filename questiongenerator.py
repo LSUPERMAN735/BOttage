@@ -1,4 +1,2 @@
-i=2
-while i <  40:
-    i+=1
+for i in range(40) :
     print ('Challenge '+ str(i) + ' :  ?| |'')
