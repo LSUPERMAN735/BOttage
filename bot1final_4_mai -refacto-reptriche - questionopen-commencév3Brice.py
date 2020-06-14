@@ -54,6 +54,8 @@ thisisuniq = 0 # commentable normalement
 
 block_it = []
 isuniq_list = [] #car buggue sinon
+like_list=[]
+dislike_list=[]
 #liste to block to one easteregg for people by categories
 credits_gagnant = []
 exp_gagnant_podium = []
@@ -660,9 +662,40 @@ async def on_message(message) :
         print ("Une erreur est survenue...Fermeture")
         sys.exit(1)        
 
-# @client.event
-# async def on_reaction_add(reaction, user):
-    
+
+@client.event
+async def on_reaction_add(reaction, user):
+# async def on_reaction_add(reaction, user, message):
+  if reaction.emoji == '👍':   
+        print('user', user)
+        user2 = str(user)
+        userdelim = user2.split('#')
+        user2 = userdelim[0]
+        print('user2', user2)
+        if user2 in totdico and user2!='BOTman' and current_challenge > 1 :
+                print(totdico[user2])
+                totdico[user2] += 2
+                like_list.append(user2)
+                # await bot.say('Bravo à ' + user + ' Clara OSWALD : est allé vous cherchez 2 points bonus dans le Tardis')
+                # await bot.say(file=discord.File('./assets/tardise.gif'))
+
+        elif user2 not in totdico and user2 not in top3NamesQY and user2!='BOTman' :
+                totdico[user2] = 2
+                like_list.append(user2)
+                # await bot.say('Bravo à ' + user + ' Clara OSWALD : est allé vous cherchez vos 2 er points bonus dans le Tardis')
+                # await bot.say(file=discord.File('./assets/tardise.gif'))
+        elif reaction.emoji == '👎':
+            if user2 in totdico and user2!='BOTman' and current_challenge > 1 :
+                totdico[user2] -= 2
+                dislike_list.append(user2)
+                # await bot.say('Pour ' + user + ' Clara OSWALD : est allé vous retirez 2 points avec le Tardis')
+                # await bot.say(file=discord.File('./assets/tardise.gif'))
+
+            elif user2 not in totdico and user2!='BOTman' and user2 not in top3NamesQY :
+                totdico[user2] = -2
+                dislike_list.append(user2)
+                # await bot.say('Pour ' + user + ' Clara OSWALD : est allé vous retirez vos 2 er points avec le Tardis')
+                # await bot.say(file=discord.File('./assets/tardise.gif')) 
 # @bot.command(pass_context=True)
 # async def checkreacts(ctx):
 #     msg1 = await bot.say("React to me!")
