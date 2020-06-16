@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
 #4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may,21may, 25 may,27, 29 may,5juin,6juin,7juin, 8juin, 9juin, 10juin
-#11juin, 12juin, 14 juin et rapport 13juin
+#11juin, 12juin, 14 juin, 16 juin et rapport 13juin
 #sort added for podiumglobal and added !podium x, podiumsave dans challenge!!
 #lisibility added, gif, time easteregg
 #crédits Amine ABDOUL-AZID, Brice AUGUSTIN, UPEC
@@ -17,21 +17,20 @@ from datetime import datetime #double les points durant la période easteregg
 import random #random choice pour afficher des images à intervalle irrégulier
 
 tok = open("token.txt", "r") #lecture du token
-token = tok.readlines() #
-
+token = tok.readlines() #lecture ligne par ligne
+#channel id
 my_channel_id = 722078641550524497
 previous_my_channel_id = 705073195077730344
 my_channel_id2 = 706529394318901328
 my_channel_id3 = 706529394318901331
-
+#id user
 BOTman_id = 705418360216748062
-
 myAuthorId = 476338851871326219
 brice_Id = 68913448029152873
 brice_identifiant = 689134480291528710
 admin_Id = 480045172630224916
 clara_oswald = 718446180429725746
-
+#role id
 prof_grp_id = 690133601605386264
 dev_grp_id = 719298857191604274
 # role_FI1_id = 719298857191604274
@@ -430,7 +429,7 @@ async def on_message(message) :
                 except (IndexError) :
                     print ("fini")#Impossible de trouver l'élément dans la liste
             if isuniq_list[current_challenge] == 'uniq' : #bloque à une participation et envoie le message sur le salon
-                await message.channel.send('Ce test est bloqué à une participation')
+                await message.channel.send('Vous ne pouvez répondre qu\'une seule fois à cette question')
                 # await message.channel.send('imagescityman')
                 thisisuniq = 1# 1
             else :
@@ -442,12 +441,12 @@ async def on_message(message) :
        
         if message.content.casefold() == 'help!!'.casefold() and role_FI1_id in [y.id for y in message.author.roles] :
             help_counter += 1
-            await message.channel.send('```!!podium : Affiche le podium précédent à partir du Challenge 2 pour tous les utilisateurs```'+\
-                '```!podium x : Affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```'\
-                + "```PodiumGlobal!!: Affiche le podium Global des challenges terminés destinés pour tous les utilisateurs```" +\
-                '```!podium 0 Affiche le podium du dernier challenge terminé pour tous les utilisateurs```' +\
-                 '```show!! : Affiche les consignes du challenge en cours pour tous les utilisateurs ```'+\
-                    '```credits!! : Affiche les crédits concepteur pour tous les utilisateurs```'+\
+            await message.channel.send('```!!podium : Affiche le podium précédent pour tous les FI1```'+\
+                '```!podium x : Affiche le podium en fonction du numéro x précédent pour tous les FI1```'\
+                + "```PodiumGlobal!! : Affiche le podium Global des challenges terminés destinés pour tous les FI1```" +\
+                '```!podium 0 Affiche le podium du dernier challenge terminé pour tous les FI1```' +\
+                 '```show!! : Affiche les consignes du challenge en cours pour tous les FI1 ```'+\
+                    '```credits!! : Affiche les crédits concepteur pour tous les FI1```'+\
                     '```Challenge!!  : Lancer le challenge ou passer le challenge admin/prof```'\
                 + '```Podium!!! : Voir le podium du challenge actuel pour les admin/prof```')
             if help_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
@@ -528,12 +527,13 @@ async def on_message(message) :
         
         # print ('cr',current_challenge)#debug
         # if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and current_challenge < len(listchallengeq) :
-        if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and role_FI1_id in [y.id for y in message.author.roles] :#boucle limitant les réponses dans le salon avec malus
+        # if message.content == listchallenger[current_challenge-1] and message.channel.id == 722078564563812412 and role_FI1_id in [y.id for y in message.author.roles] :#boucle limitant les réponses dans le salon avec malus
+        if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id and role_FI1_id in [y.id for y in message.author.roles] :#boucle limitant les réponses dans le salon avec malus
             print (message.content)#debug
             await message.delete()#discord.errors.Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
             await message.channel.send(zename + " Vous devez saisir la réponse en message privée!!! \n -2Points ROHH!! ```Attention Bart tu vas avoir une punition ...```")
             await message.channel.send(file=discord.File('./assets/bartpu.gif'))#sauf bart en publique
-            fact_malus (totdico, zename)   #Boucle clodomir V2 permet de retirer aux utilisateurs dans totdico les malus des gens qui répondent dans le channel
+            fact_malus (totdico, zename)   #Boucle clodomir V2 permet de retirer aux utilisateursZ dans totdico les malus des gens qui répondent dans le channel
 
             # await client.delete_message(message)# AttributeError: 'Bot' object has no attribute 'delete_message' AttributeError: 'Bot' object has no attribute 'delete_messages'
         # elif message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and challengefinaled == 0 :
@@ -668,7 +668,7 @@ async def on_reaction_add(reaction, user):
                     print(totdico[user2])#debug
                     totdico[user2] += 2
                     like_list.append(user2)
-                    like_message = 'Bravo à ' + str(user2) + ' Docteur Zoidberg : est allé vous cherchez 2 points bonus dans le FUTURama \n c\'est bien de checker :)'
+                    like_message = 'Bravo à ' + str(user2) + ' Docteur Zoidberg : est allé vous cherchez 2 points bonus dans le FUTURama \n c\'est bien de liker :)'
                     await client.get_user(myAuthorId).send(like_message)
                     await client.get_user(brice_identifiant).send(like_message)
                     # await client.get_user(zeid).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
@@ -678,20 +678,20 @@ async def on_reaction_add(reaction, user):
             elif user2 not in totdico and user2 not in top10NamesQY and user2!='BOTman' and current_challenge >= 1:
                     totdico[user2] = 2
                     like_list.append(user2)
-                    like_message = 'Bravo à ' + str(user2)  + ' Docteur Zoidberg : est allé vous cherchez vos 2 er points bonus dans le FUTURama \n c\'est bien de checker'
+                    like_message = 'Bravo à ' + str(user2)  + ' Docteur Zoidberg : est allé vous cherchez vos 2 er points bonus dans le FUTURama \n c\'est bien de liker'
                     await client.get_user(myAuthorId).send(like_message)
                     await client.get_user(brice_identifiant).send(like_message)
             elif reaction.emoji == '👎':
                 if user2 in totdico and user2!='BOTman' and current_challenge > 1 :
                     totdico[user2] -= 2
                     dislike_list.append(user2)
-                    dislike_message = 'Honte à ' + str(user2) + ' FRY : est allé vous cherchez 2 points malus dans le FUTURama \n c\'est bien de checker :)'
+                    dislike_message = 'Honte à ' + str(user2) + ' FRY : est allé vous cherchez 2 points malus dans le FUTURama \n c\'est mal de disliker :)'
                     await client.get_user(myAuthorId).send(dislike_message)
                     await client.get_user(brice_identifiant).send(dislike_message)
                 elif user2 not in totdico and user2!='BOTman' and user2 not in top10NamesQY and current_challenge >= 1:
                     totdico[user2] = -2
                     dislike_list.append(user2)
-                    dislike_message = 'Honte à ' + str(user2) + ' Leila : est allé vous cherchez 2er points malus dans le FUTURama \n c\'est bien de checker :)'
+                    dislike_message = 'Honte à ' + str(user2) + ' Leila : est allé vous cherchez 2er points malus dans le FUTURama \n c\'est mal de disliker :)'
                     await client.get_user(myAuthorId).send(dislike_message)
                     await client.get_user(brice_identifiant).send(dislike_message)
 
