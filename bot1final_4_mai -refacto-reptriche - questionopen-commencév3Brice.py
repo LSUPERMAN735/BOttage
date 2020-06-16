@@ -8,18 +8,19 @@
 #licence GNU V3 à copier avec les termes
 #    GNU GENERAL PUBLIC LICENSE
 #    Version 3, 29 June 2007
-import sys
-import discord
-from discord.ext import commands
-from operator import itemgetter
-import asyncio
-from datetime import datetime
-import random
+import sys #utiliser les fonctions système et fermer le programme en cas d'une erreur générale
+import discord #utiliser Discord
+from discord.ext import commands #utiliser la commande avec le préfixe
+from operator import itemgetter #trier le dictionnaire
+import asyncio #pour les fonctions asynchrone de Discord à chaque évènement
+from datetime import datetime #double les points durant la période easteregg
+import random #random choice pour afficher des images à intervalle irrégulier
 
-tok = open("token.txt", "r")
-token = tok.readlines()
+tok = open("token.txt", "r") #lecture du token
+token = tok.readlines() #
 
-my_channel_id = 705073195077730344
+my_channel_id = 722078641550524497
+previous_my_channel_id = 705073195077730344
 my_channel_id2 = 706529394318901328
 my_channel_id3 = 706529394318901331
 
@@ -119,6 +120,7 @@ def repondre_quest(msg, repx, top3NamesQx, ontBonMaisTropTardQx, Qx):
 
 def fichreaderqx() :
     global quest, rep, listchallengeq, listchallenger, rep2, isuniq
+    # fichdeqr = open("myqORIGINAL.txt", "r")
     fichdeqr = open("myq.txt", "r")
     lignes = fichdeqr.readlines()
     listchallengeq = []
@@ -401,7 +403,6 @@ async def on_message(message) :
             if current_challenge == 0 :
                 init_list()
             fichreaderqx()
-            await message.channel.send(listchallengeq[current_challenge])
             
             # await message.channel.send('conj'+ str(current_challenge))#debug
             # await message.channel.send('conj2'+ str(len(listchallengeq)))#debug
@@ -412,6 +413,7 @@ async def on_message(message) :
                 # await message.channel.send('Gagnant tot= ' + str(totdico))
                 await message.channel.send("Tous les challenges sont désormais terminés")
                 current_challenge += 1
+            await message.channel.send(listchallengeq[current_challenge]) #à mettre ici sinon bug
 
             if current_challenge > 0 :
                 try :
@@ -426,7 +428,8 @@ async def on_message(message) :
                     print ("fini")#Impossible de trouver l'élément dans la liste
             if isuniq_list[current_challenge] == 'uniq' : #bloque à une participation et envoie le message sur le salon
                 await message.channel.send('Ce test est bloqué à une participation')
-                thisisuniq = 1
+                # await message.channel.send('imagescityman')
+                thisisuniq = 1# 1
             else :
                 thisisuniq = 0 # si ce n'est pas un challenge OUI ou NON
             current_challenge += 1
@@ -440,8 +443,8 @@ async def on_message(message) :
                 '```!podium x affiche le podium en fonction du numéro x précédent pour tous les utilisateurs```'\
                 + "```PodiumGlobal!! affiche le podium Global des challenges terminés destinés pour tous les utilisateurs```" +\
                 '```!podium 0 Affiche le podium du dernier challenge terminé pour tous les utilisateurs```' +\
-                 '```Show : Affiche les consignes du challenge en cours pour tous les utilisateurs ```'+\
-                    '```Credits!! : Affiche les crédits concepteur pour tous les utilisateurs```'+\
+                 '```show!! : Affiche les consignes du challenge en cours pour tous les utilisateurs ```'+\
+                    '```credits!! : Affiche les crédits concepteur pour tous les utilisateurs```'+\
                     '```Challenge!! lancer le challenge ou passer le challenge admin/prof```'\
                 + '```Podium!!! voir le podium du challenge actuel pour les admin/prof```')
             if help_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
@@ -659,6 +662,7 @@ async def on_reaction_add(reaction, user):
                 print(totdico[user2])#debug
                 totdico[user2] += 2
                 like_list.append(user2)
+                # await client.get_user(zeid).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
                 # await bot.say('Bravo à ' + user + ' Clara OSWALD : est allé vous cherchez 2 points bonus dans le Tardis')
                 # await bot.say(file=discord.File('./assets/tardise.gif'))
 

@@ -1,5 +1,6 @@
-1) Combien font 1 + 1 ```cb```?|2|uniq
-2) Combien font 2 + 2 ?|4|
-3) Combien font 3 + 3 ?|6|uniq
-4) Combien font 4 + 4 ?|8|
-5) Combien font 5 + 5 ?|10|
+Challenge 1 : Quel est le modele de ce telephone ? http://botmaniutrtcv.epizy.com/challenge%20bot%20src/telephone.jpg ```Ex : Si Samsung Omnia 7, répondre Omnia```|cityman|
+Challenge 2 : Combien y a-t-il de platanes dans Paris 17e ? Vous trouverez la réponse dans l'interface phpMyAdmin du serveur challenge-rt.tk, avec le compte etudiant ?|3057|
+Challenge 3 : Quel phrase lisez-vous à 2 Heures 8 minutes et 53 secondes ? http://botmaniutrtcv.epizy.com/challenge%20bot%20src/Street%20Dancer%203D%20-%20English.srt|They play and I dance.|
+Challenge 4 : Sur le compte tybert/vitrygtr du serveur SSH  challenge-rt.tk, vous trouverez un fichier texte. Quel mot secret est caché dans le 42e champ de la ligne contenant 'brice is the boss' ?|jesuisrt|
+Challenge 5 : Sur le compte hermeline/vitrygtr du serveur SSH  challenge-rt.tk, quel secret est caché dans le répertoire dont le nom ne contient pas de tiret ?|millesoudier|
+Challenge 6 : Quelle est la date d'anniversaire de Lorie, en secondes depuis l'Epoch UNIX ? On suppose qu'elle est née exactement à minuit ?|389138400|
