@@ -1,0 +1,5 @@
+1) Combien font 1 + 1 ```cb```?|2|uniq
+2) Combien font 2 + 2 ?|4|
+3) Combien font 3 + 3 ?|6|uniq
+4) Combien font 4 + 4 ?|8|
+5) Combien font 5 + 5 ?|10|
