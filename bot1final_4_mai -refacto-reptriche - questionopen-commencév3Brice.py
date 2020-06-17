@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
 #4may , 5 may , 6 may commencé vers 18H20 , 7 may , 11 may , 12 may , 13 may, and 14 may, 15 may and 18 may,19may,21may, 25 may,27, 29 may,5juin,6juin,7juin, 8juin, 9juin, 10juin
-#11juin, 12juin, 14 juin, 16 juin et rapport 13juin
+#11juin, 12juin, 14 juin, 16 juin, 17 juin  et rapport 13juin
 #sort added for podiumglobal and added !podium x, podiumsave dans challenge!!
 #lisibility added, gif, time easteregg
 #crédits Amine ABDOUL-AZID, Brice AUGUSTIN, UPEC
@@ -18,6 +18,7 @@ import random #random choice pour afficher des images à intervalle irrégulier
 
 tok = open("token.txt", "r") #lecture du token
 token = tok.readlines() #lecture ligne par ligne
+#variables asssignés
 #channel id
 my_channel_id = 722078641550524497
 previous_my_channel_id = 705073195077730344
@@ -231,11 +232,17 @@ async def on_message(message) :
             g = 0#indice
             h = 10#score
             try:
+                s = ''
                 while h <= 10 and f <= 10 and g < 10 :
-                    await message.channel.send(top10NamesQY[g] + ' Top ' + str(f) + ' a ' + str(h) + ' points' )
+                    s += top10NamesQY[g] + ' Top ' + str(f) + ' a ' + str(h) + ' points' 
                     h -= 1
                     f += 1
                     g += 1
+                if s == '' : 
+                    await message.channel.send("Personne d'autres a gagné") 
+                    await message.channel.send(file=discord.File('./assets/done.gif')) 
+                else : 
+                    await message.channel.send(s)
             except (IndexError) :
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
 
@@ -331,11 +338,17 @@ async def on_message(message) :
                     elif zename in totdico and current_challenge > 1 and zename in double_exp_podium_gagnant :
                             await client.get_user(zeid).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
                             double_exp_podium_counter -= 1
+                s = ''
                 while h <= 10 and f <= 10 and g < 10 :
-                    await message.channel.send('utilisateur ' + str(top10NamesQall[challengeprec][g]) +  ' Top ' + str(f) + ' a '+str(h) + ' points' )
+                    s += 'utilisateur ' + str(top10NamesQall[challengeprec][g]) +  ' Top ' + str(f) + ' a '+str(h) + ' points'
                     h -= 1
                     f += 1
                     g += 1
+                if s == '' : 
+                    await message.channel.send("Personne d'autres a gagné") 
+                    await message.channel.send(file=discord.File('./assets/done.gif')) 
+                else : 
+                    await message.channel.send(s)
                     #si ici ça buggue  pour la boucle Flash      
             except (IndexError) :
                 await message.channel.send("Personne d'autres a gagné") #Impossible de trouver l'élément dans la liste
@@ -383,12 +396,17 @@ async def on_message(message) :
                     elif zename in totdico and current_challenge > 1 and zename in exp_gagnant_podium :
                             await client.get_user(zeid).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
                             exp_counter_podium -= 1
-
+                s = ''
                 while h <= 10 and f <= 10 and g < 10 :
-                    await message.channel.send('utilisateur ' + str(top10NamesQall[challengeprec][g]) +  ' Top ' + str(f) + ' a '+str(h) + ' points' )
+                    s += 'utilisateur ' + str(top10NamesQall[challengeprec][g]) +  ' Top ' + str(f) + ' a '+str(h) + ' points' 
                     h -= 1
                     f += 1
                     g += 1
+                if s == '' : 
+                    await message.channel.send("Personne d'autres a gagné") 
+                    await message.channel.send(file=discord.File('./assets/done.gif')) 
+                else : 
+                    await message.channel.send(s)
             except (IndexError) :
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
                 await message.channel.send(file=discord.File('./assets/done.gif'))
