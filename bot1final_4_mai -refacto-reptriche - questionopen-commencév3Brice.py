@@ -232,7 +232,7 @@ async def on_message(message) :
             g = 0#indice
             h = 10#score
             try:
-                s = ''
+                s = ''#concat
                 while h <= 10 and f <= 10 and g < 10 :
                     s += top10NamesQY[g] + ' Top ' + str(f) + ' a ' + str(h) + ' points' 
                     h -= 1
