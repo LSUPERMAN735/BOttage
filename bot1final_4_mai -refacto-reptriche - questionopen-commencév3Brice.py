@@ -37,27 +37,14 @@ dev_grp_id = 719298857191604274
 # role_FI1_id = 719298857191604274
 role_FI1_id = 689162064341893133 #role FI1
 
-
+#pour contenir toutes les listes des gagnants/perdants
 top10NamesQall = []
 ontBonMaisTropTardQall = []
 perduAnImporteQuelQall = []
-#variable
-current_challenge = 0
-#easteregg counter
-exp_counter_podium = 0
-help_counter = 0
-podium_global_counter = 0
-double_exp_podium_counter = 0
-credits_counter = 0
-show_counter = 0
-
-perdu_counter = 0
-thisisuniq = 0 # commentable normalement
-counter_like = 0 #pour compter les likes
-
-
-block_it = []
+#si question unique
+block_it = [] #sert à bloquer à une seule participation par personne
 isuniq_list = [] #car buggue sinon
+#si like easteregg bonus ou dislike malus
 like_list=[]
 dislike_list=[]
 #liste to block to one easteregg for people by categories
@@ -67,6 +54,22 @@ help_gagnant = []
 podium_global_gagnant = []
 double_exp_podium_gagnant = []
 show_gagnant = []
+
+#variable
+current_challenge = 0
+#easteregg counter
+exp_counter_podium = 0
+help_counter = 0
+podium_global_counter = 0
+double_exp_podium_counter = 0
+credits_counter = 0
+show_counter = 0 #counter pour attribuer à intervalle irrégulier les bonus
+counter_like = 0 #pour compter les likes
+perdu_counter = 0 #pour afficherà intervalle irrégulier l'image si perdu
+
+thisisuniq = 0 # commentable normalement
+
+
 ####
 # Events
 ####
@@ -118,7 +121,7 @@ def repondre_quest(msg, repx, top3NamesQx, ontBonMaisTropTardQx, Qx):
         top3NamesQx.append(msg.author.name)
         print ('gagné', Qx, '=', len(top3NamesQx)) #debug
         print ('gagné', Qx, 'mais late =', len(ontBonMaisTropTardQx)) #debug
-        return True
+        return True #important ne pas commenter car une fonction par défaut return None
 
 def fichreaderqx() :
     global quest, rep, listchallengeq, listchallenger, rep2, isuniq
@@ -129,12 +132,12 @@ def fichreaderqx() :
     listchallenger = []
     for q in lignes :
         q = q.rstrip()
-        delims = q.split('|') 
-        quest = delims[0]
+        delims = q.split('|') #séparateur =|
+        quest = delims[0] #1ère colonnne séparé d'un |
         listchallengeq.append(quest)
-        rep = delims[1]
+        rep = delims[1]#2ème colonnne séparé d'un |
         listchallenger.append(rep)
-        isuniq = delims[2]
+        isuniq = delims[2]#3ème colonnne séparé d'un |
         isuniq_list.append(isuniq)
 
     fichdeqr.close()
@@ -158,7 +161,8 @@ def podiumsave() : #time comp added #message_author_name removable
     print ('top10NameQY=', top10NamesQY) #debug commentable
     for s in top10NamesQY :
         print ('current_challenge!', current_challenge) #debug
-        if i > 0 : #permet de ne prendre que le top x avec point positif et permet d'éviter un score négatif sauf si affecté en malus pour tous les gens en retard ou perdant
+        #permet de ne prendre que le top x avec point positif et permet d'éviter un score négatif 
+        if i > 0 : #l164 sauf si affecté en malus pour tous les gens en retard ou perdant
             if current_challenge >= 1 and heure_bool == 0 : 
                 try: 
                     totdico[s] += i
@@ -183,14 +187,14 @@ def podiumsave() : #time comp added #message_author_name removable
 def podiumnum(message) :
     global typed, delimited, podiuming, numberpodiuming, numberpodium
     typed = message.content
-    delimited = typed.split(' ') 
-    # podiuming = delimited[0]#commentable
-    numberpodiuming = delimited[1]
+    delimited = typed.split(' ') #délimiteur = espace
+    # podiuming = delimited[0]#commentable 1ère coloonne séparé d'un espace
+    numberpodiuming = delimited[1]#2ème colonne séparé d'un espace
     numberpodium = int(numberpodiuming)
     # print ("message= " + message.content)#debug
     # print ("podiuming= " + podiuming)#debug
     # print ("numberpodium= " + numberpodiuming) #debug
-    return typed, delimited, numberpodiuming, numberpodium #commentable
+    return typed, delimited, numberpodiuming, numberpodium #ligne commentable podiuming
 
 def fact_malus(totdico, message_author_name) : # sert à retirer les points malus si réponse dans le salon sauf si challenge 1
             if message_author_name in totdico :
@@ -200,7 +204,7 @@ def fact_malus(totdico, message_author_name) : # sert à retirer les points malu
    
 @client.event
 async def on_ready() :
-    print ('Challenge Bot est prêt.')
+    print ('Challenge Bot est prêt.') #affiche
     # return True      #commentable  
 
 @client.event
@@ -214,9 +218,7 @@ async def on_message(message) :
         global current_challenge, totdico, top10NamesQY
         zeid = message.author.id
         zename = message.author.name
-        # if thisisuniq == 0 :# bloc commentable debug
-        #     block_it = []
-        #     thisuniq = 0
+
         if message.author.id != BOTman_id : #debug if user that send message is not bot
             print ("Je suis", zename)
             print ("Actuellement les valeurs sont :")
@@ -227,7 +229,7 @@ async def on_message(message) :
 
         if message.content.casefold() == 'Podium!!!'.casefold() \
             and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) : #current_podiums only for admins/dev/teachers
-            # and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) or role_FI1_id in [y.id for y in message.author.roles] : #current_podiums only for admins/dev/teachers
+    # l231-> dev_grp_id in [y.id for y in message.author.roles] : #current_podiums only for admins/dev/teachers
             f = 1#cbeme
             g = 0#indice
             h = 10#score
@@ -269,7 +271,7 @@ async def on_message(message) :
                     await message.channel.send(s)
                 #Impossible de trouver l'élément dans la liste
                 
-                if podium_global_counter in (1, 2, 7, 9, 14, 15, 21, 23, 31, 39, 41, 45, 50, 53, 55, 60, 65, 67, 78, 85) and message.author.id not in (brice_identifiant, brice_identifiant) :
+                if podium_global_counter in (1, 2, 7, 9, 14, 15, 21, 23, 31, 39, 41, 45, 50, 53, 55, 60, 65, 67, 78, 85) and message.author.id not in (brice_identifiant, my_author_id) :
                             if zename in totdico and zename not in podium_global_gagnant :
                                 totdico[zename] += 2
                                 podium_global_gagnant.append(zename)
@@ -314,7 +316,7 @@ async def on_message(message) :
                 if current_challenge == 1 :
                     await message.channel.send('C\'est bien de tester les commandes mais cette commande s\'utilise à partir du Challenge 2' )
                 #boucle Flash
-                if double_exp_podium_counter in (1, 2, 7, 9, 13, 15, 25, 29, 31, 39, 41, 45, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant):
+                if double_exp_podium_counter in (1, 2, 7, 9, 13, 15, 25, 29, 31, 39, 41, 45, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, my_author_id):
                     if zename in totdico and current_challenge > 1 and zename not in double_exp_podium_gagnant :
                         totdico[zename] += 2
                         double_exp_podium_gagnant.append(zename)
@@ -373,7 +375,7 @@ async def on_message(message) :
                 else: 
                     await message.channel.send("Ce challenge n'a pas démarré !!")
                 
-                if exp_counter_podium in (3, 5, 10, 15, 20, 27, 30, 39, 45, 47, 50, 51, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
+                if exp_counter_podium in (3, 5, 10, 15, 20, 27, 30, 39, 45, 47, 50, 51, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, my_author_id) :
                     
                     if zename in totdico and current_challenge > 1 :
                         # print(totdico[zename])#debug
@@ -467,7 +469,7 @@ async def on_message(message) :
                     '```credits!! : Affiche les crédits concepteur pour tous les FI1```'+\
                     '```Challenge!!  : Lancer le challenge ou passer le challenge admin/prof```'\
                 + '```Podium!!! : Voir le podium du challenge actuel pour les admin/prof```')
-            if help_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
+            if help_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, my_author_id) :
                         if zename in totdico and current_challenge > 1  and zename not in help_gagnant :
                             totdico[zename] += 2
                             help_gagnant.append(zename)
@@ -494,7 +496,7 @@ async def on_message(message) :
             await message.channel.send('Créé par Amine AA/ABDOUL-AZID, Brice Augustin, amine.abdoul-azid@etu.u-pec.fr/brice.augustin@u-pec.fr UPEC Copyleft https://github.com/LSUPERMAN735 \
                 Licence MIT')
             credits_counter += 1
-            if credits_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
+            if credits_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, my_author_id) :
                 if zename in totdico and current_challenge > 1 and zename not in credits_gagnant :
                     totdico[zename] += 2
                     credits_gagnant.append(zename)
@@ -520,7 +522,7 @@ async def on_message(message) :
         if message.content.casefold() == 'show!!'.casefold() and role_FI1_id in [y.id for y in message.author.roles] :
             await message.channel.send(listchallengeq[current_challenge-1])
             show_counter += 1
-            if show_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, brice_identifiant) :
+            if show_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, my_author_id) :
                 if zename in totdico and current_challenge > 1 and zename not in show_gagnant :
                     totdico[zename] += 2
                     show_gagnant.append(zename)
@@ -546,6 +548,7 @@ async def on_message(message) :
         # print ('cr',current_challenge)#debug
         # if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and current_challenge < len(listchallengeq) :
         # if message.content == listchallenger[current_challenge-1] and message.channel.id == 722078564563812412 and role_FI1_id in [y.id for y in message.author.roles] :#boucle limitant les réponses dans le salon avec malus
+        #Boucle/Commande SPRINT
         if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id and role_FI1_id in [y.id for y in message.author.roles] :#boucle limitant les réponses dans le salon avec malus
             print (message.content)#debug
             await message.delete()#discord.errors.Forbidden: 403 Forbidden (error code: 50013): Missing Permissions
