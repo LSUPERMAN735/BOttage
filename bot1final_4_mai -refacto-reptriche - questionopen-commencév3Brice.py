@@ -243,12 +243,8 @@ async def on_message(message) :
                     h -= 1
                     f += 1
                     g += 1
-                if s == '' : 
-                    await message.channel.send("Personne d'autres a gagné") 
-                    await message.channel.send(file=discord.File('./assets/done.gif')) 
-                else : 
                     await message.channel.send(s)#on affiche le message concaténé
-            except (IndexError) :
+            except (IndexError, discord.errors.HTTPException) :
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
 
         
@@ -267,13 +263,13 @@ async def on_message(message) :
                     if valeur > 0 and current_challenge > 1 : #ne met ni d'erreur mais n'affiche pas que les valeurs supérieurs à 0 pour bloquer l'affichage 
                         s = s + str(cle) + ' Top ' + str(o) + ' a ' + str(valeur) + ' points' + '\n'
                         o += 1
-                if s == '' : 
-                    await message.channel.send("Personne d'autres a gagné") #Impossible de trouver l'élément dans la liste
-                    await message.channel.send(file=discord.File('./assets/done.gif')) 
-                else : 
-                    await message.channel.send(s)
-                
-                
+                        await message.channel.send(s)
+                # if s == '' : #boucle VERIZON remplacé par except discord.errors.HTTPException
+                #     await message.channel.send("Personne d'autres a gagné") #Impossible de trouver l'élément dans la liste
+                #     await message.channel.send(file=discord.File('./assets/done.gif')) 
+                # else : 
+                    # await message.channel.send(s)
+
                 if podium_global_counter in (1, 2, 7, 9, 14, 15, 21, 23, 31, 39, 41, 45, 50, 53, 55, 60, 65, 67, 78, 85) and message.author.id not in (brice_identifiant, my_author_id) :
                             if zename in totdico and zename not in podium_global_gagnant :
                                 totdico[zename] += 2
@@ -291,7 +287,7 @@ async def on_message(message) :
                                 await client.get_user(zeid).send('Bravo à ' + zename\
                                      + ' BENDER : est allé vous cherchez vos 2 er points bonus dans le FUTURama\
                                     \n c\'est bien de checker')
-                                await client.get_user(zename).send(file=discord.File('./assets/bender.gif'))
+                                await client.get_user(zeid).send(file=discord.File('./assets/bender.gif'))
                                 podium_global_message = zename + ' a gagné ses 3ers pts avec podiumglob, current_challenge: '+ str(current_challenge) + ' car '\
                                     + str(podium_global_counter) + ' fois'
                                 await client.get_user(myAuthorId).send(podium_global_message)
@@ -299,7 +295,7 @@ async def on_message(message) :
                             elif zename in totdico and current_challenge > 1 and zename in podium_global_gagnant :
                                 await client.get_user(zeid).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
                                 podium_global_counter -= 1
-            except (IndexError) :
+            except (IndexError, discord.errors.HTTPException) :#raise HTTPException
                 await message.channel.send("Fin du podium global")#Impossible de trouver l'élément dans la liste
                 await message.channel.send(file=discord.File('./assets/done.gif'))
 
@@ -331,7 +327,7 @@ async def on_message(message) :
         #                 await client.get_user(brice_identifiant).send(double_exp_podium_message)
                          
         #             elif zename not in totdico and zename not in top10NamesQY and zename not in double_exp_podium_gagnant : 
-        #                 totdico[zename] = 10
+        #                 totdico[zename] = 3
         #                 double_exp_podium_gagnant.append(zename)
         #                 await client.get_user(zeid).send('Bravo à ' + zename + \
         #                     ' Phoebe Halliwell : est allé vous cherchez vos 3 er points bonus avec sa magie')
@@ -407,12 +403,8 @@ async def on_message(message) :
                     h -= 1
                     f += 1
                     g += 1
-                if s == '' : 
-                    await message.channel.send("Personne d'autres a gagné") 
-                    await message.channel.send(file=discord.File('./assets/done.gif')) 
-                else : 
                     await message.channel.send(s)
-            except (IndexError) :
+            except (IndexError, discord.errors.HTTPException ) : #discord.errors.HTTPException
                 await message.channel.send("Fin du podium x")#Impossible de trouver l'élément dans la liste
                 await message.channel.send(file=discord.File('./assets/done.gif'))
                 
@@ -483,7 +475,7 @@ async def on_message(message) :
                             await client.get_user(myAuthorId).send(help_message)
                             await client.get_user(brice_identifiant).send(help_message)
                         elif zename not in totdico and zename not in top10NamesQY and zename not in help_gagnant : 
-                            totdico[zename] = 10
+                            totdico[zename] = 3
                             help_gagnant.append(zename)
                             await client.get_user(zeid).send('Bravo à ' + zename + ' Kara Danvers : est allé vous cherchez vos 3 er points bonus en volant\
                                 \n c\'est bien de lire l\'aide :)')
@@ -510,7 +502,7 @@ async def on_message(message) :
                     await client.get_user(myAuthorId).send(credits_message)
                     await client.get_user(brice_identifiant).send(credits_message)
                 elif zename not in totdico and zename not in top10NamesQY and zename not in credits_gagnant : 
-                    totdico[zename] = 10
+                    totdico[zename] = 3
                     credits_gagnant.append(zename)
                     await client.get_user(zeid).send('Bravo à ' + zename + ' Alan : vous fait mangé 3 er points bonus \
                         \n c\'est bien de se renseigner sur les créateurs :)')
@@ -540,7 +532,7 @@ async def on_message(message) :
                     await client.get_user(myAuthorId).send(show_message)
                     await client.get_user(brice_identifiant).send(show_message)
                 elif zename not in totdico and zename not in top10NamesQY and zename not in credits_gagnant : 
-                    totdico[zename] = 10
+                    totdico[zename] = 3
                     show_gagnant.append(zename)
                     await client.get_user(zeid).send('Bravo à ' + zename + ' Natsu : vous fait goûté vos 3 er points bonus :)')
                     await client.get_user(zeid).send(file=discord.File('./assets/natsu.gif'))
@@ -558,13 +550,14 @@ async def on_message(message) :
         #commande Gold Member
         if zename in show_gagnant and zename in credits_gagnant and zename in exp_gagnant_podium and zename in help_gagnant and zename in podium_global_gagnant and zename not in gold_member :
             await client.get_user(zeid).send("Félicitations vous avez un paquet de chocolat Bon appétit \n Vous êtes désormais Gold Member \n https://www.google.com/search?q=tic+tac+toe")
-            await client.get_user(zeid).send(file=discord.File('./assets/L830GOLD.png'))
+            # await client.get_user(zeid).send(file=discord.File('./assets/L830GOLD.jpg'))
+            await client.get_user(zeid).send(file=discord.File('./assets/l930gold.jpg'))
             await client.get_user(zeid).send(file=discord.File('./assets/easteregg.jpg'))
             gold_member.append(zename)
             gold_message = zename + ' est devenu Gold Member : '
             await client.get_user(myAuthorId).send(gold_message)
             await client.get_user(brice_identifiant).send(gold_message)
-            print(gold_member)
+            print(gold_member) #debug
         
         #commande Gold Member print :
         if message.content.casefold() == 'Gold!!!'.casefold() and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) : #current_podiums only for admins/dev/teachers
@@ -698,10 +691,11 @@ async def on_message(message) :
         print ("Une erreur est survenue...Fermeture")
         sys.exit(1)        
 
-
+@client.event
 async def on_reaction_add(reaction, user):
 # async def on_reaction_add(reaction, user, message):
     global counter_like, counter_dislike
+    # print('imhere706')
     if reaction.emoji == '👍' : 
         counter_like += 1  
         print('user', user)#debug
@@ -709,12 +703,12 @@ async def on_reaction_add(reaction, user):
         userdelim = user2.split('#')
         user2 = userdelim[0]
         print('user2', user2)#debug
-        if counter_like in (1, 3, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and user2 not in ("Brice Augustin", "Brice Augustin") :
+        if counter_like in (1, 3, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and user2 not in ("Brice Augustin", "Brice Augustin") :  #à modifier
             if user2 in totdico and user2!='BOTman' and current_challenge > 1 :
                     print(totdico[user2])#debug
                     totdico[user2] += 2
                     like_list.append(user2)
-                    like_message = 'Bravo à ' + str(user2) + ' Docteur Zoidberg : est allé vous cherchez 2 points bonus dans le FUTURama \n c\'est bien de liker :) car ' + counter_like
+                    like_message = 'Bravo à ' + str(user2) + ' Docteur Zoidberg : est allé vous cherchez 2 points bonus dans le FUTURama c\'est bien de liker :) car ' + str(counter_like)
                     await client.get_user(myAuthorId).send(like_message)
                     await client.get_user(brice_identifiant).send(like_message)
                     # await client.get_user(zeid).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
@@ -724,7 +718,7 @@ async def on_reaction_add(reaction, user):
             elif user2 not in totdico and user2 not in top10NamesQY and user2!='BOTman' and current_challenge >= 1:
                     totdico[user2] = 2
                     like_list.append(user2)
-                    like_message = 'Bravo à ' + str(user2)  + ' Docteur Zoidberg : est allé vous cherchez vos 2 er points bonus dans le FUTURama \n c\'est bien de liker car ' + counter_like
+                    like_message = 'Bravo à ' + str(user2)  + ' Docteur Zoidberg : est allé vous cherchez vos 2 er points bonus dans le FUTURama c\'est bien de liker car ' + str(counter_like)
                     await client.get_user(myAuthorId).send(like_message)
                     await client.get_user(brice_identifiant).send(like_message)
                     
@@ -735,18 +729,18 @@ async def on_reaction_add(reaction, user):
         userdelim = user2.split('#')
         user2 = userdelim[0]
         print('user2 disliked', user2)#debug
-        if counter_disike >=1 and user2 not in ("Brice Augustin", "Brice Augustin") :
+        if counter_dislike >=1 and user2 not in ("Brice Augustin", "Brice Augustin") :
 
             if user2 in totdico and user2!='BOTman' and current_challenge > 1 :
                 totdico[user2] -= 2
                 dislike_list.append(user2)
-                dislike_message = 'Honte à ' + str(user2) + ' FRY : est allé vous cherchez 2 points malus dans le FUTURama \n c\'est mal de disliker :) car ' + counter_disike
+                dislike_message = 'Honte à ' + str(user2) + ' FRY : est allé vous cherchez 2 points malus dans le FUTURama c\'est mal de disliker :) car ' + str(counter_dislike)
                 await client.get_user(myAuthorId).send(dislike_message)
                 await client.get_user(brice_identifiant).send(dislike_message)
             elif user2 not in totdico and user2!='BOTman' and user2 not in top10NamesQY and current_challenge >= 1:
                 totdico[user2] = -2
                 dislike_list.append(user2)
-                dislike_message = 'Honte à ' + str(user2) + ' Leila : est allé vous cherchez 2er points malus dans le FUTURama \n c\'est mal de disliker :) car '
+                dislike_message = 'Honte à ' + str(user2) + ' Leila : est allé vous cherchez vos 2er points malus dans le FUTURama c\'est mal de disliker :) car ' + str(counter_dislike)
                 await client.get_user(myAuthorId).send(dislike_message)
                 await client.get_user(brice_identifiant).send(dislike_message)
 client.run(token[0])
