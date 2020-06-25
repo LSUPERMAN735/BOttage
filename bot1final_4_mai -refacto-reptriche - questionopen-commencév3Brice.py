@@ -35,8 +35,8 @@ clara_oswald = 718446180429725746
 #role id
 prof_grp_id = 690133601605386264
 dev_grp_id = 719298857191604274
-role_FI1_id = 719298857191604274
-# role_FI1_id = 689162064341893133 #role FI1
+# role_FI1_id = 719298857191604274
+role_FI1_id = 689162064341893133 #role FI1
 
 #pour contenir toutes les listes des gagnants/perdants
 top10NamesQall = []
@@ -199,6 +199,20 @@ def podiumnum(message) :
     # print ("numberpodium= " + numberpodiuming) #debug
     return typed, delimited, numberpodiuming, numberpodium #ligne commentable podiuming
 
+def addnum(message) :
+    global typed, delimited, podiuming, numberpodiuming, numberpodium, namer
+    typed = message.content
+    delimited = typed.split(' ') #délimiteur = espace
+    # podiuming = delimited[0]#commentable 1ère coloonne séparé d'un espace
+    numberpodiuming = delimited[1]#2ème colonne séparé d'un espace
+    numberpodium = int(numberpodiuming)
+    namer = delimited[2]#2ème colonne séparé d'un espace
+    namer = str(namer)
+    # print ("message= " + message.content)#debug
+    # print ("podiuming= " + podiuming)#debug
+    # print ("numberpodium= " + numberpodiuming) #debug
+    return typed, delimited, numberpodiuming, numberpodium #ligne commentable podiuming
+
 def fact_malus(totdico, message_author_name) : # sert à retirer les points malus si réponse dans le salon sauf si challenge 1
             if message_author_name in totdico :
                 totdico[message_author_name] -= 2 #malus de 2 points
@@ -243,7 +257,7 @@ async def on_message(message) :
                     h -= 1
                     f += 1
                     g += 1
-                    await message.channel.send(s)#on affiche le message concaténé
+                await message.channel.send(s)#on affiche le message concaténé
             except (IndexError, discord.errors.HTTPException) :
                 await message.channel.send("Personne d'autres a gagné")#Impossible de trouver l'élément dans la liste
 
@@ -263,7 +277,7 @@ async def on_message(message) :
                     if valeur > 0 and current_challenge > 1 : #ne met ni d'erreur mais n'affiche pas que les valeurs supérieurs à 0 pour bloquer l'affichage 
                         s = s + str(cle) + ' Top ' + str(o) + ' a ' + str(valeur) + ' points' + '\n'
                         o += 1
-                        await message.channel.send(s)
+                await message.channel.send(s)
                 # if s == '' : #boucle VERIZON remplacé par except discord.errors.HTTPException
                 #     await message.channel.send("Personne d'autres a gagné") #Impossible de trouver l'élément dans la liste
                 #     await message.channel.send(file=discord.File('./assets/done.gif')) 
@@ -295,7 +309,7 @@ async def on_message(message) :
                             elif zename in totdico and current_challenge > 1 and zename in podium_global_gagnant :
                                 await client.get_user(zeid).send('Désolé mais je ne peux vous attribuer des points bonus avec cette commande laissez-les pour les autres')
                                 podium_global_counter -= 1
-            except (IndexError, discord.errors.HTTPException) :#raise HTTPException
+            except (IndexError, discord.errors.HTTPException) :#raise HTTPException si s est vide donc podium vide
                 await message.channel.send("Fin du podium global")#Impossible de trouver l'élément dans la liste
                 await message.channel.send(file=discord.File('./assets/done.gif'))
 
@@ -403,7 +417,7 @@ async def on_message(message) :
                     h -= 1
                     f += 1
                     g += 1
-                    await message.channel.send(s)
+                await message.channel.send(s)
             except (IndexError, discord.errors.HTTPException ) : #discord.errors.HTTPException
                 await message.channel.send("Fin du podium x")#Impossible de trouver l'élément dans la liste
                 await message.channel.send(file=discord.File('./assets/done.gif'))
@@ -463,7 +477,7 @@ async def on_message(message) :
                     '```credits!! : Affiche les crédits concepteur pour tous les FI1.```'+\
                     '```Challenge!!  : Lancer le challenge ou passer le challenge admin/profs.```'\
                 + '```Podium!!! : Voir le podium du challenge actuel pour les admin/profs.```'
-                + '```Gold!!! : Affiche les membres Gold : Qui ont collectionné tous les easteregg```')
+                + '```Gold!!! : Affiche les membres Gold : Qui ont collectionné tous les eastereggs```')
             if help_counter in (1, 2, 7, 9, 17, 19, 20, 27, 33, 39, 45, 47, 50, 53, 55, 60, 65, 67, 78, 85, 90) and message.author.id not in (brice_identifiant, my_author_id) :
                         if zename in totdico and current_challenge > 1  and zename not in help_gagnant :
                             totdico[zename] += 2
@@ -562,7 +576,26 @@ async def on_message(message) :
         #commande Gold Member print :
         if message.content.casefold() == 'Gold!!!'.casefold() and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) : #current_podiums only for admins/dev/teachers
             await message.channel.send(str(gold_member))
-            
+        
+        #commande addpoint
+        if message.content.startswith('!add') and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) :
+            addnum(message)
+            if namer in totdico :
+                totdico[namer] += numberpodium
+                await message.channel.send(str(namer) + "a gagné " + str(numberpodium) + " points")
+            else :
+                totdico[namer] = numberpodium
+                await message.channel.send(str(namer) + " a gagné ses " + str(numberpodium) + "ers points")
+
+        # command removepoint    
+        if message.content.startswith('!remove') and message.author.id in (myAuthorId, brice_identifiant, 480045172630224916) :
+            addnum(message)
+            if namer in totdico :
+                totdico[namer] -= numberpodium
+                await message.channel.send(str(namer) + "a perdu " + str(numberpodium) + " points")
+            else :
+                totdico[namer] = - numberpodium
+                await message.channel.send(str(namer) + " a perdu ses " + str(numberpodium) + "ers points")
         # print ('cr',current_challenge)#debug
         # if message.content == listchallenger[current_challenge-1] and message.channel.id == my_channel_id3 and current_challenge < len(listchallengeq) :
         # if message.content == listchallenger[current_challenge-1] and message.channel.id == 722078564563812412 and role_FI1_id in [y.id for y in message.author.roles] :#boucle limitant les réponses dans le salon avec malus
